@@ -1,5 +1,5 @@
 //
-//  StudySetDetailView.swift
+//  StudySetView.swift
 //  Ticolingo
 //
 //  Created by NATALIE CHEN HUI REGINA RUZSICSK stu on 13/9/22.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct StudySetDetailView: View {
+struct StudySetView: View {
     
     @State var set: StudySet
     
@@ -32,13 +32,13 @@ struct StudySetDetailView: View {
     }
 }
 
-struct StudySetDetailView_Previews: PreviewProvider {
+struct StudySetView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-        StudySetDetailView(set: StudySet(title: "Happy Terms", terms: [
-            Vocab(term: "高兴", definition: "happy", exampleSentence: "我很高兴认识你。", difficulty: 0),
-            Vocab(term: "快乐", definition: "happiness", exampleSentence: "小学的时候我很快乐。", difficulty: 0),
-        ]))
+            StudySetView(set: StudySet(title: "Happy Terms", terms: [
+                Vocab(term: "高兴", definition: "happy", exampleSentence: "我很高兴认识你。", difficulty: 0),
+                Vocab(term: "快乐", definition: "happiness", exampleSentence: "小学的时候我很快乐。", difficulty: 0),
+            ]))
         }
     }
 }
