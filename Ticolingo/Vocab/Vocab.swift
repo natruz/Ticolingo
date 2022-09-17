@@ -18,11 +18,15 @@ class Vocab: ObservableObject, Codable, Identifiable {
     var difficulty: Int
     var familiarity = false
 
+    var editable: Bool = true
+
     init(term: String,
          pinyin: String? = nil,
          definition: String,
          exampleSentence: String,
-         difficulty: Int) {
+         difficulty: Int,
+         editable: Bool = true
+    ) {
         self.term = term
         if let pinyin = pinyin {
             self.pinyin = pinyin
@@ -36,6 +40,7 @@ class Vocab: ObservableObject, Codable, Identifiable {
         self.definition = definition
         self.exampleSentence = exampleSentence
         self.difficulty = difficulty
+        self.editable = editable
     }
 }
 

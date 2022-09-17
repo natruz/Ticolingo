@@ -8,14 +8,22 @@
 import Foundation
 
 class StudySet: ObservableObject, Codable, Identifiable {
-
     var id = UUID()
 
     var title: String
     var terms: [Vocab]
 
-    init(title: String, terms: [Vocab]) {
+    var editable: Bool = true {
+        didSet {
+            for term in terms {
+                term.editable = editable
+            }
+        }
+    }
+
+    init(title: String, terms: [Vocab], editable: Bool = true) {
         self.title = title
         self.terms = terms
+        self.editable = editable
     }
 }

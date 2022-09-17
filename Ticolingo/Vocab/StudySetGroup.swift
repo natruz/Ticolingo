@@ -11,8 +11,17 @@ class StudySetGroup: ObservableObject, Codable, Identifiable {
     var name: String
     var sets: [StudySet]
 
-    init(name: String, sets: [StudySet]) {
+    var editable: Bool = true {
+        didSet {
+            for set in sets {
+                set.editable = editable
+            }
+        }
+    }
+
+    init(name: String, sets: [StudySet], editable: Bool = true) {
         self.name = name
         self.sets = sets
+        self.editable = editable
     }
 }
