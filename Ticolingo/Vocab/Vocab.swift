@@ -79,7 +79,7 @@ extension String {
             for vowel in vowels {
                 if mainBody.contains(vowel) {
                     print("Replacing \(word) vowel \(vowel) tone \(toneNumber)")
-                    modifiedBody = mainBody.stringByReplacingFirstOccurrenceOfString(of: vowel, with: diacritics[vowel]![toneNumber]) + separator
+                    modifiedBody = mainBody.stringByReplacingFirstOccurrenceOfString(of: vowel, with: diacritics[vowel]![toneNumber%5]) + separator
                     break
                 }
             }
