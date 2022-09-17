@@ -86,9 +86,9 @@
 			children = (
 				93159F7628D5A6E700C55C5A /* Quizzes */,
 				93159F6E28D5A0F100C55C5A /* Vocab */,
-				2E3DDF1D28D0A30D00D3EC00 /* TicolingoApp.swift */,
 				93159F7528D5A5E200C55C5A /* SetHierarchy */,
 				2E3DDF3128D0A3E100D3EC00 /* Colours.swift */,
+				2E3DDF1D28D0A30D00D3EC00 /* TicolingoApp.swift */,
 				2E3DDF2128D0A31000D3EC00 /* Assets.xcassets */,
 				2E3DDF2328D0A31000D3EC00 /* Preview Content */,
 			);
@@ -142,6 +142,7 @@
 			children = (
 				93159F7728D5A6FB00C55C5A /* DragAndMatch */,
 				93159F7C28D5A73200C55C5A /* Question.swift */,
+				93159F7928D5A70E00C55C5A /* QuizResultsView.swift */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";
@@ -150,7 +151,6 @@
 			isa = PBXGroup;
 			children = (
 				93159F7828D5A70E00C55C5A /* DragAndMatchView.swift */,
-				93159F7928D5A70E00C55C5A /* QuizResultsView.swift */,
 			);
 			path = DragAndMatch;
 			sourceTree = "<group>";
