@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @ObservedObject
+    var studyGroups: StudyGroups = .shared
     
     init() {
         UISearchBar.appearance().tintColor = UIColor.init(primaryTextColour)
@@ -19,8 +22,8 @@ struct ContentView: View {
         NavigationView {
             VStack {
                 List {
-                    ForEach(studyGroups) { studyGroup in
-                        Section(header: SectionHeader()) {
+                    ForEach(studyGroups.studyGroups) { studyGroup in
+                        Section(header: SectionHeader(name: studyGroup.name)) {
                             ForEach(studyGroup.sets) { studyset in
                                 NavigationLink(destination: StudySetDetailView(set: studyset)) {
                                     Text(studyset.title)
@@ -46,11 +49,11 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct SectionHeader: View {
+    @State var name: String
+
     var body: some View {
-        ForEach(studyGroups) { studyGroup in
-            Text(studyGroup.name)
-                .foregroundColor(secondaryTextColour)
-        }
+        Text(name)
+            .foregroundColor(secondaryTextColour)
     }
 }
 

@@ -13,7 +13,6 @@
 		2E3DDF2528D0A31000D3EC00 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E3DDF2428D0A31000D3EC00 /* Preview Assets.xcassets */; };
 		2E3DDF2C28D0A38100D3EC00 /* StudySetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF2B28D0A38100D3EC00 /* StudySetDetailView.swift */; };
 		2E3DDF2E28D0A3A500D3EC00 /* TermDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF2D28D0A3A500D3EC00 /* TermDetailView.swift */; };
-		2E3DDF3028D0A3B400D3EC00 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF2F28D0A3B400D3EC00 /* Data.swift */; };
 		2E3DDF3228D0A3E100D3EC00 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF3128D0A3E100D3EC00 /* Colours.swift */; };
 		93159F6728D59A9000C55C5A /* HanziPinyinResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6228D59A9000C55C5A /* HanziPinyinResource.swift */; };
 		93159F6828D59A9000C55C5A /* PinyinFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6328D59A9000C55C5A /* PinyinFormatter.swift */; };
@@ -27,6 +26,10 @@
 		93159F7A28D5A70E00C55C5A /* DragAndMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F7828D5A70E00C55C5A /* DragAndMatchView.swift */; };
 		93159F7B28D5A70E00C55C5A /* QuizResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F7928D5A70E00C55C5A /* QuizResultsView.swift */; };
 		93159F7D28D5A73200C55C5A /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F7C28D5A73200C55C5A /* Question.swift */; };
+		93159F8128D5A85900C55C5A /* S2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8028D5A85900C55C5A /* S2.swift */; };
+		93159F8328D5A88E00C55C5A /* Textbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8228D5A88E00C55C5A /* Textbook.swift */; };
+		93159F8628D5A9C000C55C5A /* OtherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8528D5A9C000C55C5A /* OtherData.swift */; };
+		93159F8928D5AAF600C55C5A /* StudyGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8828D5AAF600C55C5A /* StudyGroups.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +40,6 @@
 		2E3DDF2428D0A31000D3EC00 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2E3DDF2B28D0A38100D3EC00 /* StudySetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySetDetailView.swift; sourceTree = "<group>"; };
 		2E3DDF2D28D0A3A500D3EC00 /* TermDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermDetailView.swift; sourceTree = "<group>"; };
-		2E3DDF2F28D0A3B400D3EC00 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		2E3DDF3128D0A3E100D3EC00 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		93159F6228D59A9000C55C5A /* HanziPinyinResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HanziPinyinResource.swift; sourceTree = "<group>"; };
 		93159F6328D59A9000C55C5A /* PinyinFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinyinFormatter.swift; sourceTree = "<group>"; };
@@ -51,6 +53,10 @@
 		93159F7828D5A70E00C55C5A /* DragAndMatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragAndMatchView.swift; sourceTree = "<group>"; };
 		93159F7928D5A70E00C55C5A /* QuizResultsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizResultsView.swift; sourceTree = "<group>"; };
 		93159F7C28D5A73200C55C5A /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		93159F8028D5A85900C55C5A /* S2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S2.swift; sourceTree = "<group>"; };
+		93159F8228D5A88E00C55C5A /* Textbook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Textbook.swift; sourceTree = "<group>"; };
+		93159F8528D5A9C000C55C5A /* OtherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherData.swift; sourceTree = "<group>"; };
+		93159F8828D5AAF600C55C5A /* StudyGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroups.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,7 +125,7 @@
 		93159F6E28D5A0F100C55C5A /* Vocab */ = {
 			isa = PBXGroup;
 			children = (
-				2E3DDF2F28D0A3B400D3EC00 /* Data.swift */,
+				93159F8728D5AA3100C55C5A /* Data */,
 				93159F6F28D5A10000C55C5A /* Vocab.swift */,
 				93159F7128D5A12200C55C5A /* StudySet.swift */,
 				93159F7328D5A12B00C55C5A /* StudySetGroup.swift */,
@@ -153,6 +159,33 @@
 				93159F7828D5A70E00C55C5A /* DragAndMatchView.swift */,
 			);
 			path = DragAndMatch;
+			sourceTree = "<group>";
+		};
+		93159F7E28D5A83300C55C5A /* Textbook */ = {
+			isa = PBXGroup;
+			children = (
+				93159F8228D5A88E00C55C5A /* Textbook.swift */,
+				93159F8028D5A85900C55C5A /* S2.swift */,
+			);
+			path = Textbook;
+			sourceTree = "<group>";
+		};
+		93159F8428D5A99300C55C5A /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				93159F8528D5A9C000C55C5A /* OtherData.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		93159F8728D5AA3100C55C5A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				93159F8828D5AAF600C55C5A /* StudyGroups.swift */,
+				93159F7E28D5A83300C55C5A /* Textbook */,
+				93159F8428D5A99300C55C5A /* Other */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,9 +260,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				93159F7A28D5A70E00C55C5A /* DragAndMatchView.swift in Sources */,
+				93159F8328D5A88E00C55C5A /* Textbook.swift in Sources */,
 				93159F7428D5A12B00C55C5A /* StudySetGroup.swift in Sources */,
+				93159F8128D5A85900C55C5A /* S2.swift in Sources */,
 				2E3DDF2C28D0A38100D3EC00 /* StudySetDetailView.swift in Sources */,
 				93159F7D28D5A73200C55C5A /* Question.swift in Sources */,
+				93159F8628D5A9C000C55C5A /* OtherData.swift in Sources */,
+				93159F8928D5AAF600C55C5A /* StudyGroups.swift in Sources */,
 				93159F6928D59A9000C55C5A /* String+HanziPinyin.swift in Sources */,
 				2E3DDF3228D0A3E100D3EC00 /* Colours.swift in Sources */,
 				93159F6728D59A9000C55C5A /* HanziPinyinResource.swift in Sources */,
@@ -239,7 +276,6 @@
 				93159F6B28D59A9000C55C5A /* PinyinOutputFormat.swift in Sources */,
 				93159F7228D5A12200C55C5A /* StudySet.swift in Sources */,
 				93159F6A28D59A9000C55C5A /* HanziPinyin.swift in Sources */,
-				2E3DDF3028D0A3B400D3EC00 /* Data.swift in Sources */,
 				2E3DDF2E28D0A3A500D3EC00 /* TermDetailView.swift in Sources */,
 				2E3DDF2028D0A30D00D3EC00 /* ContentView.swift in Sources */,
 				2E3DDF1E28D0A30D00D3EC00 /* TicolingoApp.swift in Sources */,
