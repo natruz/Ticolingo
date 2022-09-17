@@ -14,4 +14,4 @@ let S2StudySet = StudySetGroup(name: "Secondary 2", sets: [
     StudySet(title: "Chapter 4", terms: []),
     StudySet(title: "Chapter 5", terms: []),
     StudySet(title: "Chapter 6", terms: []),
-])
+], editable: false)

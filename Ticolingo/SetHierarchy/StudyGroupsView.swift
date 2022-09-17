@@ -22,16 +22,23 @@ struct StudyGroupsView: View {
         VStack {
             List {
                 ForEach(studyGroups.studyGroups) { studyGroup in
-                    Section(header: SectionHeader(name: studyGroup.name)) {
+                    Section(header: SectionHeader(studyGroup: studyGroup)) {
                         ForEach(studyGroup.sets) { studyset in
                             NavigationLink(destination: StudySetView(set: studyset)) {
                                 Text(studyset.title)
                                     .bold()
                                     .foregroundColor(tertiaryTextColour)
-
                             }
                             .listRowBackground(secondaryFillerColour)
+                            .deleteDisabled(!studyGroup.editable)
+                            .moveDisabled(!studyGroup.editable)
                         }
+                        .onMove(perform: { index, moveTo in
+                            print("Tried to move \(index) to \(moveTo)")
+                        })
+                        .onDelete(perform: { index in
+                            print("Tried to delete \(index)")
+                        })
                     }
                 }
             }
@@ -47,11 +54,16 @@ struct StudyGroupsView_Previews: PreviewProvider {
 }
 
 struct SectionHeader: View {
-    @State var name: String
+    @State var studyGroup: StudySetGroup
 
     var body: some View {
-        Text(name)
-            .foregroundColor(secondaryTextColour)
+        HStack {
+            Text(studyGroup.name)
+                .foregroundColor(secondaryTextColour)
+            if !studyGroup.editable {
+                Image(systemName: "lock.fill")
+            }
+        }
     }
 }
 
