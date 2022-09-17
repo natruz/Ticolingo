@@ -15,6 +15,15 @@
 		2E3DDF2E28D0A3A500D3EC00 /* TermDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF2D28D0A3A500D3EC00 /* TermDetailView.swift */; };
 		2E3DDF3028D0A3B400D3EC00 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF2F28D0A3B400D3EC00 /* Data.swift */; };
 		2E3DDF3228D0A3E100D3EC00 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF3128D0A3E100D3EC00 /* Colours.swift */; };
+		93159F6728D59A9000C55C5A /* HanziPinyinResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6228D59A9000C55C5A /* HanziPinyinResource.swift */; };
+		93159F6828D59A9000C55C5A /* PinyinFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6328D59A9000C55C5A /* PinyinFormatter.swift */; };
+		93159F6928D59A9000C55C5A /* String+HanziPinyin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6428D59A9000C55C5A /* String+HanziPinyin.swift */; };
+		93159F6A28D59A9000C55C5A /* HanziPinyin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6528D59A9000C55C5A /* HanziPinyin.swift */; };
+		93159F6B28D59A9000C55C5A /* PinyinOutputFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6628D59A9000C55C5A /* PinyinOutputFormat.swift */; };
+		93159F6D28D59E1B00C55C5A /* unicode_to_hanyu_pinyin.txt in Resources */ = {isa = PBXBuildFile; fileRef = 93159F6C28D59E1B00C55C5A /* unicode_to_hanyu_pinyin.txt */; };
+		93159F7028D5A10000C55C5A /* Vocab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6F28D5A10000C55C5A /* Vocab.swift */; };
+		93159F7228D5A12200C55C5A /* StudySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F7128D5A12200C55C5A /* StudySet.swift */; };
+		93159F7428D5A12B00C55C5A /* StudySetGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F7328D5A12B00C55C5A /* StudySetGroup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +36,15 @@
 		2E3DDF2D28D0A3A500D3EC00 /* TermDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermDetailView.swift; sourceTree = "<group>"; };
 		2E3DDF2F28D0A3B400D3EC00 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		2E3DDF3128D0A3E100D3EC00 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		93159F6228D59A9000C55C5A /* HanziPinyinResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HanziPinyinResource.swift; sourceTree = "<group>"; };
+		93159F6328D59A9000C55C5A /* PinyinFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinyinFormatter.swift; sourceTree = "<group>"; };
+		93159F6428D59A9000C55C5A /* String+HanziPinyin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HanziPinyin.swift"; sourceTree = "<group>"; };
+		93159F6528D59A9000C55C5A /* HanziPinyin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HanziPinyin.swift; sourceTree = "<group>"; };
+		93159F6628D59A9000C55C5A /* PinyinOutputFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinyinOutputFormat.swift; sourceTree = "<group>"; };
+		93159F6C28D59E1B00C55C5A /* unicode_to_hanyu_pinyin.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = unicode_to_hanyu_pinyin.txt; sourceTree = "<group>"; };
+		93159F6F28D5A10000C55C5A /* Vocab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocab.swift; sourceTree = "<group>"; };
+		93159F7128D5A12200C55C5A /* StudySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySet.swift; sourceTree = "<group>"; };
+		93159F7328D5A12B00C55C5A /* StudySetGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySetGroup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +77,8 @@
 		2E3DDF1C28D0A30D00D3EC00 /* Ticolingo */ = {
 			isa = PBXGroup;
 			children = (
+				93159F6E28D5A0F100C55C5A /* Vocab */,
+				93159F6128D59A5900C55C5A /* PinYin */,
 				2E3DDF1D28D0A30D00D3EC00 /* TicolingoApp.swift */,
 				2E3DDF1F28D0A30D00D3EC00 /* ContentView.swift */,
 				2E3DDF2B28D0A38100D3EC00 /* StudySetDetailView.swift */,
@@ -77,6 +97,29 @@
 				2E3DDF2428D0A31000D3EC00 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		93159F6128D59A5900C55C5A /* PinYin */ = {
+			isa = PBXGroup;
+			children = (
+				93159F6C28D59E1B00C55C5A /* unicode_to_hanyu_pinyin.txt */,
+				93159F6528D59A9000C55C5A /* HanziPinyin.swift */,
+				93159F6228D59A9000C55C5A /* HanziPinyinResource.swift */,
+				93159F6328D59A9000C55C5A /* PinyinFormatter.swift */,
+				93159F6628D59A9000C55C5A /* PinyinOutputFormat.swift */,
+				93159F6428D59A9000C55C5A /* String+HanziPinyin.swift */,
+			);
+			path = PinYin;
+			sourceTree = "<group>";
+		};
+		93159F6E28D5A0F100C55C5A /* Vocab */ = {
+			isa = PBXGroup;
+			children = (
+				93159F6F28D5A10000C55C5A /* Vocab.swift */,
+				93159F7128D5A12200C55C5A /* StudySet.swift */,
+				93159F7328D5A12B00C55C5A /* StudySetGroup.swift */,
+			);
+			path = Vocab;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +180,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93159F6D28D59E1B00C55C5A /* unicode_to_hanyu_pinyin.txt in Resources */,
 				2E3DDF2528D0A31000D3EC00 /* Preview Assets.xcassets in Resources */,
 				2E3DDF2228D0A31000D3EC00 /* Assets.xcassets in Resources */,
 			);
@@ -149,8 +193,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93159F7428D5A12B00C55C5A /* StudySetGroup.swift in Sources */,
 				2E3DDF2C28D0A38100D3EC00 /* StudySetDetailView.swift in Sources */,
+				93159F6928D59A9000C55C5A /* String+HanziPinyin.swift in Sources */,
 				2E3DDF3228D0A3E100D3EC00 /* Colours.swift in Sources */,
+				93159F6728D59A9000C55C5A /* HanziPinyinResource.swift in Sources */,
+				93159F6828D59A9000C55C5A /* PinyinFormatter.swift in Sources */,
+				93159F7028D5A10000C55C5A /* Vocab.swift in Sources */,
+				93159F6B28D59A9000C55C5A /* PinyinOutputFormat.swift in Sources */,
+				93159F7228D5A12200C55C5A /* StudySet.swift in Sources */,
+				93159F6A28D59A9000C55C5A /* HanziPinyin.swift in Sources */,
 				2E3DDF3028D0A3B400D3EC00 /* Data.swift in Sources */,
 				2E3DDF2E28D0A3A500D3EC00 /* TermDetailView.swift in Sources */,
 				2E3DDF2028D0A30D00D3EC00 /* ContentView.swift in Sources */,

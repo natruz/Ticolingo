@@ -7,50 +7,6 @@
 
 import Foundation
 
-class StudySetGroup: ObservableObject, Codable, Identifiable {
-    var name: String
-    var sets: [StudySet]
-    
-    init(name: String, sets: [StudySet]) {
-        self.name = name
-        self.sets = sets
-    }
-}
-
-class StudySet: ObservableObject, Codable, Identifiable {
-    
-    var id = UUID()
-    
-    var title: String
-    var terms: [Vocab]
-    
-    init(title: String, terms: [Vocab]) {
-        self.title = title
-        self.terms = terms
-    }
-}
-
-class Vocab: ObservableObject, Codable, Identifiable {
-    
-    var id = UUID()
-    
-    var term: String
-    var definition: String
-    var exampleSentence: String
-    var difficulty: Int
-    var familiarity = false
-    
-    init(term: String,
-         definition: String,
-         exampleSentence: String,
-         difficulty: Int) {
-        self.term = term
-        self.definition = definition
-        self.exampleSentence = exampleSentence
-        self.difficulty = difficulty
-    }
-}
-
 var studyGroups = [
     StudySetGroup(name: "Feelings", sets: [
         StudySet(title: "Happy Terms", terms: [

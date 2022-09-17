@@ -16,6 +16,12 @@ struct TermDetailView: View {
             List {
                 Section {
                     VStack(alignment: .leading) {
+                        Text("Pinyin: ")
+                            .foregroundColor(.gray)
+                            .padding(.bottom, 1)
+                        Text(term.pinyin)
+                    }
+                    VStack(alignment: .leading) {
                         Text("Definition: ")
                             .foregroundColor(.gray)
                             .padding(.bottom, 1)
@@ -84,6 +90,11 @@ struct TermDetailView: View {
 
 struct TermDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TermDetailView(term: Vocab(term: "a", definition: "b", exampleSentence: "c", difficulty: 4))
+        NavigationView {
+            TermDetailView(term: Vocab(term: "中文",
+                                       definition: "Chinese",
+                                       exampleSentence: "我的家人都讲中文",
+                                       difficulty: 1))
+        }
     }
 }
