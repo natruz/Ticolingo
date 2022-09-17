@@ -31,7 +31,9 @@ struct TermDetailView: View {
                         Text("Example Sentence: ")
                             .foregroundColor(.gray)
                             .padding(.bottom, 1)
-                        Text(term.exampleSentence)
+                        ForEach(Array(term.exampleSentences.enumerated()), id: \.offset.self) { index, exampleSentence in
+                            Text("\(index + 1). \(exampleSentence)")
+                        }
                     }
                     VStack(alignment: .leading) {
                         Text("Difficulty: \(term.difficulty)/7")
@@ -93,7 +95,7 @@ struct TermDetailView_Previews: PreviewProvider {
         NavigationView {
             TermDetailView(term: Vocab(term: "中文",
                                        definition: "Chinese",
-                                       exampleSentence: "我的家人都讲中文",
+                                       exampleSentences: ["我的家人都讲中文", "中文是最难的课"],
                                        difficulty: 1))
         }
     }

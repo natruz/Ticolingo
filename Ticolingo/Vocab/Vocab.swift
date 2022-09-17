@@ -14,7 +14,7 @@ class Vocab: ObservableObject, Codable, Identifiable {
     var term: String
     var pinyin: String
     var definition: String
-    var exampleSentence: String
+    var exampleSentences: [String]
     var difficulty: Int
     var familiarity = false
 
@@ -23,7 +23,7 @@ class Vocab: ObservableObject, Codable, Identifiable {
     init(term: String,
          pinyin: String? = nil,
          definition: String,
-         exampleSentence: String,
+         exampleSentences: [String],
          difficulty: Int,
          editable: Bool = true
     ) {
@@ -38,9 +38,24 @@ class Vocab: ObservableObject, Codable, Identifiable {
             }
         }
         self.definition = definition
-        self.exampleSentence = exampleSentence
+        self.exampleSentences = exampleSentences
         self.difficulty = difficulty
         self.editable = editable
+    }
+
+    convenience init(term: String,
+                     pinyin: String? = nil,
+                     definition: String,
+                     exampleSentence: String,
+                     difficulty: Int,
+                     editable: Bool = true
+    ) {
+        self.init(term: term,
+                  pinyin: pinyin,
+                  definition: definition,
+                  exampleSentences: [exampleSentence],
+                  difficulty: difficulty,
+                  editable: editable)
     }
 }
 
