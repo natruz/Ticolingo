@@ -49,7 +49,9 @@ struct StudyGroupsView: View {
 
 struct StudyGroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        StudyGroupsView()
+        NavigationView {
+            StudyGroupsView()
+        }
     }
 }
 

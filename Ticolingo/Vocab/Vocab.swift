@@ -11,7 +11,14 @@ class Vocab: ObservableObject, Codable, Identifiable {
 
     var id = UUID()
 
-    var term: String                { didSet { StudyGroups.shared.save() } }
+    var term: String                { didSet {
+        if term.hasChineseCharacter {
+            pinyin = term.toPinyin(withFormat: pyOutputFormat).transformDiacritics()
+        } else {
+            pinyin = "Non-chinese character"
+        }
+        StudyGroups.shared.save()
+    }}
     var pinyin: String              { didSet { StudyGroups.shared.save() } }
     var definition: String          { didSet { StudyGroups.shared.save() } }
     var exampleSentences: [String]  { didSet { StudyGroups.shared.save() } }

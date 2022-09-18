@@ -12,22 +12,24 @@ struct StudySetView: View {
     @State var set: StudySet
     
     var body: some View {
-//        VStack {
-//            Text(set.title)
-//                .font(.title)
-            List {
-                ForEach(set.terms) { term in
-                    NavigationLink(destination: TermDetailView(term: term)) {
-                        Text(term.familiarity ? "😃" : "☹️")
-                        Text(term.term)
-//                        Spacer()
-//                        Text(term.definition)
-//                            .foregroundColor(.gray)
-                    }
+        List {
+            ForEach(set.terms) { term in
+                NavigationLink(destination: TermDetailView(term: term)) {
+                    Text(term.familiarity ? "😃" : "☹️")
+                    Text(term.term)
+                    Text(term.pinyin)
+                        .opacity(0.8)
                 }
+                .deleteDisabled(!set.editable)
+                .moveDisabled(!set.editable)
             }
-//        }
-//        .navigationTitle("")
+            .onMove(perform: { index, moveTo in
+                print("Tried to move \(index) to \(moveTo)")
+            })
+            .onDelete(perform: { index in
+                print("Tried to delete \(index)")
+            })
+        }
         .navigationTitle(set.title)
     }
 }

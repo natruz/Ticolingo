@@ -10,22 +10,36 @@ import SwiftUI
 struct TermDetailView: View {
     
     @State var term: Vocab
+
+    @State var editing: Bool = false
     
     var body: some View {
         List {
             Section {
                 VStack(alignment: .leading) {
-                    Text("Pinyin: ")
-                        .foregroundColor(.gray)
-                        .padding(.bottom, 1)
+                    if editing {
+                        TextField("Enter Term", text: $term.term)
+                            .autocorrectionDisabled()
+                            .textInputAutocapitalization(.never)
+                            .font(.system(size: 30))
+                    } else {
+                        Text(term.term)
+                            .font(.system(size: 30))
+                    }
                     Text(term.pinyin)
+                        .padding(.top, 3)
                 }
                 VStack(alignment: .leading) {
                     Text("Definition: ")
                         .foregroundColor(.gray)
                         .padding(.bottom, 1)
-                    Text(term.definition)
+                    if editing {
+                        TextField("Enter Definition", text: $term.definition)
+                    } else {
+                        Text(term.definition)
+                    }
                 }
+                // TODO: Find a way to get example sentences modifiable
                 VStack(alignment: .leading) {
                     Text("Example Sentence: ")
                         .foregroundColor(.gray)
@@ -34,6 +48,7 @@ struct TermDetailView: View {
                         Text("\(index + 1). \(exampleSentence)")
                     }
                 }
+                // TODO: Find a way to get difficulty modifiable
                 VStack(alignment: .leading) {
                     Text("Difficulty: \(term.difficulty)/7")
                         .foregroundColor(.gray)
@@ -87,8 +102,8 @@ struct TermDetailView: View {
         .navigationTitle(term.term)
         .toolbar {
             ToolbarItem(id: "edit", placement: .navigationBarTrailing) {
-                Button("Edit") {
-
+                Button(editing ? "Finish" : "Edit") {
+                    editing.toggle()
                 }
                 .disabled(!term.editable)
             }

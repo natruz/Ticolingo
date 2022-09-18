@@ -10,8 +10,13 @@ import SwiftUI
 struct ContentView: View {
     
     var body: some View {
-        NavigationView {
-            StudyGroupsView()
+        TabView {
+            NavigationView {
+                StudyGroupsView()
+            }
+            .tabItem {
+                Label("Words", systemImage: "character.book.closed.zh")
+            }
         }
     }
 }
