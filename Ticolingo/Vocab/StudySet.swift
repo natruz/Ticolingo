@@ -10,8 +10,8 @@ import Foundation
 class StudySet: ObservableObject, Codable, Identifiable {
     var id = UUID()
 
-    var title: String
-    var terms: [Vocab]
+    var title: String   { didSet { StudyGroups.shared.save() } }
+    var terms: [Vocab]  { didSet { StudyGroups.shared.save() } }
 
     var editable: Bool = true {
         didSet {

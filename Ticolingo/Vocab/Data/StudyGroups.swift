@@ -13,9 +13,8 @@ class StudyGroups: ObservableObject {
     @Published
     var studyGroups: [StudySetGroup] {
         didSet {
-            if saveToMemory {
-                save()
-            }
+            // the save function checks if it should save or not, so no need to do it here.
+            save()
         }
     }
 

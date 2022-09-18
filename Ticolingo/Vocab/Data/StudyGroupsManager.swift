@@ -18,10 +18,12 @@ extension StudyGroups {
     }
 
     func save() {
-        let archiveURL = getArchiveURL()
-        let propertyListEncoder = PropertyListEncoder()
-        let encodedStudyGroupsItems = try? propertyListEncoder.encode(studyGroups)
-        try? encodedStudyGroupsItems?.write(to: archiveURL, options: .noFileProtection)
+        if saveToMemory {
+            let archiveURL = getArchiveURL()
+            let propertyListEncoder = PropertyListEncoder()
+            let encodedStudyGroupsItems = try? propertyListEncoder.encode(studyGroups)
+            try? encodedStudyGroupsItems?.write(to: archiveURL, options: .noFileProtection)
+        }
     }
 
     func load() {

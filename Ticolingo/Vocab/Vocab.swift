@@ -11,12 +11,12 @@ class Vocab: ObservableObject, Codable, Identifiable {
 
     var id = UUID()
 
-    var term: String
-    var pinyin: String
-    var definition: String
-    var exampleSentences: [String]
-    var difficulty: Int
-    var familiarity = false
+    var term: String                { didSet { StudyGroups.shared.save() } }
+    var pinyin: String              { didSet { StudyGroups.shared.save() } }
+    var definition: String          { didSet { StudyGroups.shared.save() } }
+    var exampleSentences: [String]  { didSet { StudyGroups.shared.save() } }
+    var difficulty: Int             { didSet { StudyGroups.shared.save() } }
+    var familiarity = false         { didSet { StudyGroups.shared.save() } }
 
     var editable: Bool = true
 
