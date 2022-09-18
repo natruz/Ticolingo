@@ -77,6 +77,12 @@ let diacritics: [String: [String]] = [
     "v": ["ü", "ǖ", "ǘ", "ǚ", "ǜ"]
 ]
 
+let verb:  String = "--verb--"
+let noun:  String = "--noun--"
+let adj:   String = "--adj--"
+let advb:  String = "--advb--"
+let idiom: String = "--idiom--"
+
 let pyOutputFormat = PinyinOutputFormat(toneType: .toneNumber, vCharType: .vCharacter, caseType: .lowercased)
 
 extension String {
