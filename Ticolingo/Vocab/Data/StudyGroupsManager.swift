@@ -17,8 +17,8 @@ extension StudyGroups {
         return documentsDirectory.appendingPathComponent(plistName)
     }
 
-    func save() {
-        if saveToMemory {
+    func save(forceSave: Bool = false) {
+        if saveToMemory || forceSave {
             let archiveURL = getArchiveURL()
             let propertyListEncoder = PropertyListEncoder()
             let encodedStudyGroupsItems = try? propertyListEncoder.encode(studyGroups)

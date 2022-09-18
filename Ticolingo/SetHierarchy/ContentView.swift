@@ -17,6 +17,13 @@ struct ContentView: View {
             .tabItem {
                 Label("Words", systemImage: "character.book.closed.zh")
             }
+
+            NavigationView {
+                PreferencesView()
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
+            }
         }
     }
 }

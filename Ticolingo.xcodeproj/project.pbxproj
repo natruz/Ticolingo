@@ -32,6 +32,7 @@
 		93159F8928D5AAF600C55C5A /* StudyGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8828D5AAF600C55C5A /* StudyGroups.swift */; };
 		93159F8B28D5ADFE00C55C5A /* StudyGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8A28D5ADFE00C55C5A /* StudyGroupsView.swift */; };
 		933CC90E28D6E3B000EC98A0 /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933CC90D28D6E3B000EC98A0 /* Definition.swift */; };
+		93813D1E28D6F11200A492D4 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93813D1D28D6F11200A492D4 /* PreferencesView.swift */; };
 		93B71B0828D6AADA00817750 /* StudyGroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B71B0728D6AADA00817750 /* StudyGroupsManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		93159F8828D5AAF600C55C5A /* StudyGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroups.swift; sourceTree = "<group>"; };
 		93159F8A28D5ADFE00C55C5A /* StudyGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupsView.swift; sourceTree = "<group>"; };
 		933CC90D28D6E3B000EC98A0 /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
+		93813D1D28D6F11200A492D4 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		93B71B0728D6AADA00817750 /* StudyGroupsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,7 +101,7 @@
 				93159F7628D5A6E700C55C5A /* Quizzes */,
 				93159F6E28D5A0F100C55C5A /* Vocab */,
 				93159F7528D5A5E200C55C5A /* SetHierarchy */,
-				2E3DDF3128D0A3E100D3EC00 /* Colours.swift */,
+				93813D1C28D6F0FC00A492D4 /* Preferences */,
 				2E3DDF1D28D0A30D00D3EC00 /* TicolingoApp.swift */,
 				2E3DDF2128D0A31000D3EC00 /* Assets.xcassets */,
 				2E3DDF2328D0A31000D3EC00 /* Preview Content */,
@@ -197,6 +199,15 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		93813D1C28D6F0FC00A492D4 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				2E3DDF3128D0A3E100D3EC00 /* Colours.swift */,
+				93813D1D28D6F11200A492D4 /* PreferencesView.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -281,6 +292,7 @@
 				93159F6728D59A9000C55C5A /* HanziPinyinResource.swift in Sources */,
 				933CC90E28D6E3B000EC98A0 /* Definition.swift in Sources */,
 				93B71B0828D6AADA00817750 /* StudyGroupsManager.swift in Sources */,
+				93813D1E28D6F11200A492D4 /* PreferencesView.swift in Sources */,
 				93159F7B28D5A70E00C55C5A /* QuizResultsView.swift in Sources */,
 				93159F8B28D5ADFE00C55C5A /* StudyGroupsView.swift in Sources */,
 				93159F6828D59A9000C55C5A /* PinyinFormatter.swift in Sources */,
