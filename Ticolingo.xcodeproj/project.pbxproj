@@ -31,6 +31,7 @@
 		93159F8628D5A9C000C55C5A /* OtherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8528D5A9C000C55C5A /* OtherData.swift */; };
 		93159F8928D5AAF600C55C5A /* StudyGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8828D5AAF600C55C5A /* StudyGroups.swift */; };
 		93159F8B28D5ADFE00C55C5A /* StudyGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8A28D5ADFE00C55C5A /* StudyGroupsView.swift */; };
+		933CC90E28D6E3B000EC98A0 /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933CC90D28D6E3B000EC98A0 /* Definition.swift */; };
 		93B71B0828D6AADA00817750 /* StudyGroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B71B0728D6AADA00817750 /* StudyGroupsManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		93159F8528D5A9C000C55C5A /* OtherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherData.swift; sourceTree = "<group>"; };
 		93159F8828D5AAF600C55C5A /* StudyGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroups.swift; sourceTree = "<group>"; };
 		93159F8A28D5ADFE00C55C5A /* StudyGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupsView.swift; sourceTree = "<group>"; };
+		933CC90D28D6E3B000EC98A0 /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
 		93B71B0728D6AADA00817750 /* StudyGroupsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +133,7 @@
 			children = (
 				93159F8728D5AA3100C55C5A /* Data */,
 				93159F6F28D5A10000C55C5A /* Vocab.swift */,
+				933CC90D28D6E3B000EC98A0 /* Definition.swift */,
 				93159F7128D5A12200C55C5A /* StudySet.swift */,
 				93159F7328D5A12B00C55C5A /* StudySetGroup.swift */,
 			);
@@ -276,6 +279,7 @@
 				93159F6928D59A9000C55C5A /* String+HanziPinyin.swift in Sources */,
 				2E3DDF3228D0A3E100D3EC00 /* Colours.swift in Sources */,
 				93159F6728D59A9000C55C5A /* HanziPinyinResource.swift in Sources */,
+				933CC90E28D6E3B000EC98A0 /* Definition.swift in Sources */,
 				93B71B0828D6AADA00817750 /* StudyGroupsManager.swift in Sources */,
 				93159F7B28D5A70E00C55C5A /* QuizResultsView.swift in Sources */,
 				93159F8B28D5ADFE00C55C5A /* StudyGroupsView.swift in Sources */,

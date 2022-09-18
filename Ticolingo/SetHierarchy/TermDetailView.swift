@@ -29,25 +29,45 @@ struct TermDetailView: View {
                     Text(term.pinyin)
                         .padding(.top, 3)
                 }
+            }
+
+            Section("Definitions") {
                 VStack(alignment: .leading) {
-                    Text("Definition: ")
+                    ForEach(term.definition.toDefinition(), id: \.self) { definition in
+                        ZStack {
+                            switch definition {
+                            case .verb:
+                                Text("Verb")
+                            case .noun:
+                                Text("Noun: ")
+                            case .adj:
+                                Text("Adjective: ")
+                            case .advb:
+                                Text("Adverb: ")
+                            case .idiom:
+                                Text("Idiom: ")
+                            case .unknown:
+                                Text("Definition: ")
+                            }
+                        }
                         .foregroundColor(.gray)
-                        .padding(.bottom, 1)
-                    if editing {
-                        TextField("Enter Definition", text: $term.definition)
-                    } else {
-                        Text(term.definition)
+                        Text(definition.asString())
+                            .padding(.bottom, 5)
                     }
                 }
-                // TODO: Find a way to get example sentences modifiable
-                VStack(alignment: .leading) {
-                    Text("Example Sentence: ")
-                        .foregroundColor(.gray)
-                        .padding(.bottom, 1)
-                    ForEach(Array(term.exampleSentences.enumerated()), id: \.offset.self) { index, exampleSentence in
-                        Text("\(index + 1). \(exampleSentence)")
+            }
+
+            Section("Examples") {
+                ForEach(Array(term.exampleSentences.enumerated()), id: \.offset.self) { index, exampleSentence in
+                    HStack {
+                        Image(systemName: "\(index + 1).circle")
+                        Text("\(exampleSentence)")
+                        Spacer()
                     }
                 }
+            }
+
+            Section {
                 // TODO: Find a way to get difficulty modifiable
                 VStack(alignment: .leading) {
                     Text("Difficulty: \(term.difficulty)/7")
@@ -64,8 +84,7 @@ struct TermDetailView: View {
                         }
                     }
                 }
-            }
-            Section {
+
                 VStack(alignment: .leading) {
                     Text("How familiar are you with this word?")
                         .padding(.bottom, 1)
@@ -115,7 +134,7 @@ struct TermDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             TermDetailView(term: Vocab(term: "中文",
-                                       definition: "Chinese",
+                                       definition: "\(noun) Chinese, \(adj) IDK man",
                                        exampleSentences: ["我的家人都讲中文", "中文是最难的课"],
                                        difficulty: 1))
         }
