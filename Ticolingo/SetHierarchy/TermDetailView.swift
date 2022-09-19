@@ -37,7 +37,7 @@ struct TermDetailView: View {
                         ZStack {
                             switch definition {
                             case .verb:
-                                Text("Verb")
+                                Text("Verb: ")
                             case .noun:
                                 Text("Noun: ")
                             case .adj:
@@ -46,8 +46,11 @@ struct TermDetailView: View {
                                 Text("Adverb: ")
                             case .idiom:
                                 Text("Idiom: ")
+                            case .sound:
+                                Text("Onomatopoea: ")
                             case .unknown:
-                                Text("Definition: ")
+                                // just don't show anything
+                                EmptyView()
                             }
                         }
                         .foregroundColor(.gray)

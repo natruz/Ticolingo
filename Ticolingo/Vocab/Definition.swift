@@ -13,6 +13,7 @@ enum Definition: Hashable {
     case adj(String)
     case advb(String)
     case idiom(String)
+    case sound(String)
 
     case unknown(String)
 
@@ -29,6 +30,8 @@ enum Definition: Hashable {
             asString = string
         case .idiom(let string):
             asString = string
+        case .sound(let string):
+            asString = string
         case .unknown(let string):
             asString = string
         }
@@ -41,6 +44,7 @@ let noun:  String = "--noun--"
 let adj:   String = "--adj--"
 let advb:  String = "--advb--"
 let idiom: String = "--idiom--"
+let sound: String = "--sound--" // onomatopoea
 
 extension String {
     // function to take a string and turn it into an array of definitions
@@ -59,6 +63,9 @@ extension String {
             })
             .reduce([String](), { result, element in
                 result + element.componentsWithSeparator(separatedBy: idiom)
+            })
+            .reduce([String](), { result, element in
+                result + element.componentsWithSeparator(separatedBy: sound)
             })
             .filter({ !$0.isEmpty })
 
@@ -80,6 +87,9 @@ extension String {
             } else if definitionString.hasPrefix(idiom) {
                 mutableDefinition.removeFirst(idiom.count)
                 return .idiom(mutableDefinition)
+            } else if definitionString.hasPrefix(sound) {
+                mutableDefinition.removeFirst(sound.count)
+                return .sound(mutableDefinition)
             } else {
                 return .unknown(definitionString)
             }
