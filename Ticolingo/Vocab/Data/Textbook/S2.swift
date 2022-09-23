@@ -359,6 +359,9 @@ let S2StudySet = StudySetGroup(name: "Secondary 2", sets: [
               difficulty: S2Difficulty),
     ]),
     StudySet(title: "Chapter 4", terms: [
+
+    ]),
+    StudySet(title: "Chapter 5", terms: [
         Vocab(term: "简陋",
               definition: "\(adj) simple and crude",
               exampleSentences: ["很多人住在简陋的家", "简陋的设备"],
@@ -480,6 +483,5 @@ let S2StudySet = StudySetGroup(name: "Secondary 2", sets: [
               exampleSentences: ["他讲的话很俏皮", "他显得很俏皮"],
               difficulty: S2Difficulty),
     ]),
-    StudySet(title: "Chapter 5", terms: []),
     StudySet(title: "Chapter 6", terms: []),
 ], editable: false)
