@@ -37,34 +37,7 @@ struct MemoryCardsView: View {
                             if currentQAs[lineNo * 3 + colNo].1.question != emptyIdentifier {
                                 SingleFlipCardView(front: .constant(""),
                                                    back: $currentQAs[lineNo * 3 + colNo].0,
-                                                   onFlip: { isOnBack in
-                                    print("Callback called")
-                                    guard isOnBack else { return .none }
-                                    print("Callback going")
-                                    if let selectedQuestion = selectedQuestion {
-                                        let id = currentQAs[lineNo * 3 + colNo].1.id
-                                        if id == selectedQuestion.id {
-                                            // MATCH
-                                            print("Match")
-                                            pastQuestions.append(currentQAs[lineNo * 3 + colNo].1)
-                                            currentQAs[lineNo * 3 + colNo] = (emptyIdentifier, .empty())
-                                            if let otherIndex = currentQAs.firstIndex(where: { $0.1.id == id }) {
-                                                currentQAs[otherIndex] = (emptyIdentifier, .empty())
-                                            }
-                                            return .none
-                                        } else {
-                                            // NO MATCH
-                                            print("No Match")
-                                            self.selectedQuestion = nil
-                                            return .unflipAll
-                                        }
-                                    } else {
-                                        // None selected
-                                        print("None selected")
-                                        self.selectedQuestion = currentQAs[lineNo * 3 + colNo].1
-                                        return .exclusive
-                                    }
-                                })
+                                                   onFlip: { onCardFlip(isOnBack: $0, lineNo: lineNo, colNo: colNo) })
                                 .frame(width: geometry.size.width/3-10, height: geometry.size.height/4-20)
                             } else {
                                 Spacer()
@@ -78,6 +51,43 @@ struct MemoryCardsView: View {
         }
         .onAppear {
             newGridElements()
+        }
+    }
+
+    func onCardFlip(isOnBack: Bool, lineNo: Int, colNo: Int) -> SingleFlipCardView.Behaviour {
+        print("Callback called")
+        guard isOnBack else { return .none }
+        print("Callback going")
+        if let selectedQuestion = selectedQuestion {
+            let id = currentQAs[lineNo * 3 + colNo].1.id
+            if id == selectedQuestion.id {
+                // MATCH
+                withAnimation {
+                    pastQuestions.append(currentQAs[lineNo * 3 + colNo].1)
+                    currentQAs[lineNo * 3 + colNo] = (emptyIdentifier, .empty())
+                    if let otherIndex = currentQAs.firstIndex(where: { $0.1.id == id }) {
+                        currentQAs[otherIndex] = (emptyIdentifier, .empty())
+                    }
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    if currentQAs.filter({ $0.1.question != emptyIdentifier }).count == 0 {
+                        withAnimation {
+                            newGridElements()
+                        }
+                    }
+                    self.selectedQuestion = nil
+                }
+                return .none
+            } else {
+                // NO MATCH
+                self.selectedQuestion = nil
+                return .unflipAll
+            }
+        } else {
+            // None selected
+            print("None selected")
+            self.selectedQuestion = currentQAs[lineNo * 3 + colNo].1
+            return .exclusive
         }
     }
 
@@ -114,15 +124,15 @@ struct MemoryCardsView_Previews: PreviewProvider {
             Question(question: "a", answer: "1"),
             Question(question: "b", answer: "2"),
             Question(question: "c", answer: "3"),
-//            Question(question: "d", answer: "4"),
-//            Question(question: "e", answer: "5"),
-//            Question(question: "f", answer: "6"),
-//            Question(question: "g", answer: "7"),
-//            Question(question: "h", answer: "8"),
-//            Question(question: "i", answer: "9"),
-//            Question(question: "j", answer: "10"),
-//            Question(question: "k", answer: "11"),
-//            Question(question: "l", answer: "12"),
+            Question(question: "d", answer: "4"),
+            Question(question: "e", answer: "5"),
+            Question(question: "f", answer: "6"),
+            Question(question: "g", answer: "7"),
+            Question(question: "h", answer: "8"),
+            Question(question: "i", answer: "9"),
+            Question(question: "j", answer: "10"),
+            Question(question: "k", answer: "11"),
+            Question(question: "l", answer: "12"),
         ])
     }
 }
