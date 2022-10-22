@@ -16,22 +16,24 @@ struct StudySetView: View {
         List {
             Section {
                 NavigationLink {
-                    QuizSelectTypeView(vocab: set.terms,
-                                       questions: $questions)
-                    NavigationLink {
-                        DragAndMatchView(options: questions)
-                    } label: {
-                        ZStack(alignment: .center) {
-                            Color.accentColor
-                                .frame(width: 240, height: 80)
-                                .cornerRadius(10)
-                            Text("Start Playing")
-                                .foregroundColor(Color(uiColor: UIColor.label.inverted))
-                        }
-                    }
-                    .navigationTitle("Select Quiz Type")
+                    quizSelectScreen(quizType: .dragAndMatch)
                 } label: {
                     Text("Drag and Match Quiz")
+                }
+                NavigationLink {
+                    quizSelectScreen(quizType: .memoryCards)
+                } label: {
+                    Text("Memory Cards Quiz")
+                }
+                NavigationLink {
+                    quizSelectScreen(quizType: .questionAnswer)
+                } label: {
+                    Text("Question and Answer Quiz")
+                }
+                NavigationLink {
+                    quizSelectScreen(quizType: .flashCards)
+                } label: {
+                    Text("Flash Cards")
                 }
             }
             Section {
@@ -56,6 +58,42 @@ struct StudySetView: View {
         }
         .navigationTitle(set.title)
     }
+
+    @ViewBuilder
+    func quizSelectScreen(quizType: QuizType) -> some View {
+        QuizSelectTypeView(vocab: set.terms,
+                           questions: $questions)
+        NavigationLink {
+            ZStack {
+                switch quizType {
+                case .dragAndMatch:
+                    DragAndMatchView(options: questions)
+                case .memoryCards:
+                    Text("memoryCards")
+                case .questionAnswer:
+                    Text("questionAnswer")
+                case .flashCards:
+                    Text("flashCards")
+                }
+            }
+        } label: {
+            ZStack(alignment: .center) {
+                Color.accentColor
+                    .frame(width: 240, height: 80)
+                    .cornerRadius(10)
+                Text("Start Playing")
+                    .foregroundColor(Color(uiColor: UIColor.label.inverted))
+            }
+            .navigationTitle("Select Quiz Type")
+        }
+    }
+}
+
+enum QuizType {
+    case dragAndMatch
+    case memoryCards
+    case questionAnswer
+    case flashCards
 }
 
 struct StudySetView_Previews: PreviewProvider {
