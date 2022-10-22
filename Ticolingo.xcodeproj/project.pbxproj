@@ -34,6 +34,7 @@
 		933CC90E28D6E3B000EC98A0 /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933CC90D28D6E3B000EC98A0 /* Definition.swift */; };
 		9370488229037B600073ED7B /* QuizSelectTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370488129037B600073ED7B /* QuizSelectTypeView.swift */; };
 		937048852903930D0073ED7B /* MemoryCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937048842903930D0073ED7B /* MemoryCardsView.swift */; };
+		9370488729039CFF0073ED7B /* SingleFlipCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370488629039CFF0073ED7B /* SingleFlipCardView.swift */; };
 		93813D1E28D6F11200A492D4 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93813D1D28D6F11200A492D4 /* PreferencesView.swift */; };
 		93B71B0828D6AADA00817750 /* StudyGroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B71B0728D6AADA00817750 /* StudyGroupsManager.swift */; };
 /* End PBXBuildFile section */
@@ -67,6 +68,7 @@
 		933CC90D28D6E3B000EC98A0 /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
 		9370488129037B600073ED7B /* QuizSelectTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSelectTypeView.swift; sourceTree = "<group>"; };
 		937048842903930D0073ED7B /* MemoryCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCardsView.swift; sourceTree = "<group>"; };
+		9370488629039CFF0073ED7B /* SingleFlipCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFlipCardView.swift; sourceTree = "<group>"; };
 		93813D1D28D6F11200A492D4 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		93B71B0728D6AADA00817750 /* StudyGroupsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -201,6 +203,7 @@
 			children = (
 				93159F7828D5A70E00C55C5A /* DragAndMatchView.swift */,
 				937048842903930D0073ED7B /* MemoryCardsView.swift */,
+				9370488629039CFF0073ED7B /* SingleFlipCardView.swift */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";
@@ -307,6 +310,7 @@
 				93159F7028D5A10000C55C5A /* Vocab.swift in Sources */,
 				93159F6B28D59A9000C55C5A /* PinyinOutputFormat.swift in Sources */,
 				93159F7228D5A12200C55C5A /* StudySet.swift in Sources */,
+				9370488729039CFF0073ED7B /* SingleFlipCardView.swift in Sources */,
 				93159F6A28D59A9000C55C5A /* HanziPinyin.swift in Sources */,
 				2E3DDF2E28D0A3A500D3EC00 /* TermDetailView.swift in Sources */,
 				2E3DDF2028D0A30D00D3EC00 /* ContentView.swift in Sources */,

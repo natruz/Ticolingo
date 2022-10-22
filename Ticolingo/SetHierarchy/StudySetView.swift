@@ -69,7 +69,7 @@ struct StudySetView: View {
                 case .dragAndMatch:
                     DragAndMatchView(options: questions)
                 case .memoryCards:
-                    Text("memoryCards")
+                    MemoryCardsView(options: questions)
                 case .questionAnswer:
                     Text("questionAnswer")
                 case .flashCards:

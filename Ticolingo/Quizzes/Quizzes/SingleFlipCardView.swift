@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct SingleFlipCardView: View {
-    @State var front: String
-    @State var back: String
+    // front and back need to be bindings because when the view is created,
+    // these values may not have been filled out yet and may simply be placeholders.
+    // As state variables update unreliably across views, these must be binding.
+    @Binding var front: String
+    @Binding var back: String
     @State var duration: CGFloat = 0.4
 
     @State var amount: CGFloat = 0
@@ -45,7 +48,7 @@ struct SingleFlipCardView: View {
 
 struct SingleFlipCardView_Previews: PreviewProvider {
     static var previews: some View {
-        SingleFlipCardView(front: "hi", back: "bye")
+        SingleFlipCardView(front: .constant("hi"), back: .constant("bye"))
             .frame(width: 150, height: 200)
     }
 }

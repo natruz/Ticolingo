@@ -10,7 +10,7 @@ import Foundation
 // in case there is the need for a question to be empty, use emptyIdentifier to denote both the question and answer.
 let emptyIdentifier = UUID().uuidString
 
-class Question: Hashable {
+class Question: Hashable, Identifiable {
 
     static func == (lhs: Question, rhs: Question) -> Bool {
         lhs.question == rhs.question && lhs.answer == rhs.answer
@@ -23,6 +23,7 @@ class Question: Hashable {
 
     var question: String = ""
     var answer: String = ""
+    var id = UUID()
 
     init(question: String, answer: String) {
         self.question = question
