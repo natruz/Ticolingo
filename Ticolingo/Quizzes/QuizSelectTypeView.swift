@@ -63,7 +63,7 @@ struct QuizSelectTypeView: View {
                     .onChange(of: answerFormat) { _ in
                         if questionFormat == answerFormat {
                             let questionIndex = qnaFormatOptions.firstIndex(of: answerFormat)!
-                            let newIndex = (questionIndex-1) % qnaFormatOptions.count
+                            let newIndex = (questionIndex+1) % qnaFormatOptions.count
                             questionFormat = qnaFormatOptions[newIndex]
                         }
                         changeQuestions()

@@ -23,12 +23,13 @@ struct StudySetView: View {
                     } label: {
                         ZStack(alignment: .center) {
                             Color.accentColor
-                                .frame(width: 120, height: 40)
+                                .frame(width: 240, height: 80)
                                 .cornerRadius(10)
                             Text("Start Playing")
                                 .foregroundColor(Color(uiColor: UIColor.label.inverted))
                         }
                     }
+                    .navigationTitle("Select Quiz Type")
                 } label: {
                     Text("Drag and Match Quiz")
                 }
