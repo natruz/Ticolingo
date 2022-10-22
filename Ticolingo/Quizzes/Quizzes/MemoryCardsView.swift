@@ -23,7 +23,7 @@ struct MemoryCardsView: View {
         let empty: [Double?] = options.map({ _ in nil })
         self.scores = Dictionary(uniqueKeysWithValues: zip(options, empty))
         self.pastQuestions = []
-        self.currentQAs = (0..<12).map({ _ in (emptyIdentifier, Question(question: emptyIdentifier, answer: emptyIdentifier)) })
+        self.currentQAs = (0..<12).map({ _ in (emptyIdentifier, .empty()) })
         newGridElements()
     }
 
@@ -34,8 +34,42 @@ struct MemoryCardsView: View {
                     HStack {
                         Spacer()
                         ForEach(0..<3) { colNo in
-                            SingleFlipCardView(front: .constant(""), back: $currentQAs[lineNo * 3 + colNo].0)
+                            if currentQAs[lineNo * 3 + colNo].1.question != emptyIdentifier {
+                                SingleFlipCardView(front: .constant(""),
+                                                   back: $currentQAs[lineNo * 3 + colNo].0,
+                                                   onFlip: { isOnBack in
+                                    print("Callback called")
+                                    guard isOnBack else { return .none }
+                                    print("Callback going")
+                                    if let selectedQuestion = selectedQuestion {
+                                        let id = currentQAs[lineNo * 3 + colNo].1.id
+                                        if id == selectedQuestion.id {
+                                            // MATCH
+                                            print("Match")
+                                            pastQuestions.append(currentQAs[lineNo * 3 + colNo].1)
+                                            currentQAs[lineNo * 3 + colNo] = (emptyIdentifier, .empty())
+                                            if let otherIndex = currentQAs.firstIndex(where: { $0.1.id == id }) {
+                                                currentQAs[otherIndex] = (emptyIdentifier, .empty())
+                                            }
+                                            return .none
+                                        } else {
+                                            // NO MATCH
+                                            print("No Match")
+                                            self.selectedQuestion = nil
+                                            return .unflipAll
+                                        }
+                                    } else {
+                                        // None selected
+                                        print("None selected")
+                                        self.selectedQuestion = currentQAs[lineNo * 3 + colNo].1
+                                        return .exclusive
+                                    }
+                                })
                                 .frame(width: geometry.size.width/3-10, height: geometry.size.height/4-20)
+                            } else {
+                                Spacer()
+                                    .frame(width: geometry.size.width/3-10, height: geometry.size.height/4-20)
+                            }
                         }
                         Spacer()
                     }
@@ -55,8 +89,8 @@ struct MemoryCardsView: View {
         while localCurrentQAs.count < 12 {
             // if somehow no random element was selected, this means options is empty. Add an empty placeholder.
             guard let randomQuestion = questions.randomElement() else {
-                localCurrentQAs.append((emptyIdentifier, Question(question: emptyIdentifier, answer: emptyIdentifier)))
-                localCurrentQAs.append((emptyIdentifier, Question(question: emptyIdentifier, answer: emptyIdentifier)))
+                localCurrentQAs.append((emptyIdentifier, .empty()))
+                localCurrentQAs.append((emptyIdentifier, .empty()))
                 continue
             }
 
@@ -80,15 +114,15 @@ struct MemoryCardsView_Previews: PreviewProvider {
             Question(question: "a", answer: "1"),
             Question(question: "b", answer: "2"),
             Question(question: "c", answer: "3"),
-            Question(question: "d", answer: "4"),
-            Question(question: "e", answer: "5"),
-            Question(question: "f", answer: "6"),
-            Question(question: "g", answer: "7"),
-            Question(question: "h", answer: "8"),
-            Question(question: "i", answer: "9"),
-            Question(question: "j", answer: "10"),
-            Question(question: "k", answer: "11"),
-            Question(question: "l", answer: "12"),
+//            Question(question: "d", answer: "4"),
+//            Question(question: "e", answer: "5"),
+//            Question(question: "f", answer: "6"),
+//            Question(question: "g", answer: "7"),
+//            Question(question: "h", answer: "8"),
+//            Question(question: "i", answer: "9"),
+//            Question(question: "j", answer: "10"),
+//            Question(question: "k", answer: "11"),
+//            Question(question: "l", answer: "12"),
         ])
     }
 }

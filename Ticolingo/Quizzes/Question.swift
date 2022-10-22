@@ -35,6 +35,8 @@ class Question: Hashable, Identifiable {
             Question(question: $0.key, answer: $0.value)
         }
     }
+
+    static func empty() -> Question { Question(question: emptyIdentifier, answer: emptyIdentifier) }
 }
 
 extension Array<Question> {
