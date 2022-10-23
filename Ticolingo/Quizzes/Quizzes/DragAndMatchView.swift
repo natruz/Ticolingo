@@ -306,7 +306,20 @@ struct DragAndMatchView: View {
 struct DragAndMatchView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            DragAndMatchView(options: [Question(question: "a", answer: "1")])
+            DragAndMatchView(options: [
+                Question(question: "a", answer: "1"),
+                Question(question: "b", answer: "2"),
+                Question(question: "c", answer: "3"),
+                Question(question: "d", answer: "4"),
+                Question(question: "e", answer: "5"),
+                Question(question: "f", answer: "6"),
+                Question(question: "g", answer: "7"),
+                Question(question: "h", answer: "8"),
+                Question(question: "i", answer: "9"),
+                Question(question: "j", answer: "10"),
+                Question(question: "k", answer: "11"),
+                Question(question: "l", answer: "12")
+            ])
         }
     }
 }

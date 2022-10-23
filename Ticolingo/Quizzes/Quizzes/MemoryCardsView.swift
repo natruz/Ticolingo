@@ -10,7 +10,7 @@ import SwiftUI
 struct MemoryCardsView: View {
 
     let options: [Question]
-    @State var scores: [Question: Double?]
+    @State var scores: [Question: Double]
     @State var currentQAs: [(String, Question)] // 12 elements ONLY
     @State var pastQuestions: [Question]
     @State var selectedQuestion: Question?
@@ -20,7 +20,7 @@ struct MemoryCardsView: View {
 
     init(options: [Question]) {
         self.options = options
-        let empty: [Double?] = options.map({ _ in nil })
+        let empty: [Double] = options.map({ _ in 0 })
         self.scores = Dictionary(uniqueKeysWithValues: zip(options, empty))
         self.pastQuestions = []
         self.currentQAs = (0..<12).map({ _ in (emptyIdentifier, .empty()) })
@@ -28,36 +28,58 @@ struct MemoryCardsView: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack(alignment: .center) {
-                ForEach(0..<4) { lineNo in
-                    HStack {
-                        Spacer()
-                        ForEach(0..<3) { colNo in
-                            if currentQAs[lineNo * 3 + colNo].1.question != emptyIdentifier {
-                                SingleFlipCardView(front: .constant(""),
-                                                   back: $currentQAs[lineNo * 3 + colNo].0,
-                                                   onFlip: { onCardFlip(isOnBack: $0, lineNo: lineNo, colNo: colNo) })
-                                .frame(width: geometry.size.width/3-10, height: geometry.size.height/4-20)
-                            } else {
-                                Spacer()
+        if pastQuestions.count < options.count {
+            GeometryReader { geometry in
+                VStack(alignment: .center) {
+                    ForEach(0..<4) { lineNo in
+                        HStack {
+                            Spacer()
+                            ForEach(0..<3) { colNo in
+                                if currentQAs[lineNo * 3 + colNo].1.question != emptyIdentifier {
+                                    SingleFlipCardView(front: .constant(""),
+                                                       back: $currentQAs[lineNo * 3 + colNo].0,
+                                                       onFlip: { onCardFlip(isOnBack: $0, lineNo: lineNo, colNo: colNo) })
                                     .frame(width: geometry.size.width/3-10, height: geometry.size.height/4-20)
+                                } else {
+                                    Spacer()
+                                        .frame(width: geometry.size.width/3-10, height: geometry.size.height/4-20)
+                                }
                             }
+                            Spacer()
                         }
-                        Spacer()
                     }
                 }
             }
-        }
-        .onAppear {
-            newGridElements()
+            .onAppear {
+                newGridElements()
+            }
+        } else {
+            HStack {
+                Spacer()
+                VStack {
+                    Spacer()
+                    Button("Restart") {
+                        withAnimation {
+                            restart()
+                        }
+                    }
+                    .padding(.bottom, 20)
+                    NavigationLink("Finish") {
+                        QuizResultsView(scores: scores)
+                    }
+                    Spacer()
+                }
+                Spacer()
+            }
         }
     }
 
     func onCardFlip(isOnBack: Bool, lineNo: Int, colNo: Int) -> SingleFlipCardView.Behaviour {
-        print("Callback called")
-        guard isOnBack else { return .none }
-        print("Callback going")
+        guard isOnBack else {
+            // deselect everything if flipped to front
+            selectedQuestion = nil
+            return .none
+        }
         if let selectedQuestion = selectedQuestion {
             let id = currentQAs[lineNo * 3 + colNo].1.id
             if id == selectedQuestion.id {
@@ -69,17 +91,26 @@ struct MemoryCardsView: View {
                         currentQAs[otherIndex] = (emptyIdentifier, .empty())
                     }
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    if currentQAs.filter({ $0.1.question != emptyIdentifier }).count == 0 {
+                // Turn the scores into usable doubles instead of Integers
+                // Before they're matched, they're in the form of integers representing how many
+                // failed tries have occured. This equation takes the reciprocal of it as the
+                // final percentage.
+                let timesAttempted = (scores[selectedQuestion] ?? 0) + 1
+                scores[selectedQuestion] = 1/timesAttempted
+
+                // Load new grid elements if all have been used up
+                if currentQAs.filter({ $0.1.question != emptyIdentifier }).count == 0 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                         withAnimation {
                             newGridElements()
                         }
                     }
-                    self.selectedQuestion = nil
                 }
+                self.selectedQuestion = nil
                 return .none
             } else {
                 // NO MATCH
+                scores[selectedQuestion] = (scores[selectedQuestion] ?? 0) + 1
                 self.selectedQuestion = nil
                 return .unflipAll
             }
@@ -116,23 +147,33 @@ struct MemoryCardsView: View {
         localCurrentQAs.shuffle()
         self.currentQAs = localCurrentQAs
     }
+
+    func restart() {
+        let empty: [Double] = options.map({ _ in 0 })
+        self.scores = Dictionary(uniqueKeysWithValues: zip(options, empty))
+        self.pastQuestions = []
+        self.currentQAs = (0..<12).map({ _ in (emptyIdentifier, .empty()) })
+        newGridElements()
+    }
 }
 
 struct MemoryCardsView_Previews: PreviewProvider {
     static var previews: some View {
-        MemoryCardsView(options: [
-            Question(question: "a", answer: "1"),
-            Question(question: "b", answer: "2"),
-            Question(question: "c", answer: "3"),
-            Question(question: "d", answer: "4"),
-            Question(question: "e", answer: "5"),
-            Question(question: "f", answer: "6"),
-            Question(question: "g", answer: "7"),
-            Question(question: "h", answer: "8"),
-            Question(question: "i", answer: "9"),
-            Question(question: "j", answer: "10"),
-            Question(question: "k", answer: "11"),
-            Question(question: "l", answer: "12"),
-        ])
+        NavigationView {
+            MemoryCardsView(options: [
+                Question(question: "a", answer: "1"),
+                Question(question: "b", answer: "2")
+                //            Question(question: "c", answer: "3"),
+                //            Question(question: "d", answer: "4"),
+                //            Question(question: "e", answer: "5"),
+                //            Question(question: "f", answer: "6"),
+                //            Question(question: "g", answer: "7"),
+                //            Question(question: "h", answer: "8"),
+                //            Question(question: "i", answer: "9"),
+                //            Question(question: "j", answer: "10"),
+                //            Question(question: "k", answer: "11"),
+                //            Question(question: "l", answer: "12"),
+            ])
+        }
     }
 }
