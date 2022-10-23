@@ -14,6 +14,7 @@ struct MemoryCardsView: View {
     @State var currentQAs: [(String, Question)] // 12 elements ONLY
     @State var pastQuestions: [Question]
     @State var selectedQuestion: Question?
+    @State var wrongAnswers: Int = 0
 
     let cardSize: CGFloat = 90.0
     let topBarSize: CGFloat = 50.0
@@ -31,6 +32,9 @@ struct MemoryCardsView: View {
         if pastQuestions.count < options.count {
             GeometryReader { geometry in
                 VStack(alignment: .center) {
+                    HStack {
+                        stats
+                    }
                     ForEach(0..<4) { lineNo in
                         HStack {
                             Spacer()
@@ -56,22 +60,73 @@ struct MemoryCardsView: View {
         } else {
             HStack {
                 Spacer()
-                VStack {
-                    Spacer()
-                    Button("Restart") {
-                        withAnimation {
-                            restart()
+                ZStack {
+                    VStack {
+                        stats
+                    }
+                    .frame(width: 200)
+                    VStack {
+                        Button("Restart") {
+                            withAnimation {
+                                restart()
+                            }
+                        }
+                        .padding(.bottom, 20)
+                        NavigationLink("Finish") {
+                            QuizResultsView(scores: scores)
                         }
                     }
-                    .padding(.bottom, 20)
-                    NavigationLink("Finish") {
-                        QuizResultsView(scores: scores)
-                    }
-                    Spacer()
+                    .offset(y: 200)
                 }
                 Spacer()
             }
         }
+    }
+
+    @ViewBuilder
+    var stats: some View {
+        Spacer()
+            .frame(width: 10)
+        ZStack {
+            Color.cyan
+                .frame(height: 50)
+                .cornerRadius(10)
+                .opacity(0.5)
+            HStack {
+                Text("Left")
+                    .padding(.bottom, 0)
+                Text("\(options.count-pastQuestions.count)")
+                    .font(.system(size: 30))
+            }
+        }
+
+        ZStack {
+            Color.green
+                .frame(height: 50)
+                .cornerRadius(10)
+                .opacity(0.5)
+            HStack {
+                Text("Matched")
+                    .padding(.bottom, 0)
+                Text("\(pastQuestions.count)")
+                    .font(.system(size: 30))
+            }
+        }
+
+        ZStack {
+            Color.indigo
+                .frame(height: 50)
+                .cornerRadius(10)
+                .opacity(0.5)
+            HStack {
+                Text("Wrong")
+                    .padding(.bottom, 0)
+                Text("\(wrongAnswers)")
+                    .font(.system(size: 30))
+            }
+        }
+        Spacer()
+            .frame(width: 10)
     }
 
     func onCardFlip(isOnBack: Bool, lineNo: Int, colNo: Int) -> SingleFlipCardView.Behaviour {
@@ -110,6 +165,7 @@ struct MemoryCardsView: View {
                 return .none
             } else {
                 // NO MATCH
+                wrongAnswers += 1
                 scores[selectedQuestion] = (scores[selectedQuestion] ?? 0) + 1
                 self.selectedQuestion = nil
                 return .unflipAll
@@ -153,6 +209,7 @@ struct MemoryCardsView: View {
         self.scores = Dictionary(uniqueKeysWithValues: zip(options, empty))
         self.pastQuestions = []
         self.currentQAs = (0..<12).map({ _ in (emptyIdentifier, .empty()) })
+        self.wrongAnswers = 0
         newGridElements()
     }
 }
