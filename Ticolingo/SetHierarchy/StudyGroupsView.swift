@@ -12,6 +12,9 @@ struct StudyGroupsView: View {
     @ObservedObject
     var studyGroups: StudyGroups = .shared
 
+    @State
+    var showNewGroups: Bool = false
+
     init() {
         UISearchBar.appearance().tintColor = UIColor.init(primaryTextColour)
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.init(primaryTextColour)]
@@ -34,15 +37,29 @@ struct StudyGroupsView: View {
                             .moveDisabled(!studyGroup.editable)
                         }
                         .onMove(perform: { index, moveTo in
+                            studyGroup.sets.move(fromOffsets: index, toOffset: moveTo)
                             print("Tried to move \(index) to \(moveTo)")
                         })
                         .onDelete(perform: { index in
+                            studyGroup.sets.remove(atOffsets: index)
                             print("Tried to delete \(index)")
                         })
                     }
                 }
             }
-            .navigationTitle("Study Sets")
+        }
+        .navigationTitle("Study Sets")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showNewGroups.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+        .sheet(isPresented: $showNewGroups) {
+            NewStudySetGroupView()
         }
     }
 }
