@@ -11,6 +11,8 @@ struct StudySetView: View {
     
     @State var set: StudySet
     @State var questions: [Question] = []
+
+    @State var editing: Bool = false
     
     var body: some View {
         List {
@@ -61,8 +63,22 @@ struct StudySetView: View {
 
     @ViewBuilder
     func quizSelectScreen(quizType: QuizType) -> some View {
-        QuizSelectTypeView(vocab: set.terms,
-                           questions: $questions)
+        List {
+            Section {
+                QuizSelectTypeView(vocab: set.terms,
+                                   questions: $questions)
+            }
+
+            Section("Questions") {
+                ForEach(questions) { question in
+                    VStack(alignment: .leading) {
+                        Text(question.question)
+                        Text(question.answer)
+                    }
+                }
+            }
+        }
+
         NavigationLink {
             ZStack {
                 switch quizType {
