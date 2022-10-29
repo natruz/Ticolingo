@@ -14,6 +14,9 @@ struct SingleFlipCardView: View {
     @Binding var front: String
     @Binding var back: String
 
+    @State var frontColor: Color = Color.green
+    @State var backColor: Color = Color.purple
+
     // Taking in a boolean for if it is on the back side (true) or front side (false)
     // returns a behaviour that it should do
     @State var onFlip: (Bool) -> Behaviour = { _ in .none }
@@ -30,16 +33,21 @@ struct SingleFlipCardView: View {
     var body: some View {
         ZStack {
             if flipToBack ? amount <= 90 : amount < 90 {
-                Color.green
+                frontColor
                     .cornerRadius(15)
                 Text(front)
+                    .padding(15)
             } else {
-                Color.purple
+                backColor
                     .cornerRadius(15)
                 Text(back)
                     .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
+                    .padding(15)
             }
         }
+        .font(.largeTitle)
+        .fixedSize(horizontal: false, vertical: false)
+        .minimumScaleFactor(0.4)
         .onReceive(flipManager.$allOthersUnflip) { _ in
             if amount != 0 && flipManager.sender != self.id {
                 flipToBack = false
@@ -86,6 +94,8 @@ struct SingleFlipCardView: View {
                         flipManager.allOthersUnflip = false
                     }
                 }
+            case .reject:
+                return
             default: break
             }
             withAnimation(.easeIn(duration: duration/2)) {
@@ -101,6 +111,7 @@ struct SingleFlipCardView: View {
     }
 
     enum Behaviour {
+        /// No special behaviour
         case none
         /// When this card is flipped, all other cards will unflip.
         case exclusive
@@ -108,6 +119,8 @@ struct SingleFlipCardView: View {
         case unflipAll
         /// When this card is flipped, it unflips itself after completion.
         case unflip
+        /// Does not allow a flip to occur
+        case reject
     }
 }
 
@@ -116,7 +129,7 @@ struct SingleFlipCardView_Previews: PreviewProvider {
         HStack {
             SingleFlipCardView(front: .constant("hi"), back: .constant("bye"))
                 .frame(width: 150, height: 200)
-            SingleFlipCardView(front: .constant("abc"), back: .constant("def"))
+            SingleFlipCardView(front: .constant("really long title please work this is super duper long yay"), back: .constant("def"))
                 .frame(width: 150, height: 200)
         }
     }

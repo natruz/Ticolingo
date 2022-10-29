@@ -100,12 +100,10 @@ struct DragAndMatchView: View {
                         .frame(width: proxy.size.width/5*3.5)
                     VStack {
                         ForEach(Array(rightOptions.enumerated()), id: \.offset) { index, option in
-                            ZStack {
-                                Color.pink
-                                    .cornerRadius(10)
-                                Text(option)
-                                    .font(.system(size: cardSize))
-                            }
+                            SingleFlipCardView(front: .constant(option),
+                                               back: .constant(""),
+                                               frontColor: .pink,
+                                               onFlip: { _ in .reject })
                             .opacity(option == emptyIdentifier ? 0 : (
                                 pairedIndexes.contains(Array(options.answers).firstIndex(of: option)!) ? 0 : 1
                             ))
@@ -117,12 +115,10 @@ struct DragAndMatchView: View {
                 HStack {
                     VStack {
                         ForEach(Array(leftOptions.enumerated()), id: \.offset) { index, option in
-                            ZStack {
-                                Color.purple
-                                    .cornerRadius(10)
-                                Text(option)
-                                    .font(.system(size: cardSize))
-                            }
+                            SingleFlipCardView(front: .constant(option),
+                                               back: .constant(""),
+                                               frontColor: .purple,
+                                               onFlip: { _ in .reject })
                             .opacity(option == emptyIdentifier ? 0 : (
                                 pairedIndexes.contains(Array(options.questions).firstIndex(of: option)!) ? 0 : 1
                             ))
