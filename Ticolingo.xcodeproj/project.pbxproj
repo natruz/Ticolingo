@@ -39,6 +39,7 @@
 		93B71B0828D6AADA00817750 /* StudyGroupsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B71B0728D6AADA00817750 /* StudyGroupsManager.swift */; };
 		93BABE75290CC1310091B65A /* NewStudySetGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE74290CC1310091B65A /* NewStudySetGroupView.swift */; };
 		93BABE77290CC13C0091B65A /* NewStudySetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE76290CC13C0091B65A /* NewStudySetView.swift */; };
+		93BABE7A290CD2860091B65A /* NewVocabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE79290CD2850091B65A /* NewVocabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,7 @@
 		93B71B0728D6AADA00817750 /* StudyGroupsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupsManager.swift; sourceTree = "<group>"; };
 		93BABE74290CC1310091B65A /* NewStudySetGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStudySetGroupView.swift; sourceTree = "<group>"; };
 		93BABE76290CC13C0091B65A /* NewStudySetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStudySetView.swift; sourceTree = "<group>"; };
+		93BABE79290CD2850091B65A /* NewVocabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVocabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,8 +161,7 @@
 				93159F8A28D5ADFE00C55C5A /* StudyGroupsView.swift */,
 				2E3DDF2B28D0A38100D3EC00 /* StudySetView.swift */,
 				2E3DDF2D28D0A3A500D3EC00 /* TermDetailView.swift */,
-				93BABE74290CC1310091B65A /* NewStudySetGroupView.swift */,
-				93BABE76290CC13C0091B65A /* NewStudySetView.swift */,
+				93BABE78290CD2730091B65A /* Adding */,
 			);
 			path = SetHierarchy;
 			sourceTree = "<group>";
@@ -221,6 +222,16 @@
 				93813D1D28D6F11200A492D4 /* PreferencesView.swift */,
 			);
 			path = Preferences;
+			sourceTree = "<group>";
+		};
+		93BABE78290CD2730091B65A /* Adding */ = {
+			isa = PBXGroup;
+			children = (
+				93BABE74290CC1310091B65A /* NewStudySetGroupView.swift */,
+				93BABE76290CC13C0091B65A /* NewStudySetView.swift */,
+				93BABE79290CD2850091B65A /* NewVocabView.swift */,
+			);
+			path = Adding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,6 +322,7 @@
 				93813D1E28D6F11200A492D4 /* PreferencesView.swift in Sources */,
 				937048852903930D0073ED7B /* MemoryCardsView.swift in Sources */,
 				93159F7B28D5A70E00C55C5A /* QuizResultsView.swift in Sources */,
+				93BABE7A290CD2860091B65A /* NewVocabView.swift in Sources */,
 				93159F8B28D5ADFE00C55C5A /* StudyGroupsView.swift in Sources */,
 				93159F6828D59A9000C55C5A /* PinyinFormatter.swift in Sources */,
 				93159F7028D5A10000C55C5A /* Vocab.swift in Sources */,

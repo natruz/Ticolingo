@@ -16,8 +16,7 @@ struct NewStudySetView: View {
     @State var studySetTitle: String = ""
     @State var terms: [Vocab] = []
 
-    @State var showExamples: Bool = false
-    @State var currentTerm: Vocab?
+    @State var showDefinitions: Bool = false
 
     var body: some View {
         List {
@@ -27,12 +26,12 @@ struct NewStudySetView: View {
                 }
             }
 
-            Section {
+            Section("Vocabulary") {
                 ForEach($terms) { $term in
-                    VStack {
-                        TextField(text: $term.term) { Text("Term") }
-                        TextField(text: $term.definition) { Text("Definition") }
-                        // TODO: Example sentence
+                    VStack(alignment: .leading) {
+                        Text(term.term)
+                        Text(term.definition)
+                        Text("\(term.exampleSentences.count) Examples")
                         Picker(selection: $term.difficulty) {
                             ForEach(0..<7) { index in
                                 Text("\(index+1)")
@@ -42,6 +41,12 @@ struct NewStudySetView: View {
                         }
                     }
                 }
+                .onMove(perform: { index, moveTo in
+                    terms.move(fromOffsets: index, toOffset: moveTo)
+                })
+                .onDelete(perform: { index in
+                    terms.remove(atOffsets: index)
+                })
 
                 HStack {
                     Spacer()
@@ -52,14 +57,14 @@ struct NewStudySetView: View {
                             last.exampleSentences.isEmpty {
                             return
                         }
-                        terms.append(Vocab(term: "",
-                                           definition: "",
-                                           exampleSentences: [],
-                                           difficulty: 0))
+                        showDefinitions.toggle()
                     } label: {
                         Image(systemName: "plus")
                     }
                     Spacer()
+                }
+                .sheet(isPresented: $showDefinitions) {
+                    NewVocabView(terms: $terms)
                 }
             }
         }
