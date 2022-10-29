@@ -35,6 +35,11 @@ struct StudyGroupsView: View {
                             .listRowBackground(secondaryFillerColour)
                             .deleteDisabled(!studyGroup.editable)
                             .moveDisabled(!studyGroup.editable)
+                            .contextMenu {
+                                Button("Delete", role: .destructive) {
+                                    studyGroups.studyGroups.removeAll(where: { $0.id == studyGroup.id })
+                                }
+                            }
                         }
                         .onMove(perform: { index, moveTo in
                             studyGroup.sets.move(fromOffsets: index, toOffset: moveTo)

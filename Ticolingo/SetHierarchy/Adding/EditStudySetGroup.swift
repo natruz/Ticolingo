@@ -15,6 +15,10 @@ struct EditStudySetGroup: View {
     @State
     var showNewGroups: Bool = false
 
+    @State var showExport: Bool = false
+    @State var exportedStudyGroup: StudySetGroup? = StudyGroups.shared.studyGroups.first
+    @State var prettyExport: Bool = false
+
     var body: some View {
         List {
             Section {
@@ -27,6 +31,10 @@ struct EditStudySetGroup: View {
                         Text("\(studyGroup.sets.count) Sets")
                     }
                     .contextMenu {
+                        Button("Export") {
+                            exportedStudyGroup = studyGroup
+                            showExport = true
+                        }
                         Button("Duplicate") {
                             guard let index = studyGroups.studyGroups.firstIndex(where: { $0.id == studyGroup.id })
                             else { return }
@@ -67,6 +75,38 @@ struct EditStudySetGroup: View {
                 }
                 .onMove { index, moveTo in
                     studyGroups.studyGroups.move(fromOffsets: index, toOffset: moveTo)
+                }
+            }
+            .sheet(isPresented: $showExport) {
+                if let exportedStudyGroup {
+                    if let export = exportedStudyGroup.export(pretty: prettyExport) {
+                        List {
+                            Section {
+                                VStack(alignment: .leading) {
+                                    Toggle("Pretty Formatting", isOn: $prettyExport)
+                                    Text("Note: May take a while")
+                                        .font(.system(.footnote))
+                                }
+                            }
+
+                            Section("Preview") {
+                                ScrollView(.vertical, showsIndicators: true) {
+                                    Text(export)
+                                }
+                                .frame(height: 160)
+                            }
+
+                            Section("Export Options") {
+                                Button("Save to Clipboard") {
+                                    UIPasteboard.general.string = export
+                                }
+                            }
+                        }
+                    } else {
+                        Text("Failed to export")
+                    }
+                } else {
+                    Text("No selected study group")
                 }
             }
 
