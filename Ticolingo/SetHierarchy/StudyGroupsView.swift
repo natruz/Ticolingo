@@ -13,7 +13,7 @@ struct StudyGroupsView: View {
     var studyGroups: StudyGroups = .shared
 
     @State
-    var showNewGroups: Bool = false
+    var showEditGroups: Bool = false
 
     init() {
         UISearchBar.appearance().tintColor = UIColor.init(primaryTextColour)
@@ -55,14 +55,14 @@ struct StudyGroupsView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    showNewGroups.toggle()
+                    showEditGroups.toggle()
                 } label: {
-                    Image(systemName: "plus")
+                    Image(systemName: "pencil.circle")
                 }
             }
         }
-        .sheet(isPresented: $showNewGroups) {
-            NewStudySetGroupView()
+        .sheet(isPresented: $showEditGroups) {
+            EditStudySetGroup()
         }
     }
 }

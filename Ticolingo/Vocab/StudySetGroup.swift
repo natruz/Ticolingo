@@ -25,5 +25,9 @@ class StudySetGroup: ObservableObject, Codable, Identifiable {
         self.name = name
         self.sets = sets
         self.editable = editable
+
+        for set in sets {
+            set.editable = editable
+        }
     }
 }
