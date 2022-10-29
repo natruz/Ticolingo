@@ -30,4 +30,15 @@ class StudySetGroup: ObservableObject, Codable, Identifiable {
             set.editable = editable
         }
     }
+
+    func export(pretty: Bool = false) -> String? {
+        let encoder = JSONEncoder()
+        if pretty {
+            encoder.outputFormatting = .prettyPrinted
+        }
+        if let encodedStudyGroup = try? encoder.encode(self) {
+            return String(data: encodedStudyGroup, encoding: .utf8)
+        }
+        return nil
+    }
 }
