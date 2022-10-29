@@ -12,8 +12,8 @@ struct EditStudySetGroup: View {
     @ObservedObject
     var studyGroups: StudyGroups = .shared
 
-    @State
-    var showNewGroups: Bool = false
+    @State var showNewGroups: Bool = false
+    @State var showImport: Bool = false
 
     @State var showExport: Bool = false
     @State var exportedStudyGroup: StudySetGroup? = StudyGroups.shared.studyGroups.first
@@ -111,18 +111,18 @@ struct EditStudySetGroup: View {
             }
 
             Section {
-                HStack {
-                    Spacer()
-                    Button {
-                        showNewGroups.toggle()
-                    } label: {
-                        Image(systemName: "plus")
-                    }
-                    Spacer()
+                Button("Create New Study Group") {
+                    showNewGroups.toggle()
+                }
+                Button("Import Study Group") {
+                    showImport.toggle()
                 }
             }
             .sheet(isPresented: $showNewGroups) {
                 NewStudySetGroupView()
+            }
+            .sheet(isPresented: $showImport) {
+                ImportStudySetGroupView()
             }
         }
     }

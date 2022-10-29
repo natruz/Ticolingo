@@ -14,6 +14,7 @@
 		2E3DDF2C28D0A38100D3EC00 /* StudySetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF2B28D0A38100D3EC00 /* StudySetView.swift */; };
 		2E3DDF2E28D0A3A500D3EC00 /* TermDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF2D28D0A3A500D3EC00 /* TermDetailView.swift */; };
 		2E3DDF3228D0A3E100D3EC00 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3DDF3128D0A3E100D3EC00 /* Colours.swift */; };
+		9311F8AE290D4B8600C646C6 /* ImportStudySetGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9311F8AD290D4B8600C646C6 /* ImportStudySetGroupView.swift */; };
 		93159F6728D59A9000C55C5A /* HanziPinyinResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6228D59A9000C55C5A /* HanziPinyinResource.swift */; };
 		93159F6828D59A9000C55C5A /* PinyinFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6328D59A9000C55C5A /* PinyinFormatter.swift */; };
 		93159F6928D59A9000C55C5A /* String+HanziPinyin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F6428D59A9000C55C5A /* String+HanziPinyin.swift */; };
@@ -52,6 +53,7 @@
 		2E3DDF2B28D0A38100D3EC00 /* StudySetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySetView.swift; sourceTree = "<group>"; };
 		2E3DDF2D28D0A3A500D3EC00 /* TermDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermDetailView.swift; sourceTree = "<group>"; };
 		2E3DDF3128D0A3E100D3EC00 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		9311F8AD290D4B8600C646C6 /* ImportStudySetGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportStudySetGroupView.swift; sourceTree = "<group>"; };
 		93159F6228D59A9000C55C5A /* HanziPinyinResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HanziPinyinResource.swift; sourceTree = "<group>"; };
 		93159F6328D59A9000C55C5A /* PinyinFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinyinFormatter.swift; sourceTree = "<group>"; };
 		93159F6428D59A9000C55C5A /* String+HanziPinyin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+HanziPinyin.swift"; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				93BABE76290CC13C0091B65A /* NewStudySetView.swift */,
 				93BABE79290CD2850091B65A /* NewVocabView.swift */,
 				934E94D3290D002F00FF272F /* EditStudySetGroup.swift */,
+				9311F8AD290D4B8600C646C6 /* ImportStudySetGroupView.swift */,
 			);
 			path = Adding;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9311F8AE290D4B8600C646C6 /* ImportStudySetGroupView.swift in Sources */,
 				93159F7A28D5A70E00C55C5A /* DragAndMatchView.swift in Sources */,
 				93159F8328D5A88E00C55C5A /* Textbook.swift in Sources */,
 				93159F7428D5A12B00C55C5A /* StudySetGroup.swift in Sources */,

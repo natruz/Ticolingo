@@ -73,4 +73,9 @@ extension StudyGroups {
         }
         return false
     }
+
+    func testImport(data: Data) -> Bool {
+        let decoder = JSONDecoder()
+        return (try? decoder.decode(StudySetGroup.self, from: data)) != nil
+    }
 }
