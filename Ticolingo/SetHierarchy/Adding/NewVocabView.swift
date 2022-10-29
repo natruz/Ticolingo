@@ -16,7 +16,7 @@ struct NewVocabView: View {
     @State var difficulty: Int = 0
     @State var examples: [String] = []
 
-    @State var newDefinitionPrefix: String = ""
+    @State var newDefinitionPrefix: String = "Verb"
 
     @Environment(\.presentationMode) var presentationMode
 
