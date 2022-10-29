@@ -42,6 +42,9 @@ struct StudyGroupsView: View {
                         })
                         .onDelete(perform: { index in
                             studyGroup.sets.remove(atOffsets: index)
+                            if studyGroup.sets.isEmpty {
+                                studyGroups.studyGroups.removeAll(where: { $0.id == studyGroup.id })
+                            }
                             print("Tried to delete \(index)")
                         })
                     }
