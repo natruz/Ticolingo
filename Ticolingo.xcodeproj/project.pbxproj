@@ -42,6 +42,7 @@
 		93BABE75290CC1310091B65A /* NewStudySetGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE74290CC1310091B65A /* NewStudySetGroupView.swift */; };
 		93BABE77290CC13C0091B65A /* NewStudySetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE76290CC13C0091B65A /* NewStudySetView.swift */; };
 		93BABE7A290CD2860091B65A /* NewVocabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE79290CD2850091B65A /* NewVocabView.swift */; };
+		D98550F1290EB2E70013614B /* FlashcardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98550F0290EB2E70013614B /* FlashcardsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,7 @@
 		93BABE74290CC1310091B65A /* NewStudySetGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStudySetGroupView.swift; sourceTree = "<group>"; };
 		93BABE76290CC13C0091B65A /* NewStudySetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStudySetView.swift; sourceTree = "<group>"; };
 		93BABE79290CD2850091B65A /* NewVocabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVocabView.swift; sourceTree = "<group>"; };
+		D98550F0290EB2E70013614B /* FlashcardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +217,7 @@
 				93159F7828D5A70E00C55C5A /* DragAndMatchView.swift */,
 				937048842903930D0073ED7B /* MemoryCardsView.swift */,
 				9370488629039CFF0073ED7B /* SingleFlipCardView.swift */,
+				D98550F0290EB2E70013614B /* FlashcardsView.swift */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D98550F1290EB2E70013614B /* FlashcardsView.swift in Sources */,
 				9311F8AE290D4B8600C646C6 /* ImportStudySetGroupView.swift in Sources */,
 				93159F7A28D5A70E00C55C5A /* DragAndMatchView.swift in Sources */,
 				93159F8328D5A88E00C55C5A /* Textbook.swift in Sources */,
