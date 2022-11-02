@@ -13,6 +13,8 @@ struct QuizView: View {
     @State var correctQuestions = [Question]()
     @State var wrongQuestions = [Question]()
 
+    @State var isCorrect: Bool?
+
     init(options: [Question]) {
         let allAnswers = options.map { $0.answer }
 
@@ -35,28 +37,67 @@ struct QuizView: View {
     var body: some View {
         ZStack {
             GeometryReader { geometry in VStack {
-                HStack {
-                    stats
-                }
+                if questionIndex < options.count {
+                    HStack {
+                        stats
+                    }
 
-                // question
-                // this view reuses the single flip card view for its auto
-                // resizing text. It does not flip.
-                SingleFlipCardView(front: .constant(options[questionIndex].0.questionType
-                                            .questionUsingFormatFor(text: options[questionIndex].0.question)),
-                                   back: .constant(""),
-                                   frontColor: .clear,
-                                   onFlip: { _ in .reject })
+                    // question
+                    // this view reuses the single flip card view for its auto
+                    // resizing text. It does not flip.
+                    SingleFlipCardView(front: .constant(options[questionIndex].0.questionType
+                        .questionUsingFormatFor(text: options[questionIndex].0.question)),
+                                       back: .constant(""),
+                                       frontColor: .clear,
+                                       onFlip: { _ in .reject })
                     .frame(height: geometry.size.height/2)
 
-                // answer options
-                VStack {
-                    ForEach(0..<options[questionIndex].1.count, id: \.self) { index in
-                        buttonForOption(optionNo: index)
+                    // answer options
+                    VStack {
+                        ForEach(0..<options[questionIndex].1.count, id: \.self) { index in
+                            buttonForOption(optionNo: index)
+                                .padding(4)
+                        }
+                    } // no need to set the frame here since it'll automatically fill the
+                    // rest of the view
+                } else {
+                    VStack {
+                        stats
+                            .frame(width: geometry.size.width/2)
                     }
-                } // no need to set the frame here since it'll automatically fill the
-                  // rest of the view
+                    .frame(maxWidth: .infinity)
+                }
             }}
+            if let isCorrect = isCorrect {
+                if isCorrect {
+                    ZStack {
+                        Color.green
+                    }
+                } else {
+                    ZStack {
+                        Color.red
+                    }
+                }
+
+                VStack {
+                    Text(isCorrect ? "Correct!" : "Incorrect")
+                        .font(.largeTitle)
+                    Text("Correct option:")
+                        .font(.title2)
+                        .padding(20)
+                    SingleFlipCardView(front: .constant(options[questionIndex].0.answer),
+                                       back: .constant(""),
+                                       frontColor: .clear,
+                                       onFlip: { _ in .reject })
+                    .frame(height: 80)
+                    Button("Next Question") {
+                        self.isCorrect = nil
+                        self.questionIndex += 1
+                    }
+                    .padding(20)
+                    .buttonStyle(.borderedProminent)
+                }
+            }
         }
     }
 
@@ -111,10 +152,10 @@ struct QuizView: View {
         Button {
             if options[questionIndex].0.answer == options[questionIndex].1[optionNo] { // correct
                 correctQuestions.append(options[questionIndex].0)
-                questionIndex += 1
+                isCorrect = true
             } else { // wrong
                 wrongQuestions.append(options[questionIndex].0)
-                questionIndex += 1
+                isCorrect = false
             }
         } label: {
             Text("\(options[questionIndex].1[optionNo])")
