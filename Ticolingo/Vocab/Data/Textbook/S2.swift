@@ -41,7 +41,7 @@ let S2StudySet = StudySetGroup(name: "Secondary 2", sets: [
               definition: "\(advb) There is no harm in, might as well",
               exampleSentences: ["你不妨跟他谈一谈", "我不放现在就告诉他"],
               difficulty: S2Difficulty-1),
-        Vocab(term: "刀的嘴，豆腐心",
+        Vocab(term: "刀子嘴，豆腐心",
               definition: "\(idiom) Sharp words, tofu (soft) heart",
               exampleSentence: "你的妈妈刀的嘴，豆腐心，说的话都是为你好。",
               difficulty: S2Difficulty),
