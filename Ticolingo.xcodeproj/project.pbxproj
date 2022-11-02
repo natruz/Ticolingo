@@ -44,7 +44,6 @@
 		93BABE7A290CD2860091B65A /* NewVocabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE79290CD2850091B65A /* NewVocabView.swift */; };
 		D98550F1290EB2E70013614B /* FlashcardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98550F0290EB2E70013614B /* FlashcardsView.swift */; };
 		D98550F3291236760013614B /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98550F2291236760013614B /* QuizView.swift */; };
-		D98550F529123A050013614B /* QuizQn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98550F429123A050013614B /* QuizQn.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,7 +85,6 @@
 		93BABE79290CD2850091B65A /* NewVocabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVocabView.swift; sourceTree = "<group>"; };
 		D98550F0290EB2E70013614B /* FlashcardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsView.swift; sourceTree = "<group>"; };
 		D98550F2291236760013614B /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
-		D98550F429123A050013614B /* QuizQn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQn.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,7 +250,6 @@
 			isa = PBXGroup;
 			children = (
 				D98550F2291236760013614B /* QuizView.swift */,
-				D98550F429123A050013614B /* QuizQn.swift */,
 			);
 			path = QuizViews;
 			sourceTree = "<group>";
@@ -330,7 +327,6 @@
 			files = (
 				D98550F1290EB2E70013614B /* FlashcardsView.swift in Sources */,
 				9311F8AE290D4B8600C646C6 /* ImportStudySetGroupView.swift in Sources */,
-				D98550F529123A050013614B /* QuizQn.swift in Sources */,
 				93159F7A28D5A70E00C55C5A /* DragAndMatchView.swift in Sources */,
 				93159F8328D5A88E00C55C5A /* Textbook.swift in Sources */,
 				93159F7428D5A12B00C55C5A /* StudySetGroup.swift in Sources */,
