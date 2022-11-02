@@ -35,10 +35,9 @@ struct QuizView: View {
     var body: some View {
         ZStack {
             GeometryReader { geometry in VStack {
-                // progress indicator
-                ProgressView(value: Double(questionIndex), total: Double(options.count))
-                    .scaleEffect(x: 1, y: 4, anchor: .center)
-                    .padding()
+                HStack {
+                    stats
+                }
 
                 // question
                 // this view reuses the single flip card view for its auto
@@ -59,6 +58,52 @@ struct QuizView: View {
                   // rest of the view
             }}
         }
+    }
+
+    @ViewBuilder
+    var stats: some View {
+        Spacer()
+            .frame(width: 10)
+        ZStack {
+            Color.cyan
+                .frame(height: 50)
+                .cornerRadius(10)
+                .opacity(0.5)
+            HStack {
+                Text("Left")
+                    .padding(.bottom, 0)
+                Text("\(options.count-questionIndex)")
+                    .font(.system(size: 30))
+            }
+        }
+
+        ZStack {
+            Color.green
+                .frame(height: 50)
+                .cornerRadius(10)
+                .opacity(0.5)
+            HStack {
+                Text("Matched")
+                    .padding(.bottom, 0)
+                Text("\(questionIndex)")
+                    .font(.system(size: 30))
+            }
+        }
+
+        ZStack {
+            Color.indigo
+                .frame(height: 50)
+                .cornerRadius(10)
+                .opacity(0.5)
+            HStack {
+                Text("Wrong")
+                    .padding(.bottom, 0)
+                Text("\(wrongQuestions.count)")
+                    .font(.system(size: 30))
+            }
+        }
+        Spacer()
+            .frame(width: 10)
     }
 
     @ViewBuilder
