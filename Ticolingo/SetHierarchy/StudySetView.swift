@@ -89,7 +89,7 @@ struct StudySetView: View {
                 case .questionAnswer:
                     Text("questionAnswer")
                 case .flashCards:
-                    Text("flashCards")
+                    FlashcardsView(options: questions)
                 }
             }
         } label: {

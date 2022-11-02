@@ -9,53 +9,61 @@ import SwiftUI
 
 struct FlashcardsView: View {
     
-    let options: [Question]
+    @State var options: [Question]
     @State var questionNumber = 0
-    @State var currentQuestion: Question = Question(question: emptyIdentifier,
-                                                    answer: emptyIdentifier)
-        
+
+    @State var knownQuestions: [Question] = []
+    @State var unknownQuestions: [Question] = []
+
+    @State var cardOffset: CGSize = .zero
+    @State var cardScale: CGSize = .one
+
     init(options: [Question]) {
-        self.options = options.shuffled()
+        self.options = options // .shuffled()
     }
     
     var body: some View {
         if questionNumber < options.count {
             VStack {
                 stats
+                    .padding(.horizontal, 10)
+
                 Spacer()
-                if currentQuestion.question != emptyIdentifier {
-                    SingleFlipCardView(front: $currentQuestion.question,
-                                       back: $currentQuestion.answer)
+                ZStack {
+                    SingleFlipCardView(front: $options[questionNumber].question,
+                                       back: $options[questionNumber].answer)
+                    .scaleEffect(cardScale)
+                    .offset(cardOffset)
+                    .opacity(cardScale.height)
                 }
+                .frame(width: 250, height: 400)
+                .gesture(cardDragGesture)
                 Spacer()
-                    .frame(width: 5, height: 30)
+
                 HStack {
-                    Button {
-                        questionNumber -= 1
-                    } label: {
-                        Image(systemName: "arrow.backward")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .padding()
+                    Spacer()
+                    ZStack {
+                        SingleFlipCardView(front: .constant("\(knownQuestions.count)"),
+                                           back: .constant(""),
+                                           onFlip: { _ in .reject })
+                            .frame(width: 50, height: 80)
+                        Text("Familiar")
+                            .offset(y: 55)
                     }
                     Spacer()
-                    Button {
-                        questionNumber += 1
-                        if questionNumber < options.count {
-                            self.currentQuestion = options[questionNumber]
-                        }
-                    } label: {
-                        Image(systemName: "arrow.right")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .padding()
+                    ZStack {
+                        SingleFlipCardView(front: .constant("\(unknownQuestions.count)"),
+                                           back: .constant(""),
+                                           onFlip: { _ in .reject })
+                            .frame(width: 50, height: 80)
+                        Text("Unfamiliar")
+                            .offset(y: 55)
                     }
+                    Spacer()
                 }
+                .frame(height: 100)
+                .background(Color.yellow)
             }
-            .onAppear {
-                self.currentQuestion = options[questionNumber]
-            }
-            .frame(width: 250, height: 400)
         } else {
             HStack {
                 Spacer()
@@ -81,14 +89,67 @@ struct FlashcardsView: View {
             }
         }
     }
+
+    var cardDragGesture: some Gesture {
+        DragGesture()
+            .onChanged{ value in
+                cardOffset = value.translation
+
+                if cardOffset.height > 0 {
+                    let scale = min(CGFloat(1), CGFloat(100)/cardOffset.height)
+                    cardScale = .init(width: scale, height: scale)
+                } else {
+                    cardScale = .one
+                }
+            }
+            .onEnded{ value in
+                print("Current pos: \(value.location)")
+                print("Start pos: \(value.startLocation)")
+                print("Screen size: \(UIScreen.main.bounds)")
+                if value.translation.height < 50 {
+                    withAnimation {
+                        cardScale = .one
+                        cardOffset = .zero
+                    }
+                } else if value.velocity.height > 700 || value.translation.height > 300 {
+                    var goAwayCardPos = cardOffset
+                    let screenSize = UIScreen.main.bounds
+                    if value.translation.width > 0 { // right
+                        unknownQuestions.append(options[questionNumber])
+                        goAwayCardPos = .init(width: screenSize.width/4, height: screenSize.height/2)
+                    } else { // left
+                        knownQuestions.append(options[questionNumber])
+                        goAwayCardPos = .init(width: screenSize.width/(-4), height: screenSize.height/2)
+                    }
+                    let scale = min(CGFloat(1), CGFloat(100)/goAwayCardPos.height)
+                    withAnimation(.easeOut(duration: 0.2)) {
+                        cardOffset = goAwayCardPos
+                        cardScale = .init(width: scale, height: scale)
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        questionNumber += 1
+                        cardOffset = .zero
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            cardScale = .one
+                        }
+                    }
+                } else {
+                    withAnimation {
+                        cardOffset = .zero
+                    }
+                }
+            }
+    }
     
     func restart() {
-        
+        questionNumber = 0
+        knownQuestions = []
+        unknownQuestions = []
     }
     
     @ViewBuilder
     var stats: some View {
-        VStack {
+        HStack {
             ZStack {
                 Color.cyan
                     .frame(height: 50)
@@ -98,6 +159,30 @@ struct FlashcardsView: View {
                     Text("Left")
                         .padding(.bottom, 0)
                     Text("\(options.count-questionNumber)")
+                        .font(.system(size: 30))
+                }
+            }
+            ZStack {
+                Color.cyan
+                    .frame(height: 50)
+                    .cornerRadius(10)
+                    .opacity(0.5)
+                HStack {
+                    Text("Total")
+                        .padding(.bottom, 0)
+                    Text("\(options.count)")
+                        .font(.system(size: 30))
+                }
+            }
+            ZStack {
+                Color.cyan
+                    .frame(height: 50)
+                    .cornerRadius(10)
+                    .opacity(0.5)
+                HStack {
+                    Text("Done")
+                        .padding(.bottom, 0)
+                    Text("\(questionNumber)")
                         .font(.system(size: 30))
                 }
             }
@@ -117,3 +202,33 @@ struct FlashcardsView_Previews: PreviewProvider {
     }
 }
 
+extension DragGesture.Value {
+
+    /// The current drag velocity.
+    ///
+    /// While the velocity value is contained in the value, it is not publicly available and we
+    /// have to apply tricks to retrieve it. The following code accesses the underlying value via
+    /// the `Mirror` type.
+    internal var velocity: CGSize {
+        let valueMirror = Mirror(reflecting: self)
+        for valueChild in valueMirror.children {
+            if valueChild.label == "velocity" {
+                let velocityMirror = Mirror(reflecting: valueChild.value)
+                for velocityChild in velocityMirror.children {
+                    if velocityChild.label == "valuePerSecond" {
+                        if let velocity = velocityChild.value as? CGSize {
+                            return velocity
+                        }
+                    }
+                }
+            }
+        }
+
+        fatalError("Unable to retrieve velocity from \(Self.self)")
+    }
+
+}
+
+extension CGSize {
+    static let one: CGSize = .init(width: 1, height: 1)
+}
