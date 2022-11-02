@@ -26,8 +26,8 @@ struct FlashcardsView: View {
         if questionNumber < options.count {
             VStack {
                 stats
-                    .padding(.horizontal, 10)
 
+                // The actual card
                 Spacer()
                 ZStack {
                     SingleFlipCardView(front: $options[questionNumber].question,
@@ -40,50 +40,51 @@ struct FlashcardsView: View {
                 .gesture(cardDragGesture)
                 Spacer()
 
+                // the bottom buttons/indicators
                 HStack {
                     Spacer()
                     ZStack {
                         SingleFlipCardView(front: .constant("\(knownQuestions.count)"),
                                            back: .constant(""),
-                                           onFlip: { _ in .reject })
-                            .frame(width: 50, height: 80)
+                                           onFlip: { _ in
+                            markCardAsKnown()
+                            return .reject
+                        }).frame(width: 50, height: 80)
                         Text("Familiar")
-                            .offset(y: 55)
+                            .offset(x: -65)
                     }
                     Spacer()
                     ZStack {
                         SingleFlipCardView(front: .constant("\(unknownQuestions.count)"),
                                            back: .constant(""),
-                                           onFlip: { _ in .reject })
-                            .frame(width: 50, height: 80)
+                                           onFlip: { _ in
+                            markCardAsUnknown()
+                            return .reject
+                        }).frame(width: 50, height: 80)
                         Text("Unfamiliar")
-                            .offset(y: 55)
+                            .offset(x: 75)
                     }
                     Spacer()
                 }
                 .frame(height: 100)
-                .background(Color.yellow)
             }
-        } else {
+        } else { // completion screen
             HStack {
                 Spacer()
-                ZStack {
-                    VStack {
-                        stats
-                    }
-                    .frame(width: 200)
-                    VStack {
-                        Button("Restart") {
-                            withAnimation {
-                                restart()
-                            }
-                        }
-                        .padding(.bottom, 20)
-                        Button("Exit") {
-                            // TODO: Exit
+                VStack {
+                    Spacer()
+                    stats
+                    Spacer()
+                    Button("Restart") {
+                        withAnimation {
+                            restart()
                         }
                     }
-                    .offset(y: 200)
+                    .padding(.bottom, 20)
+                    NavigationLink("Finish") {
+                        Text("Not finished :P")
+                    }
+                    Spacer()
                 }
                 Spacer()
             }
@@ -95,6 +96,7 @@ struct FlashcardsView: View {
             .onChanged{ value in
                 cardOffset = value.translation
 
+                // get a new scale for the card proportional to the card's vertical offset
                 if cardOffset.height > 0 {
                     let scale = min(CGFloat(1), CGFloat(100)/cardOffset.height)
                     cardScale = .init(width: scale, height: scale)
@@ -103,42 +105,60 @@ struct FlashcardsView: View {
                 }
             }
             .onEnded{ value in
-                print("Current pos: \(value.location)")
-                print("Start pos: \(value.startLocation)")
-                print("Screen size: \(UIScreen.main.bounds)")
-                if value.translation.height < 50 {
-                    withAnimation {
-                        cardScale = .one
-                        cardOffset = .zero
-                    }
-                } else if value.velocity.height > 700 || value.translation.height > 300 {
-                    var goAwayCardPos = cardOffset
-                    let screenSize = UIScreen.main.bounds
+                if value.velocity.height > 700 ||
+                    value.translation.height > UIScreen.main.bounds.height/6 {
+
                     if value.translation.width > 0 { // right
-                        unknownQuestions.append(options[questionNumber])
-                        goAwayCardPos = .init(width: screenSize.width/4, height: screenSize.height/2)
+                        markCardAsUnknown()
                     } else { // left
-                        knownQuestions.append(options[questionNumber])
-                        goAwayCardPos = .init(width: screenSize.width/(-4), height: screenSize.height/2)
-                    }
-                    let scale = min(CGFloat(1), CGFloat(100)/goAwayCardPos.height)
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        cardOffset = goAwayCardPos
-                        cardScale = .init(width: scale, height: scale)
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                        questionNumber += 1
-                        cardOffset = .zero
-                        withAnimation(.easeInOut(duration: 0.2)) {
-                            cardScale = .one
-                        }
+                        markCardAsKnown()
                     }
                 } else {
                     withAnimation {
                         cardOffset = .zero
+                        cardScale = .one
                     }
                 }
             }
+    }
+
+    @State var isAnimating: Bool = false
+
+    func markCardAsUnknown() {
+        guard !isAnimating else { return }
+        unknownQuestions.append(options[questionNumber])
+        let screenSize = UIScreen.main.bounds
+        let goAwayCardPos = CGSize(width: screenSize.width/4-20, height: screenSize.height/2-70)
+        let scale = min(CGFloat(1), CGFloat(100)/goAwayCardPos.height)
+        goNextCard(dismissLocation: goAwayCardPos, dismissSize: .init(width: scale, height: scale))
+    }
+
+    func markCardAsKnown() {
+        guard !isAnimating else { return }
+        knownQuestions.append(options[questionNumber])
+        let screenSize = UIScreen.main.bounds
+        let goAwayCardPos = CGSize(width: screenSize.width/(-4)+20, height: screenSize.height/2-70)
+        let scale = min(CGFloat(1), CGFloat(100)/goAwayCardPos.height)
+        goNextCard(dismissLocation: goAwayCardPos, dismissSize: .init(width: scale, height: scale))
+    }
+
+    // Moves the card to a location and size, then increment the question number
+    func goNextCard(dismissLocation: CGSize = .zero, dismissSize: CGSize = .one) {
+        isAnimating = true
+        withAnimation(.easeOut(duration: 0.2)) {
+            cardOffset = dismissLocation
+            cardScale = dismissSize
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            questionNumber += 1
+            cardOffset = .zero
+            withAnimation(.easeInOut(duration: 0.2)) {
+                cardScale = .one
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                isAnimating = false
+            }
+        }
     }
     
     func restart() {
@@ -150,6 +170,8 @@ struct FlashcardsView: View {
     @ViewBuilder
     var stats: some View {
         HStack {
+            Spacer().frame(width: 10)
+
             ZStack {
                 Color.cyan
                     .frame(height: 50)
@@ -162,30 +184,21 @@ struct FlashcardsView: View {
                         .font(.system(size: 30))
                 }
             }
+
             ZStack {
-                Color.cyan
+                Color.green
                     .frame(height: 50)
                     .cornerRadius(10)
                     .opacity(0.5)
                 HStack {
-                    Text("Total")
-                        .padding(.bottom, 0)
-                    Text("\(options.count)")
-                        .font(.system(size: 30))
-                }
-            }
-            ZStack {
-                Color.cyan
-                    .frame(height: 50)
-                    .cornerRadius(10)
-                    .opacity(0.5)
-                HStack {
-                    Text("Done")
+                    Text("Matched")
                         .padding(.bottom, 0)
                     Text("\(questionNumber)")
                         .font(.system(size: 30))
                 }
             }
+
+            Spacer().frame(width: 10)
         }
     }
 }
