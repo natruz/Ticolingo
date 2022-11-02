@@ -43,7 +43,8 @@ struct QuizView: View {
                 // question
                 // this view reuses the single flip card view for its auto
                 // resizing text. It does not flip.
-                SingleFlipCardView(front: $options[questionIndex].0.question,
+                SingleFlipCardView(front: .constant(options[questionIndex].0.questionType
+                                            .questionUsingFormatFor(text: options[questionIndex].0.question)),
                                    back: .constant(""),
                                    frontColor: .clear,
                                    onFlip: { _ in .reject })
@@ -86,10 +87,10 @@ struct QuizView: View {
 
 struct QuizView_Previews: PreviewProvider {
     static var previews: some View {
-        QuizView(options: [Question(question: "a", answer: "1"),
-                           Question(question: "b", answer: "2"),
-                           Question(question: "c", answer: "3"),
-                           Question(question: "d", answer: "4"),
-                           Question(question: "e", answer: "5")])
+        QuizView(options: [Question(question: "a", answer: "1", questionType: .character, answerType: .pinYin),
+                           Question(question: "b", answer: "2", questionType: .character, answerType: .pinYin),
+                           Question(question: "c", answer: "3", questionType: .character, answerType: .pinYin),
+                           Question(question: "d", answer: "4", questionType: .character, answerType: .pinYin),
+                           Question(question: "e", answer: "5", questionType: .character, answerType: .pinYin)])
     }
 }

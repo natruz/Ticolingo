@@ -45,6 +45,7 @@ struct SingleFlipCardView: View {
                     .padding(15)
             }
         }
+        .multilineTextAlignment(.center)
         .font(.largeTitle)
         .fixedSize(horizontal: false, vertical: false)
         .minimumScaleFactor(0.4)

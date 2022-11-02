@@ -51,6 +51,15 @@ enum QAType: CaseIterable {
     static var allRealCases: [QAType] {
         allCases.filter({ $0 != .unspecified })
     }
+
+    public func questionUsingFormatFor(text: String) -> String {
+        switch self {
+        case .character:    return "What is the character for \"\(text)\"?"
+        case .pinYin:       return "What is the pinyin for \"\(text)\"?"
+        case .definition:   return "What is the definition of \"\(text)\"?"
+        case .unspecified:  return text
+        }
+    }
 }
 
 extension Array<Question> {
