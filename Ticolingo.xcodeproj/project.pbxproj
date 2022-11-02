@@ -220,7 +220,7 @@
 				937048842903930D0073ED7B /* MemoryCardsView.swift */,
 				9370488629039CFF0073ED7B /* SingleFlipCardView.swift */,
 				D98550F0290EB2E70013614B /* FlashcardsView.swift */,
-				D98550F629123A0C0013614B /* QuizViews */,
+				D98550F2291236760013614B /* QuizView.swift */,
 			);
 			path = Quizzes;
 			sourceTree = "<group>";
@@ -244,14 +244,6 @@
 				9311F8AD290D4B8600C646C6 /* ImportStudySetGroupView.swift */,
 			);
 			path = Adding;
-			sourceTree = "<group>";
-		};
-		D98550F629123A0C0013614B /* QuizViews */ = {
-			isa = PBXGroup;
-			children = (
-				D98550F2291236760013614B /* QuizView.swift */,
-			);
-			path = QuizViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

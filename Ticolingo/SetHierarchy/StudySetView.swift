@@ -87,7 +87,7 @@ struct StudySetView: View {
                 case .memoryCards:
                     MemoryCardsView(options: questions)
                 case .questionAnswer:
-                    Text("questionAnswer")
+                    QuizView(options: questions)
                 case .flashCards:
                     FlashcardsView(options: questions)
                 }
