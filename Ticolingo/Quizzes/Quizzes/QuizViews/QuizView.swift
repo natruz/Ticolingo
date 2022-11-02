@@ -149,7 +149,10 @@ struct QuizView: View {
 
     @ViewBuilder
     func buttonForOption(optionNo: Int) -> some View {
-        Button {
+        SingleFlipCardView(front: .constant("\(options[questionIndex].1[optionNo])"),
+                           back: .constant(""),
+                           frontColor: buttonColors[optionNo],
+                           onFlip: { _ in
             if options[questionIndex].0.answer == options[questionIndex].1[optionNo] { // correct
                 correctQuestions.append(options[questionIndex].0)
                 isCorrect = true
@@ -157,14 +160,9 @@ struct QuizView: View {
                 wrongQuestions.append(options[questionIndex].0)
                 isCorrect = false
             }
-        } label: {
-            Text("\(options[questionIndex].1[optionNo])")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(buttonColors[optionNo])
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                .padding(.horizontal, 10)
-        }
+            return .reject
+        })
+        .padding(.horizontal, 10)
     }
 
     // this arrangement theoretically allows up to 6 options
