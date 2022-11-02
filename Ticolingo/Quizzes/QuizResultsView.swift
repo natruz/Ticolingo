@@ -62,8 +62,13 @@ struct QuizResultsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             QuizResultsView(scores: Dictionary(uniqueKeysWithValues: zip(
-                Question.initFromDict(dict: ["a":"1", "b":"2"]),
-                [0.5, 0.7])))
+                initFromDict(dict: ["a":"1", "b":"2"]), [0.5, 0.7])))
         }
+    }
+}
+
+fileprivate func initFromDict(dict: Dictionary<String, String>) -> [Question] {
+    return dict.map {
+        Question(question: $0.key, answer: $0.value)
     }
 }

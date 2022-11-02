@@ -12,46 +12,50 @@ struct QuizSelectTypeView: View {
     @State var vocab: [Vocab]
     @Binding var questions: [Question]
 
-    @State var questionFormat: String = "Character"
-    @State var answerFormat: String = "PinYin"
-
-    let qnaFormatOptions = [
-        "Character",
-        "PinYin",
-        "Definition"
-    ]
+    @State var questionFormat: QAType = .character
+    @State var answerFormat: QAType = .pinYin
 
     var body: some View {
         VStack {
             Picker("Question Format", selection: $questionFormat, content: {
-                ForEach(qnaFormatOptions, id: \.self) { format in
-                    Text(format)
+                ForEach(QAType.allRealCases, id: \.self) { format in
+                    switch format {
+                    case .character: Text("Character")
+                    case .pinYin: Text("PinYin")
+                    case .definition: Text("Definition")
+                    default: EmptyView()
+                    }
                 }
             })
             .pickerStyle(.menu)
         }
         .onChange(of: questionFormat) { _ in
             if questionFormat == answerFormat {
-                let questionIndex = qnaFormatOptions.firstIndex(of: questionFormat)!
-                let newIndex = (questionIndex+1) % qnaFormatOptions.count
-                answerFormat = qnaFormatOptions[newIndex]
+                let questionIndex = QAType.allRealCases.firstIndex(of: questionFormat)!
+                let newIndex = (questionIndex+1) % QAType.allRealCases.count
+                answerFormat = QAType.allRealCases[newIndex]
             }
             changeQuestions()
         }
 
         VStack {
             Picker("Answer Format", selection: $answerFormat, content: {
-                ForEach(qnaFormatOptions, id: \.self) { format in
-                    Text(format)
+                ForEach(QAType.allRealCases, id: \.self) { format in
+                    switch format {
+                    case .character: Text("Character")
+                    case .pinYin: Text("PinYin")
+                    case .definition: Text("Definition")
+                    default: EmptyView()
+                    }
                 }
             })
             .pickerStyle(.menu)
         }
         .onChange(of: answerFormat) { _ in
             if questionFormat == answerFormat {
-                let questionIndex = qnaFormatOptions.firstIndex(of: answerFormat)!
-                let newIndex = (questionIndex+1) % qnaFormatOptions.count
-                questionFormat = qnaFormatOptions[newIndex]
+                let questionIndex = QAType.allRealCases.firstIndex(of: answerFormat)!
+                let newIndex = (questionIndex+1) % QAType.allRealCases.count
+                questionFormat = QAType.allRealCases[newIndex]
             }
             changeQuestions()
         }
@@ -69,26 +73,29 @@ struct QuizSelectTypeView: View {
             var answer = "unknown answer"
 
             switch questionFormat {
-            case "Character":
+            case .character:
                 question = vocab.term
-            case "PinYin":
+            case .pinYin:
                 question = vocab.pinyin
-            case "Definition":
+            case .definition:
                 question = vocab.definition
             default: break
             }
 
             switch answerFormat {
-            case "Character":
+            case .character:
                 answer = vocab.term
-            case "PinYin":
+            case .pinYin:
                 answer = vocab.pinyin
-            case "Definition":
+            case .definition:
                 answer = vocab.definition
             default: break
             }
 
-            return Question(question: question, answer: answer)
+            return Question(question: question,
+                            answer: answer,
+                            questionType: questionFormat,
+                            answerType: answerFormat)
         }
     }
 }
@@ -99,8 +106,7 @@ struct QuizSelectTypeView_Previews: PreviewProvider {
             QuizSelectTypeView(vocab: [
                 Vocab(term: "高兴", definition: "happy", exampleSentence: "我很高兴认识你。", difficulty: 0),
                 Vocab(term: "快乐", definition: "happiness", exampleSentence: "小学的时候我很快乐。", difficulty: 0),
-            ],
-                               questions: .constant([]))
+            ], questions: .constant([]))
         }
     }
 }

@@ -21,22 +21,36 @@ class Question: Hashable, Identifiable {
         hasher.combine(answer)
     }
 
-    var question: String = ""
-    var answer: String = ""
     var id = UUID()
 
-    init(question: String, answer: String) {
+    var question: String = ""
+    var answer: String = ""
+
+    var questionType: QAType = .unspecified
+    var answerType: QAType = .unspecified
+
+    init(question: String,
+         answer: String,
+         questionType: QAType = .unspecified,
+         answerType: QAType = .unspecified) {
         self.question = question
         self.answer = answer
-    }
-
-    static func initFromDict(dict: Dictionary<String, String>) -> [Question] {
-        return dict.map {
-            Question(question: $0.key, answer: $0.value)
-        }
+        self.questionType = questionType
+        self.answerType = answerType
     }
 
     static func empty() -> Question { Question(question: emptyIdentifier, answer: emptyIdentifier) }
+}
+
+enum QAType: CaseIterable {
+    case character
+    case pinYin
+    case definition
+    case unspecified
+
+    static var allRealCases: [QAType] {
+        allCases.filter({ $0 != .unspecified })
+    }
 }
 
 extension Array<Question> {
