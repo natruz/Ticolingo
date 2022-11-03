@@ -93,6 +93,8 @@ struct QuizView: View {
                 }
             }
         }
+        .navigationTitle("Quiz")
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     @ViewBuilder
@@ -167,10 +169,12 @@ struct QuizView: View {
 
 struct QuizView_Previews: PreviewProvider {
     static var previews: some View {
-        QuizView(options: [Question(question: "a", answer: "1", questionType: .character, answerType: .pinYin),
-                           Question(question: "b", answer: "2", questionType: .character, answerType: .pinYin),
-                           Question(question: "c", answer: "3", questionType: .character, answerType: .pinYin),
-                           Question(question: "d", answer: "4", questionType: .character, answerType: .pinYin),
-                           Question(question: "e", answer: "5", questionType: .character, answerType: .pinYin)])
+        NavigationView {
+            QuizView(options: [Question(question: "a", answer: "1", questionType: .character, answerType: .pinYin),
+                               Question(question: "b", answer: "2", questionType: .character, answerType: .pinYin),
+                               Question(question: "c", answer: "3", questionType: .character, answerType: .pinYin),
+                               Question(question: "d", answer: "4", questionType: .character, answerType: .pinYin),
+                               Question(question: "e", answer: "5", questionType: .character, answerType: .pinYin)])
+        }
     }
 }

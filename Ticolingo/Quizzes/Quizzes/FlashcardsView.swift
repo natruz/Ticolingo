@@ -68,6 +68,8 @@ struct FlashcardsView: View {
                 }
                 .frame(height: 100)
             }
+            .navigationTitle("Flashcards")
+            .navigationBarTitleDisplayMode(.inline)
         } else { // completion screen
             HStack {
                 Spacer()
@@ -88,6 +90,8 @@ struct FlashcardsView: View {
                 }
                 Spacer()
             }
+            .navigationTitle("Flashcards")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 
@@ -205,13 +209,15 @@ struct FlashcardsView: View {
 
 struct FlashcardsView_Previews: PreviewProvider {
     static var previews: some View {
-        FlashcardsView(options: [
-            Question(question: "who is the best team", answer: "ticolingo"),
-            Question(question: "who is the best team2", answer: "ticolingo"),
-            Question(question: "who is the best team3", answer: "ticolingo"),
-            Question(question: "who is the best team4", answer: "ticolingo"),
-            Question(question: "who is the best team5", answer: "ticolingo"),
-        ])
+        NavigationView {
+            FlashcardsView(options: [
+                Question(question: "who is the best team", answer: "ticolingo"),
+                Question(question: "who is the best team2", answer: "ticolingo"),
+                Question(question: "who is the best team3", answer: "ticolingo"),
+                Question(question: "who is the best team4", answer: "ticolingo"),
+                Question(question: "who is the best team5", answer: "ticolingo"),
+            ])
+        }
     }
 }
 

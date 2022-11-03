@@ -57,6 +57,8 @@ struct MemoryCardsView: View {
             .onAppear {
                 newGridElements()
             }
+            .navigationBarTitle("Memory Cards")
+            .navigationBarTitleDisplayMode(.inline)
         } else {
             HStack {
                 Spacer()
@@ -80,6 +82,8 @@ struct MemoryCardsView: View {
                 }
                 Spacer()
             }
+            .navigationBarTitle("Memory Cards")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 
