@@ -10,7 +10,6 @@ import SwiftUI
 struct StudySetView: View {
     
     @State var set: StudySet
-    @State var questions: [Question] = []
 
     @State var editing: Bool = false
     
@@ -18,22 +17,26 @@ struct StudySetView: View {
         List {
             Section {
                 NavigationLink {
-                    quizSelectScreen(quizType: .dragAndMatch)
+                    QuizSelectView(quizType: .dragAndMatch,
+                                   set: set)
                 } label: {
                     Text("Drag and Match Quiz")
                 }
                 NavigationLink {
-                    quizSelectScreen(quizType: .memoryCards)
+                    QuizSelectView(quizType: .memoryCards,
+                                   set: set)
                 } label: {
                     Text("Memory Cards Quiz")
                 }
                 NavigationLink {
-                    quizSelectScreen(quizType: .questionAnswer)
+                    QuizSelectView(quizType: .questionAnswer,
+                                   set: set)
                 } label: {
                     Text("Question and Answer Quiz")
                 }
                 NavigationLink {
-                    quizSelectScreen(quizType: .flashCards)
+                    QuizSelectView(quizType: .flashCards,
+                                   set: set)
                 } label: {
                     Text("Flash Cards")
                 }
@@ -59,49 +62,6 @@ struct StudySetView: View {
             }
         }
         .navigationTitle(set.title)
-    }
-
-    @ViewBuilder
-    func quizSelectScreen(quizType: QuizType) -> some View {
-        List {
-            Section {
-                QuizSelectTypeView(vocab: set.terms,
-                                   questions: $questions)
-            }
-
-            Section("Questions") {
-                ForEach(questions) { question in
-                    VStack(alignment: .leading) {
-                        Text(question.question)
-                        Text(question.answer)
-                    }
-                }
-            }
-        }
-
-        NavigationLink {
-            ZStack {
-                switch quizType {
-                case .dragAndMatch:
-                    DragAndMatchView(options: questions)
-                case .memoryCards:
-                    MemoryCardsView(options: questions)
-                case .questionAnswer:
-                    QuizView(options: questions)
-                case .flashCards:
-                    FlashcardsView(options: questions)
-                }
-            }
-        } label: {
-            ZStack(alignment: .center) {
-                Color.accentColor
-                    .frame(width: 240, height: 80)
-                    .cornerRadius(10)
-                Text("Start Playing")
-                    .foregroundColor(Color(uiColor: UIColor.label.inverted))
-            }
-            .navigationTitle("Select Quiz Type")
-        }
     }
 }
 
