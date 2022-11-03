@@ -34,6 +34,7 @@
 		93159F8B28D5ADFE00C55C5A /* StudyGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8A28D5ADFE00C55C5A /* StudyGroupsView.swift */; };
 		933CC90E28D6E3B000EC98A0 /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933CC90D28D6E3B000EC98A0 /* Definition.swift */; };
 		934E94D4290D002F00FF272F /* EditStudySetGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934E94D3290D002F00FF272F /* EditStudySetGroup.swift */; };
+		935277092913F97600471421 /* ResizableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935277082913F97600471421 /* ResizableTextView.swift */; };
 		9370488229037B600073ED7B /* QuizSelectTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370488129037B600073ED7B /* QuizSelectTypeView.swift */; };
 		937048852903930D0073ED7B /* MemoryCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937048842903930D0073ED7B /* MemoryCardsView.swift */; };
 		9370488729039CFF0073ED7B /* SingleFlipCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370488629039CFF0073ED7B /* SingleFlipCardView.swift */; };
@@ -75,6 +76,7 @@
 		93159F8A28D5ADFE00C55C5A /* StudyGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupsView.swift; sourceTree = "<group>"; };
 		933CC90D28D6E3B000EC98A0 /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
 		934E94D3290D002F00FF272F /* EditStudySetGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudySetGroup.swift; sourceTree = "<group>"; };
+		935277082913F97600471421 /* ResizableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableTextView.swift; sourceTree = "<group>"; };
 		9370488129037B600073ED7B /* QuizSelectTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSelectTypeView.swift; sourceTree = "<group>"; };
 		937048842903930D0073ED7B /* MemoryCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCardsView.swift; sourceTree = "<group>"; };
 		9370488629039CFF0073ED7B /* SingleFlipCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFlipCardView.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				93704883290392E60073ED7B /* Quizzes */,
+				935277072913F8FF00471421 /* ConvenienceViews */,
 				93159F7C28D5A73200C55C5A /* Question.swift */,
 				93159F7928D5A70E00C55C5A /* QuizResultsView.swift */,
 				9370488129037B600073ED7B /* QuizSelectTypeView.swift */,
@@ -213,12 +216,20 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
+		935277072913F8FF00471421 /* ConvenienceViews */ = {
+			isa = PBXGroup;
+			children = (
+				935277082913F97600471421 /* ResizableTextView.swift */,
+				9370488629039CFF0073ED7B /* SingleFlipCardView.swift */,
+			);
+			path = ConvenienceViews;
+			sourceTree = "<group>";
+		};
 		93704883290392E60073ED7B /* Quizzes */ = {
 			isa = PBXGroup;
 			children = (
 				93159F7828D5A70E00C55C5A /* DragAndMatchView.swift */,
 				937048842903930D0073ED7B /* MemoryCardsView.swift */,
-				9370488629039CFF0073ED7B /* SingleFlipCardView.swift */,
 				D98550F0290EB2E70013614B /* FlashcardsView.swift */,
 				D98550F2291236760013614B /* QuizView.swift */,
 			);
@@ -326,6 +337,7 @@
 				93159F8128D5A85900C55C5A /* S2.swift in Sources */,
 				2E3DDF2C28D0A38100D3EC00 /* StudySetView.swift in Sources */,
 				93159F7D28D5A73200C55C5A /* Question.swift in Sources */,
+				935277092913F97600471421 /* ResizableTextView.swift in Sources */,
 				934E94D4290D002F00FF272F /* EditStudySetGroup.swift in Sources */,
 				93159F8628D5A9C000C55C5A /* OtherData.swift in Sources */,
 				93159F8928D5AAF600C55C5A /* StudyGroups.swift in Sources */,

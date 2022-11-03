@@ -35,20 +35,16 @@ struct SingleFlipCardView: View {
             if flipToBack ? amount <= 90 : amount < 90 {
                 frontColor
                     .cornerRadius(15)
-                Text(front)
+                ResizableTextView($front)
                     .padding(15)
             } else {
                 backColor
                     .cornerRadius(15)
-                Text(back)
+                ResizableTextView($back)
                     .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
                     .padding(15)
             }
         }
-        .multilineTextAlignment(.center)
-        .font(.largeTitle)
-        .fixedSize(horizontal: false, vertical: false)
-        .minimumScaleFactor(0.4)
         .onReceive(flipManager.$allOthersUnflip) { _ in
             if amount != 0 && flipManager.sender != self.id {
                 flipToBack = false

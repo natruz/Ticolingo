@@ -45,12 +45,9 @@ struct QuizView: View {
                     // question
                     // this view reuses the single flip card view for its auto
                     // resizing text. It does not flip.
-                    SingleFlipCardView(front: .constant(options[questionIndex].0.questionType
-                        .questionUsingFormatFor(text: options[questionIndex].0.question)),
-                                       back: .constant(""),
-                                       frontColor: .clear,
-                                       onFlip: { _ in .reject })
-                    .frame(height: geometry.size.height/2)
+                    ResizableTextView(.constant(options[questionIndex].0.questionType
+                        .questionUsingFormatFor(text: options[questionIndex].0.question)))
+                        .frame(height: geometry.size.height/2)
 
                     // answer options
                     VStack {
@@ -85,10 +82,7 @@ struct QuizView: View {
                     Text("Correct option:")
                         .font(.title2)
                         .padding(20)
-                    SingleFlipCardView(front: .constant(options[questionIndex].0.answer),
-                                       back: .constant(""),
-                                       frontColor: .clear,
-                                       onFlip: { _ in .reject })
+                    ResizableTextView(.constant(options[questionIndex].0.answer))
                     .frame(height: 80)
                     Button("Next Question") {
                         self.isCorrect = nil
@@ -149,10 +143,7 @@ struct QuizView: View {
 
     @ViewBuilder
     func buttonForOption(optionNo: Int) -> some View {
-        SingleFlipCardView(front: .constant("\(options[questionIndex].1[optionNo])"),
-                           back: .constant(""),
-                           frontColor: buttonColors[optionNo],
-                           onFlip: { _ in
+        Button {
             if options[questionIndex].0.answer == options[questionIndex].1[optionNo] { // correct
                 correctQuestions.append(options[questionIndex].0)
                 isCorrect = true
@@ -160,9 +151,14 @@ struct QuizView: View {
                 wrongQuestions.append(options[questionIndex].0)
                 isCorrect = false
             }
-            return .reject
-        })
-        .padding(.horizontal, 10)
+        } label: {
+            ResizableTextView(.constant("\(options[questionIndex].1[optionNo])"))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(buttonColors[optionNo])
+                .cornerRadius(10)
+                .padding(.horizontal, 10)
+        }
+        .buttonStyle(.plain)
     }
 
     // this arrangement theoretically allows up to 6 options
