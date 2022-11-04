@@ -31,6 +31,9 @@ protocol QuizProtocolView: View {
 
     /// A function that dismisses the view
     func exit()
+
+    /// A function that restarts the quiz
+    func restart()
 }
 
 enum Stat: CaseIterable {
@@ -122,6 +125,10 @@ extension QuizProtocolView {
                 Spacer()
 
                 VStack {
+                    Button("Restart") {
+                        restart()
+                    }
+                    Spacer().frame(height: 20)
                     Button("Exit") {
                         exit()
                     }
@@ -172,6 +179,13 @@ private struct TestQuizView: QuizProtocolView {
 
     func exit() {
         presentationMode.wrappedValue.dismiss()
+    }
+
+    func restart() {
+        total = 0
+        completed = 0
+        wrong = 0
+        correct = 0
     }
 
     var body: some View {

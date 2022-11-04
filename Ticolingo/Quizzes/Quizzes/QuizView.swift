@@ -149,6 +149,15 @@ struct QuizView: QuizProtocolView {
     func exit() {
         presentationMode.wrappedValue.dismiss()
     }
+
+    func restart() {
+        completed = 0
+        attempts = [:]
+        correctQuestions = []
+        correct = 0
+        wrongQuestions = []
+        wrong = 0
+    }
 }
 
 struct QuizView_Previews: PreviewProvider {
