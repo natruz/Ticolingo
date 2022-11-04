@@ -17,7 +17,17 @@ protocol QuizProtocolView: View {
     /// The total number of correct questions in the quiz. MUST BE MARKED `@State`
     var correct: Int? { get set }
 
+    /// Which stats to show in the stat screen
     var statsToShow: [Stat] { get set }
+
+    /// The questions for the quiz view
+    var questions: [Question] { get set }
+
+    /// If the questions are randomised or not
+    var randomised: Bool { get set }
+
+    /// The number of times the user wrongly answers a question to the total attempts made
+    var attempts: [Question: (Int, Int)] { get set }
 }
 
 enum Stat: CaseIterable {
@@ -105,6 +115,10 @@ private struct TestQuizView: QuizProtocolView {
         .wrong,
         .correct
     ]
+
+    @State var questions: [Question] = []
+    @State var randomised: Bool = false
+    @State var attempts: [Question : (Int, Int)] = [:]
 
     var body: some View {
         VStack {
