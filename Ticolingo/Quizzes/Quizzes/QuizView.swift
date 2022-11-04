@@ -81,10 +81,7 @@ struct QuizView: QuizProtocolView {
                     } // no need to set the frame here since it'll automatically fill the
                     // rest of the view
                 } else {
-                    VStack {
-                        endView
-                        Text("Number: \(options.count)")
-                    }
+                    endView
                 }
             }}
             if let isCorrect = isCorrect {
