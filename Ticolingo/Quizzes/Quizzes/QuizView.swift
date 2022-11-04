@@ -7,18 +7,37 @@
 
 import SwiftUI
 
-struct QuizView: View {
+struct QuizView: QuizProtocolView {
+    @State var total: Int
+    @State var completed: Int
+    @State var wrong: Int?
+    @State var correct: Int?
+    @State var questions: [Question]
+    @State var randomised: Bool
+    @State var attempts: [Question : (Int, Int)]
+
+    @State var statsToShow: [Stat] = [ .total, .completed, .wrong ]
+
     @State var options: [(Question, [String])]
-    @State var questionIndex = 0
-    @State var correctQuestions = [Question]()
-    @State var wrongQuestions = [Question]()
+    @State var correctQuestions: [Question]
+    @State var wrongQuestions: [Question]
 
     @State var isCorrect: Bool?
 
-    init(options: [Question]) {
+    init(options: [Question], randomised: Bool = false) {
+        self._total = State(initialValue: options.count)
+        self._completed = State(initialValue: 0)
+        self._questions = State(initialValue: options)
+        self._wrong = State(initialValue: 0)
+        self._correct = State(initialValue: 0)
+        self._correctQuestions = State(initialValue: [Question]())
+        self._wrongQuestions = State(initialValue: [Question]())
+        self._randomised = State(initialValue: randomised)
+        self._attempts = State(initialValue: [:])
+
         let allAnswers = options.map { $0.answer }
 
-        self.options = options.map { option in
+        let optionMap = options.map { option in
             // remove the correct answer from the possible random answers
             // shuffle the possible other answers
             let possibleOtherAnswers = allAnswers.filter({ $0 != option.answer }).shuffled()
@@ -32,26 +51,30 @@ struct QuizView: View {
             answers.append(option.answer)
             return (option , answers.shuffled())
         }
+        self._options = State(initialValue: randomised ? optionMap.shuffled() : optionMap)
+
+        self.total = self.options.count
     }
     
     var body: some View {
         ZStack {
             GeometryReader { geometry in VStack {
-                if questionIndex < options.count {
+                if completed < options.count {
                     HStack {
                         stats
                     }
+                    .padding(.horizontal, 10)
 
                     // question
                     // this view reuses the single flip card view for its auto
                     // resizing text. It does not flip.
-                    ResizableTextView(.constant(options[questionIndex].0.questionType
-                        .questionUsingFormatFor(text: options[questionIndex].0.question)))
+                    ResizableTextView(.constant(options[completed].0.questionType
+                        .questionUsingFormatFor(text: options[completed].0.question)))
                         .frame(height: geometry.size.height/2)
 
                     // answer options
                     VStack {
-                        ForEach(0..<options[questionIndex].1.count, id: \.self) { index in
+                        ForEach(0..<options[completed].1.count, id: \.self) { index in
                             buttonForOption(optionNo: index)
                                 .padding(4)
                         }
@@ -59,10 +82,9 @@ struct QuizView: View {
                     // rest of the view
                 } else {
                     VStack {
-                        stats
-                            .frame(width: geometry.size.width/2)
+                        endView
+                        Text("Number: \(options.count)")
                     }
-                    .frame(maxWidth: .infinity)
                 }
             }}
             if let isCorrect = isCorrect {
@@ -82,11 +104,11 @@ struct QuizView: View {
                     Text("Correct option:")
                         .font(.title2)
                         .padding(20)
-                    ResizableTextView(.constant(options[questionIndex].0.answer))
+                    ResizableTextView(.constant(options[completed].0.answer))
                     .frame(height: 80)
                     Button("Next Question") {
                         self.isCorrect = nil
-                        self.questionIndex += 1
+                        self.completed += 1
                     }
                     .padding(20)
                     .buttonStyle(.borderedProminent)
@@ -94,67 +116,24 @@ struct QuizView: View {
             }
         }
         .navigationTitle("Quiz")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-
-    @ViewBuilder
-    var stats: some View {
-        Spacer()
-            .frame(width: 10)
-        ZStack {
-            Color.cyan
-                .frame(height: 50)
-                .cornerRadius(10)
-                .opacity(0.5)
-            HStack {
-                Text("Left")
-                    .padding(.bottom, 0)
-                Text("\(options.count-questionIndex)")
-                    .font(.system(size: 30))
-            }
-        }
-
-        ZStack {
-            Color.green
-                .frame(height: 50)
-                .cornerRadius(10)
-                .opacity(0.5)
-            HStack {
-                Text("Matched")
-                    .padding(.bottom, 0)
-                Text("\(questionIndex)")
-                    .font(.system(size: 30))
-            }
-        }
-
-        ZStack {
-            Color.indigo
-                .frame(height: 50)
-                .cornerRadius(10)
-                .opacity(0.5)
-            HStack {
-                Text("Wrong")
-                    .padding(.bottom, 0)
-                Text("\(wrongQuestions.count)")
-                    .font(.system(size: 30))
-            }
-        }
-        Spacer()
-            .frame(width: 10)
     }
 
     @ViewBuilder
     func buttonForOption(optionNo: Int) -> some View {
         Button {
-            if options[questionIndex].0.answer == options[questionIndex].1[optionNo] { // correct
-                correctQuestions.append(options[questionIndex].0)
+            if options[completed].0.answer == options[completed].1[optionNo] { // correct
+                correctQuestions.append(options[completed].0)
+                attempts[options[completed].0] = (1, 1)
+                correct = correctQuestions.count
                 isCorrect = true
             } else { // wrong
-                wrongQuestions.append(options[questionIndex].0)
+                wrongQuestions.append(options[completed].0)
+                attempts[options[completed].0] = (0, 1)
+                wrong = wrongQuestions.count
                 isCorrect = false
             }
         } label: {
-            ResizableTextView(.constant("\(options[questionIndex].1[optionNo])"))
+            ResizableTextView(.constant("\(options[completed].1[optionNo])"))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(buttonColors[optionNo])
                 .cornerRadius(10)
@@ -165,6 +144,11 @@ struct QuizView: View {
 
     // this arrangement theoretically allows up to 6 options
     let buttonColors: [Color] = [.red, .yellow, .green, .blue, .orange]
+
+    @Environment(\.presentationMode) var presentationMode
+    func exit() {
+        presentationMode.wrappedValue.dismiss()
+    }
 }
 
 struct QuizView_Previews: PreviewProvider {
