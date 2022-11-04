@@ -7,31 +7,49 @@
 
 import SwiftUI
 
-struct FlashcardsView: View {
-    
-    @State var options: [Question]
-    @State var questionNumber = 0
+struct FlashcardsView: QuizProtocolView {
+
+    @State var total: Int
+    @State var completed: Int
+    @State var wrong: Int? = nil
+    @State var correct: Int? = nil
+    @State var questions: [Question]
+    @State var randomised: Bool
+    @State var attempts: [Question : (Int, Int)]
+
+    @State var statsToShow: [Stat] = [ .total, .completed ]
 
     @State var knownQuestions: [Question] = []
     @State var unknownQuestions: [Question] = []
 
+    @State var isCorrect: Bool?
+
+    init(options: [Question], randomised: Bool = false) {
+        self._total = State(initialValue: options.count)
+        self._completed = State(initialValue: 0)
+        self._questions = State(initialValue: randomised ? options.shuffled() : options)
+        self._knownQuestions = State(initialValue: [Question]())
+        self._unknownQuestions = State(initialValue: [Question]())
+        self._randomised = State(initialValue: randomised)
+        self._attempts = State(initialValue: [:])
+    }
+
     @State var cardOffset: CGSize = .zero
     @State var cardScale: CGSize = .one
-
-    init(options: [Question]) {
-        self.options = options // .shuffled()
-    }
     
     var body: some View {
-        if questionNumber < options.count {
-            VStack {
-                stats
+        VStack {
+            if completed < total {
+                HStack {
+                    stats
+                }
+                .padding(.horizontal, 10)
 
                 // The actual card
                 Spacer()
                 ZStack {
-                    SingleFlipCardView(front: $options[questionNumber].question,
-                                       back: $options[questionNumber].answer)
+                    SingleFlipCardView(front: $questions[completed].question,
+                                       back: $questions[completed].answer)
                     .scaleEffect(cardScale)
                     .offset(cardOffset)
                     .opacity(cardScale.height)
@@ -67,32 +85,11 @@ struct FlashcardsView: View {
                     Spacer()
                 }
                 .frame(height: 100)
+            } else { // completion screen
+                endView
             }
-            .navigationTitle("Flashcards")
-            .navigationBarTitleDisplayMode(.inline)
-        } else { // completion screen
-            HStack {
-                Spacer()
-                VStack {
-                    Spacer()
-                    stats
-                    Spacer()
-                    Button("Restart") {
-                        withAnimation {
-                            restart()
-                        }
-                    }
-                    .padding(.bottom, 20)
-                    NavigationLink("Finish") {
-                        Text("Not finished :P")
-                    }
-                    Spacer()
-                }
-                Spacer()
-            }
-            .navigationTitle("Flashcards")
-            .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationTitle("Flashcards")
     }
 
     var cardDragGesture: some Gesture {
@@ -130,7 +127,8 @@ struct FlashcardsView: View {
 
     func markCardAsUnknown() {
         guard !isAnimating else { return }
-        unknownQuestions.append(options[questionNumber])
+        unknownQuestions.append(questions[completed])
+        attempts[questions[completed]] = (0, 1)
         let screenSize = UIScreen.main.bounds
         let goAwayCardPos = CGSize(width: screenSize.width/4-20, height: screenSize.height/2-70)
         let scale = min(CGFloat(1), CGFloat(100)/goAwayCardPos.height)
@@ -139,7 +137,8 @@ struct FlashcardsView: View {
 
     func markCardAsKnown() {
         guard !isAnimating else { return }
-        knownQuestions.append(options[questionNumber])
+        knownQuestions.append(questions[completed])
+        attempts[questions[completed]] = (1, 1)
         let screenSize = UIScreen.main.bounds
         let goAwayCardPos = CGSize(width: screenSize.width/(-4)+20, height: screenSize.height/2-70)
         let scale = min(CGFloat(1), CGFloat(100)/goAwayCardPos.height)
@@ -154,7 +153,7 @@ struct FlashcardsView: View {
             cardScale = dismissSize
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            questionNumber += 1
+            completed += 1
             cardOffset = .zero
             withAnimation(.easeInOut(duration: 0.2)) {
                 cardScale = .one
@@ -164,46 +163,16 @@ struct FlashcardsView: View {
             }
         }
     }
-    
-    func restart() {
-        questionNumber = 0
-        knownQuestions = []
-        unknownQuestions = []
+
+    @Environment(\.presentationMode) var presentationMode
+    func exit() {
+        presentationMode.wrappedValue.dismiss()
     }
     
-    @ViewBuilder
-    var stats: some View {
-        HStack {
-            Spacer().frame(width: 10)
-
-            ZStack {
-                Color.cyan
-                    .frame(height: 50)
-                    .cornerRadius(10)
-                    .opacity(0.5)
-                HStack {
-                    Text("Left")
-                        .padding(.bottom, 0)
-                    Text("\(options.count-questionNumber)")
-                        .font(.system(size: 30))
-                }
-            }
-
-            ZStack {
-                Color.green
-                    .frame(height: 50)
-                    .cornerRadius(10)
-                    .opacity(0.5)
-                HStack {
-                    Text("Matched")
-                        .padding(.bottom, 0)
-                    Text("\(questionNumber)")
-                        .font(.system(size: 30))
-                }
-            }
-
-            Spacer().frame(width: 10)
-        }
+    func restart() {
+        completed = 0
+        knownQuestions = []
+        unknownQuestions = []
     }
 }
 
