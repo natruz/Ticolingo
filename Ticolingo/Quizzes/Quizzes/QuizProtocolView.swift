@@ -28,6 +28,9 @@ protocol QuizProtocolView: View {
 
     /// The number of times the user wrongly answers a question to the total attempts made
     var attempts: [Question: (Int, Int)] { get set }
+
+    /// A function that dismisses the view
+    func exit()
 }
 
 enum Stat: CaseIterable {
@@ -100,6 +103,47 @@ extension QuizProtocolView {
                 }
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    @ViewBuilder
+    var endView: some View {
+        GeometryReader { geometry in
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    VStack {
+                        stats
+                    }
+                    .frame(width: geometry.size.width/2)
+                    Spacer()
+                }
+                Spacer()
+
+                VStack {
+                    Button("Exit") {
+                        exit()
+                    }
+                    Spacer().frame(height: 20)
+                    NavigationLink("Results") {
+                        QuizResultsView(scores: turnAttemptsToScores(attempts: attempts))
+                    }
+                }
+                Spacer()
+            }
+        }
+    }
+
+    private func turnAttemptsToScores(attempts: [Question: (Int, Int)]) -> [Question: Double?] {
+        var scores: [Question: Double?] = [:]
+
+        for (question, attempt) in attempts {
+            let score = Double(attempt.0) / Double(attempt.1)
+            scores[question] = score
+        }
+
+        return scores
     }
 }
 
@@ -116,33 +160,47 @@ private struct TestQuizView: QuizProtocolView {
         .correct
     ]
 
-    @State var questions: [Question] = []
+    @State var questions: [Question] = [
+        Question(question: "HI", answer: "BYE")
+    ]
     @State var randomised: Bool = false
-    @State var attempts: [Question : (Int, Int)] = [:]
+    @State var attempts: [Question : (Int, Int)] = [
+        Question(question: "HI", answer: "BYE"): (2, 3)
+    ]
+
+    @Environment(\.presentationMode) var presentationMode
+
+    func exit() {
+        presentationMode.wrappedValue.dismiss()
+    }
 
     var body: some View {
-        VStack {
-            stats
-            HStack {
-                VStack {
-                    Button("Increase total") { total += 1 }
-                    Button("Increase completed") { completed += 1 }
-                    Button("Increase wrong") { wrong = (wrong ?? 0) + 1 }
-                    Button("Increase right") { correct = (correct ?? 0) + 1 }
-                }
-                VStack {
-                    Button("Decrease total") { total -= 1 }
-                    Button("Decrease completed") { completed -= 1 }
-                    Button("Decrease wrong") { wrong = (wrong ?? 0) - 1 }
-                    Button("Decrease right") { correct = (correct ?? 0) - 1 }
-                }
-            }
-        }
+//        VStack {
+//            stats
+//            HStack {
+//                VStack {
+//                    Button("Increase total") { total += 1 }
+//                    Button("Increase completed") { completed += 1 }
+//                    Button("Increase wrong") { wrong = (wrong ?? 0) + 1 }
+//                    Button("Increase right") { correct = (correct ?? 0) + 1 }
+//                }
+//                VStack {
+//                    Button("Decrease total") { total -= 1 }
+//                    Button("Decrease completed") { completed -= 1 }
+//                    Button("Decrease wrong") { wrong = (wrong ?? 0) - 1 }
+//                    Button("Decrease right") { correct = (correct ?? 0) - 1 }
+//                }
+//            }
+//        }
+        endView
+            .navigationTitle("HI")
     }
 }
 
 struct QuizProtocolView_Previews: PreviewProvider {
     static var previews: some View {
-        TestQuizView()
+        NavigationView {
+            TestQuizView()
+        }
     }
 }
