@@ -7,130 +7,75 @@
 
 import SwiftUI
 
-struct MemoryCardsView: View {
-
-    let options: [Question]
-    @State var scores: [Question: Double]
-    @State var currentQAs: [(String, Question)] // 12 elements ONLY
-    @State var pastQuestions: [Question]
-    @State var selectedQuestion: Question?
-    @State var wrongAnswers: Int = 0
+struct MemoryCardsView: QuizProtocolView {
 
     let cardSize: CGFloat = 90.0
     let topBarSize: CGFloat = 50.0
 
-    init(options: [Question]) {
-        self.options = options
-        let empty: [Double] = options.map({ _ in 0 })
-        self.scores = Dictionary(uniqueKeysWithValues: zip(options, empty))
-        self.pastQuestions = []
-        self.currentQAs = (0..<12).map({ _ in (emptyIdentifier, .empty()) })
+    @State var total: Int
+    @State var completed: Int
+    @State var wrong: Int? = 0
+    @State var correct: Int? = nil
+    @State var questions: [Question]
+    @State var randomised: Bool
+    @State var attempts: [Question : (Int, Int)]
+
+    @State var statsToShow: [Stat] = [ .total, .completed, .wrong ]
+
+    @State var currentQAs: [(String, Question)] // 12 elements ONLY
+    @State var selectedQuestion: Question?
+    @State var pastQuestions: [Question]
+
+    init(options: [Question], randomised: Bool = false) {
+        self._total = State(initialValue: options.count)
+        self._completed = State(initialValue: 0)
+        self._questions = State(initialValue: randomised ? options.shuffled() : options)
+        self._randomised = State(initialValue: randomised)
+        self._attempts = State(initialValue: [:])
+
+        self._pastQuestions = State(initialValue: [])
+        self._currentQAs = State(initialValue: (0..<12).map({ _ in
+            (emptyIdentifier, .empty())
+        }))
         newGridElements()
     }
 
     var body: some View {
-        if pastQuestions.count < options.count {
-            GeometryReader { geometry in
-                VStack(alignment: .center) {
-                    HStack {
-                        stats
-                    }
-                    ForEach(0..<4) { lineNo in
+        ZStack {
+            if completed < total {
+                GeometryReader { geometry in
+                    VStack(alignment: .center) {
                         HStack {
-                            Spacer()
-                            ForEach(0..<3) { colNo in
-                                if currentQAs[lineNo * 3 + colNo].1.question != emptyIdentifier {
-                                    SingleFlipCardView(front: .constant(""),
-                                                       back: $currentQAs[lineNo * 3 + colNo].0,
-                                                       onFlip: { onCardFlip(isOnBack: $0, lineNo: lineNo, colNo: colNo) })
-                                    .frame(width: geometry.size.width/3-10, height: geometry.size.height/4-20)
-                                } else {
-                                    Spacer()
+                            stats
+                        }
+                        .padding(.horizontal, 10)
+                        ForEach(0..<4) { lineNo in
+                            HStack {
+                                Spacer()
+                                ForEach(0..<3) { colNo in
+                                    if currentQAs[lineNo * 3 + colNo].1.question != emptyIdentifier {
+                                        SingleFlipCardView(front: .constant(""),
+                                                           back: $currentQAs[lineNo * 3 + colNo].0,
+                                                           onFlip: { onCardFlip(isOnBack: $0, lineNo: lineNo, colNo: colNo) })
                                         .frame(width: geometry.size.width/3-10, height: geometry.size.height/4-20)
+                                    } else {
+                                        Spacer()
+                                            .frame(width: geometry.size.width/3-10, height: geometry.size.height/4-20)
+                                    }
                                 }
+                                Spacer()
                             }
-                            Spacer()
                         }
                     }
                 }
-            }
-            .onAppear {
-                newGridElements()
-            }
-            .navigationBarTitle("Memory Cards")
-            .navigationBarTitleDisplayMode(.inline)
-        } else {
-            HStack {
-                Spacer()
-                ZStack {
-                    VStack {
-                        stats
-                    }
-                    .frame(width: 200)
-                    VStack {
-                        Button("Restart") {
-                            withAnimation {
-                                restart()
-                            }
-                        }
-                        .padding(.bottom, 20)
-                        NavigationLink("Finish") {
-                            QuizResultsView(scores: scores)
-                        }
-                    }
-                    .offset(y: 200)
+                .onAppear {
+                    newGridElements()
                 }
-                Spacer()
-            }
-            .navigationBarTitle("Memory Cards")
-            .navigationBarTitleDisplayMode(.inline)
-        }
-    }
-
-    @ViewBuilder
-    var stats: some View {
-        Spacer()
-            .frame(width: 10)
-        ZStack {
-            Color.cyan
-                .frame(height: 50)
-                .cornerRadius(10)
-                .opacity(0.5)
-            HStack {
-                Text("Left")
-                    .padding(.bottom, 0)
-                Text("\(options.count-pastQuestions.count)")
-                    .font(.system(size: 30))
+            } else {
+                endView
             }
         }
-
-        ZStack {
-            Color.green
-                .frame(height: 50)
-                .cornerRadius(10)
-                .opacity(0.5)
-            HStack {
-                Text("Matched")
-                    .padding(.bottom, 0)
-                Text("\(pastQuestions.count)")
-                    .font(.system(size: 30))
-            }
-        }
-
-        ZStack {
-            Color.indigo
-                .frame(height: 50)
-                .cornerRadius(10)
-                .opacity(0.5)
-            HStack {
-                Text("Wrong")
-                    .padding(.bottom, 0)
-                Text("\(wrongAnswers)")
-                    .font(.system(size: 30))
-            }
-        }
-        Spacer()
-            .frame(width: 10)
+        .navigationBarTitle("Memory Cards")
     }
 
     func onCardFlip(isOnBack: Bool, lineNo: Int, colNo: Int) -> SingleFlipCardView.Behaviour {
@@ -150,28 +95,19 @@ struct MemoryCardsView: View {
                         currentQAs[otherIndex] = (emptyIdentifier, .empty())
                     }
                 }
-                // Turn the scores into usable doubles instead of Integers
-                // Before they're matched, they're in the form of integers representing how many
-                // failed tries have occured. This equation takes the reciprocal of it as the
-                // final percentage.
-                let timesAttempted = (scores[selectedQuestion] ?? 0) + 1
-                scores[selectedQuestion] = 1/timesAttempted
-
-                // Load new grid elements if all have been used up
-                if currentQAs.filter({ $0.1.question != emptyIdentifier }).count == 0 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                        withAnimation {
-                            newGridElements()
-                        }
-                    }
-                }
+                // update the attempts and total completed
+                let existingScore = attempts[selectedQuestion] ?? (0, 0)
+                attempts[selectedQuestion] = (existingScore.0, existingScore.1 + 1)
                 self.selectedQuestion = nil
+                completed += 1
                 return .none
             } else {
                 // NO MATCH
-                wrongAnswers += 1
-                scores[selectedQuestion] = (scores[selectedQuestion] ?? 0) + 1
+                // update the attempts and total wrong
+                let existingScore = attempts[selectedQuestion] ?? (0, 0)
+                attempts[selectedQuestion] = (existingScore.0 + 1, existingScore.1 + 1)
                 self.selectedQuestion = nil
+                wrong = (wrong ?? 0) + 1
                 return .unflipAll
             }
         } else {
@@ -185,7 +121,7 @@ struct MemoryCardsView: View {
     func newGridElements() {
         var localCurrentQAs = [(String, Question)]()
         // create an array of unselected questions
-        var questions = options.filter({ !pastQuestions.contains($0) })
+        var questions = questions.filter({ !pastQuestions.contains($0) })
 
         while localCurrentQAs.count < 12 {
             // if somehow no random element was selected, this means options is empty. Add an empty placeholder.
@@ -209,12 +145,19 @@ struct MemoryCardsView: View {
     }
 
     func restart() {
-        let empty: [Double] = options.map({ _ in 0 })
-        self.scores = Dictionary(uniqueKeysWithValues: zip(options, empty))
+        self.completed = 0
+        self.attempts = [:]
+        self.selectedQuestion = nil
         self.pastQuestions = []
+
         self.currentQAs = (0..<12).map({ _ in (emptyIdentifier, .empty()) })
-        self.wrongAnswers = 0
         newGridElements()
+        newGridElements()
+    }
+
+    @Environment(\.presentationMode) var presentationMode
+    func exit() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
