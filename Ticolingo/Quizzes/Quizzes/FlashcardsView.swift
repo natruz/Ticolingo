@@ -128,7 +128,7 @@ struct FlashcardsView: QuizProtocolView {
     func markCardAsUnknown() {
         guard !isAnimating else { return }
         unknownQuestions.append(questions[completed])
-        attempts[questions[completed]] = (0, 1)
+        attempts[questions[completed]] = (1, 1)
         let screenSize = UIScreen.main.bounds
         let goAwayCardPos = CGSize(width: screenSize.width/4-20, height: screenSize.height/2-70)
         let scale = min(CGFloat(1), CGFloat(100)/goAwayCardPos.height)
@@ -138,7 +138,7 @@ struct FlashcardsView: QuizProtocolView {
     func markCardAsKnown() {
         guard !isAnimating else { return }
         knownQuestions.append(questions[completed])
-        attempts[questions[completed]] = (1, 1)
+        attempts[questions[completed]] = (0, 1)
         let screenSize = UIScreen.main.bounds
         let goAwayCardPos = CGSize(width: screenSize.width/(-4)+20, height: screenSize.height/2-70)
         let scale = min(CGFloat(1), CGFloat(100)/goAwayCardPos.height)

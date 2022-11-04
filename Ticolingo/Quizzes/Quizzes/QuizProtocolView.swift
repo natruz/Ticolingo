@@ -146,7 +146,7 @@ extension QuizProtocolView {
         var scores: [Question: Double?] = [:]
 
         for (question, attempt) in attempts {
-            let score = Double(attempt.0) / Double(attempt.1)
+            let score = 1 - Double(attempt.0) / Double(attempt.1)
             scores[question] = score
         }
 

@@ -123,12 +123,12 @@ struct QuizView: QuizProtocolView {
         Button {
             if options[completed].0.answer == options[completed].1[optionNo] { // correct
                 correctQuestions.append(options[completed].0)
-                attempts[options[completed].0] = (1, 1)
+                attempts[options[completed].0] = (0, 1)
                 correct = correctQuestions.count
                 isCorrect = true
             } else { // wrong
                 wrongQuestions.append(options[completed].0)
-                attempts[options[completed].0] = (0, 1)
+                attempts[options[completed].0] = (1, 1)
                 wrong = wrongQuestions.count
                 isCorrect = false
             }
