@@ -134,7 +134,7 @@ extension QuizProtocolView {
                     }
                     Spacer().frame(height: 20)
                     NavigationLink("Results") {
-                        QuizResultsView(scores: turnAttemptsToScores(attempts: attempts))
+                        QuizResultsView(scores: turnAttemptsToScores())
                     }
                 }
                 Spacer()
@@ -142,12 +142,13 @@ extension QuizProtocolView {
         }
     }
 
-    private func turnAttemptsToScores(attempts: [Question: (Int, Int)]) -> [Question: Double?] {
-        var scores: [Question: Double?] = [:]
+    private func turnAttemptsToScores() -> [(Question, Double?)] {
+        var scores: [(Question, Double?)] = []
 
-        for (question, attempt) in attempts {
-            let score = 1 - Double(attempt.0) / Double(attempt.1)
-            scores[question] = score
+        for question in questions {
+            if let attempt = attempts[question] {
+                scores.append((question, 1 - Double(attempt.0) / Double(attempt.1)))
+            }
         }
 
         return scores

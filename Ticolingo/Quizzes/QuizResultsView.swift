@@ -9,11 +9,11 @@ import SwiftUI
 
 struct QuizResultsView: View {
 
-    var scores: [Question: Double?]
+    var scores: [(Question, Double?)]
 
     var body: some View {
         List {
-            ForEach(Array(scores), id: \.key) { (question, score) in
+            ForEach(scores, id: \.0) { (question, score) in
                 HStack {
                     VStack(alignment: .leading) {
                         Spacer()
@@ -61,8 +61,10 @@ struct QuizResultsView: View {
 struct QuizResultsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            QuizResultsView(scores: Dictionary(uniqueKeysWithValues: zip(
-                initFromDict(dict: ["a":"1", "b":"2"]), [0.5, 0.7])))
+            QuizResultsView(scores: [
+                (Question(question: "hi", answer: "bye"), 0.5),
+                (Question(question: "hi2", answer: "bye2"), 0.2)
+            ])
         }
     }
 }

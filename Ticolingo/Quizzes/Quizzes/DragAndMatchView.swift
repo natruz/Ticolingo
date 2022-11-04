@@ -45,7 +45,8 @@ struct DragAndMatchView: View {
                     }
                     .padding(.bottom, 20)
                     NavigationLink("Finish") {
-                        QuizResultsView(scores: scores)
+                        // TODO: Reimplement QuizResultsView
+//                        QuizResultsView(scores: scores)
                     }
                 }
                 .offset(y: 200)
