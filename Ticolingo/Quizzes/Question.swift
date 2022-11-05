@@ -29,6 +29,10 @@ class Question: Hashable, Identifiable {
     var questionType: QAType = .unspecified
     var answerType: QAType = .unspecified
 
+    var isEmpty: Bool {
+        self.answer == emptyIdentifier || self.question == emptyIdentifier
+    }
+
     init(question: String,
          answer: String,
          questionType: QAType = .unspecified,
