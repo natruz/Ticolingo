@@ -75,7 +75,7 @@ struct DragAndMatchView: QuizProtocolView {
                                                    back: .constant(""),
                                                    frontColor: .pink,
                                                    onFlip: { _ in .reject })
-                                .opacity(currentOptions[optionIndex].answer == emptyIdentifier ? 0 : (
+                                .opacity(currentOptions[optionIndex].isEmpty ? 0 : (
                                     pairedQuestions.contains(currentOptions[optionIndex]) ? 0 : 1
                                 ))
                             }
@@ -94,7 +94,7 @@ struct DragAndMatchView: QuizProtocolView {
                                                    back: .constant(""),
                                                    frontColor: .pink,
                                                    onFlip: { _ in .reject })
-                                .opacity(currentOptions[optionIndex].question == emptyIdentifier ? 0 : (
+                                .opacity(currentOptions[optionIndex].isEmpty ? 0 : (
                                     pairedQuestions.contains(currentOptions[optionIndex]) ? 0 : 1
                                 ))
                                 .offset(x: draggedCard == currentOptions[optionIndex] ? translation.width : 0,
@@ -205,6 +205,8 @@ struct DragAndMatchView: QuizProtocolView {
         generateNewOption()
         pairedQuestions = []
         attempts = [:]
+        completed = 0
+        wrong = 0
     }
 
     @Environment(\.presentationMode) var presentationMode
