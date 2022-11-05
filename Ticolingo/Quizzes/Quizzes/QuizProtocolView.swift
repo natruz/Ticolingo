@@ -111,33 +111,40 @@ extension QuizProtocolView {
 
     @ViewBuilder
     var endView: some View {
-        GeometryReader { geometry in
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    VStack {
-                        stats
-                    }
-                    .frame(width: geometry.size.width/2)
-                    Spacer()
-                }
-                Spacer()
+        List {
+            Section("Statistics") {
+                stats
+            }
 
-                VStack {
-                    Button("Restart") {
-                        restart()
-                    }
-                    Spacer().frame(height: 20)
-                    Button("Exit") {
-                        exit()
-                    }
-                    Spacer().frame(height: 20)
-                    NavigationLink("Results") {
-                        QuizResultsView(scores: turnAttemptsToScores())
+            Section {
+                Button {
+                    restart()
+                } label: {
+                    HStack {
+                        Image(systemName: "arrow.clockwise")
+                            .frame(width: 25)
+                        Text("Restart")
                     }
                 }
-                Spacer()
+                Button {
+                    exit()
+                } label: {
+                    HStack {
+                        Image(systemName: "chevron.backward.square")
+                            .frame(width: 25)
+                        Text("Exit")
+                    }
+                }
+                NavigationLink {
+                    QuizResultsView(scores: turnAttemptsToScores())
+                } label: {
+                    HStack {
+                        Image(systemName: "list.star")
+                            .frame(width: 25)
+                        Text("Results")
+                    }
+                    .foregroundColor(.accentColor)
+                }
             }
         }
     }
