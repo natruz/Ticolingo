@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct QuizSelectView: View {
-
+    
     @State var quizType: QuizType
     @State var set: StudySet
     @State var questions: [Question] = []
-
+    
     var body: some View {
         if #available(iOS 16.0, *) {
             content
@@ -21,14 +21,14 @@ struct QuizSelectView: View {
             content
         }
     }
-
+    
     var content: some View {
         List {
             Section {
                 QuizSelectTypeView(vocab: set.terms,
                                    questions: $questions)
             }
-
+            
             Section {
                 NavigationLink {
                     ZStack {
@@ -53,12 +53,14 @@ struct QuizSelectView: View {
                     }
                 }
             }
-
+            
             Section("Questions") {
                 ForEach(questions) { question in
                     VStack(alignment: .leading) {
                         Text(question.question)
+                            .foregroundColor(secondaryTextColour)
                         Text(question.answer)
+                            .foregroundColor(secondaryTextColour)
                     }
                 }
             }

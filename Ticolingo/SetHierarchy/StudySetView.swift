@@ -21,24 +21,32 @@ struct StudySetView: View {
                                    set: set)
                 } label: {
                     Text("Drag and Match Quiz")
+                        .bold()
+                        .foregroundColor(secondaryTextColour)
                 }
                 NavigationLink {
                     QuizSelectView(quizType: .memoryCards,
                                    set: set)
                 } label: {
                     Text("Memory Cards Quiz")
+                        .bold()
+                    .foregroundColor(secondaryTextColour)
                 }
                 NavigationLink {
                     QuizSelectView(quizType: .questionAnswer,
                                    set: set)
                 } label: {
                     Text("Question and Answer Quiz")
+                        .bold()
+                    .foregroundColor(secondaryTextColour)
                 }
                 NavigationLink {
                     QuizSelectView(quizType: .flashCards,
                                    set: set)
                 } label: {
                     Text("Flash Cards")
+                        .bold()
+                    .foregroundColor(secondaryTextColour)
                 }
             }
             Section {
@@ -46,8 +54,12 @@ struct StudySetView: View {
                     NavigationLink(destination: TermDetailView(term: term)) {
                         Text(term.familiarity ? "😃" : "☹️")
                         Text(term.term)
+                            .bold()
+                            .foregroundColor(tertiaryTextColour)
                         Text(term.pinyin)
+                            .bold()
                             .opacity(0.8)
+                            .foregroundColor(tertiaryTextColour)
                     }
                     .deleteDisabled(!set.editable)
                     .moveDisabled(!set.editable)

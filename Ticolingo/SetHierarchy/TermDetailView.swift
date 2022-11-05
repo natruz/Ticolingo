@@ -21,12 +21,15 @@ struct TermDetailView: View {
                         TextField("Enter Term", text: $term.term)
                             .autocorrectionDisabled()
                             .textInputAutocapitalization(.never)
+                            .foregroundColor(secondaryTextColour)
                             .font(.system(size: 30))
                     } else {
                         Text(term.term)
                             .font(.system(size: 30))
+                            .foregroundColor(tertiaryTextColour)
                     }
                     Text(term.pinyin)
+                        .foregroundColor(tertiaryTextColour)
                         .padding(.top, 3)
                 }
             }
@@ -53,8 +56,9 @@ struct TermDetailView: View {
                                 EmptyView()
                             }
                         }
-                        .foregroundColor(.gray)
+                        .foregroundColor(tertiaryTextColour)
                         Text(definition.asString())
+                            .foregroundColor(tertiaryTextColour)
                             .padding(.bottom, 5)
                     }
                 }
@@ -64,7 +68,9 @@ struct TermDetailView: View {
                 ForEach(Array(term.exampleSentences.enumerated()), id: \.offset.self) { index, exampleSentence in
                     HStack {
                         Image(systemName: "\(index + 1).circle")
+                            .foregroundColor(tertiaryTextColour)
                         Text("\(exampleSentence)")
+                            .foregroundColor(tertiaryTextColour)
                         Spacer()
                     }
                 }
@@ -74,7 +80,7 @@ struct TermDetailView: View {
                 // TODO: Find a way to get difficulty modifiable
                 VStack(alignment: .leading) {
                     Text("Difficulty: \(term.difficulty)/7")
-                        .foregroundColor(.gray)
+                        .foregroundColor(tertiaryTextColour)
                         .padding(.bottom, 1)
                     HStack {
                         ForEach(0..<term.difficulty, id: \.self ) { _ in
@@ -90,6 +96,7 @@ struct TermDetailView: View {
 
                 VStack(alignment: .leading) {
                     Text("How familiar are you with this word?")
+                        .foregroundColor(tertiaryTextColour)
                         .padding(.bottom, 1)
                 }
                 HStack {
