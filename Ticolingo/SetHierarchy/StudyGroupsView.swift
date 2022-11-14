@@ -87,7 +87,7 @@ struct SectionHeader: View {
 
     var body: some View {
         HStack {
-            ColText(studyGroup.name)
+            SecTitle(studyGroup.name)
             if !studyGroup.editable {
                 Image(systemName: "lock.fill")
             }

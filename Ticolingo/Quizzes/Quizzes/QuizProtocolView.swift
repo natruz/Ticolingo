@@ -112,7 +112,7 @@ extension QuizProtocolView {
     @ViewBuilder
     var endView: some View {
         List {
-            Section(header: ColText("Statistics")) {
+            Section(header: SecTitle("Statistics")) {
                 stats
             }
 

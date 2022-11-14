@@ -26,7 +26,7 @@ struct QuizSelectView: View {
     
     var content: some View {
         List {
-            Section(header: ColText("Select Quizzed Aspects")) {
+            Section(header: SecTitle("Select Quizzed Aspects")) {
                 QuizSelectTypeView(vocab: set.terms,
                                    questions: $questions)
             }
@@ -56,7 +56,7 @@ struct QuizSelectView: View {
                 }
             }
             
-            Section(header: ColText("Questions")) {
+            Section(header: SecTitle("Questions")) {
                 ForEach(questions) { question in
                     VStack(alignment: .leading) {
                         Text(question.question)

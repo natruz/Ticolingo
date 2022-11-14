@@ -31,7 +31,7 @@ class ColorManager: ObservableObject {
     @Published var secondaryFillerColour = Color(red: 202/255, green: 183/255, blue: 206/255)
 }
 
-struct ColText: View {
+struct SecTitle: View {
     @State var content: String
     @ObservedObject var colors: ColorManager = .shared
 

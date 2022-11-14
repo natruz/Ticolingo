@@ -33,7 +33,7 @@ struct NewVocabView: View {
                 }
             }
 
-            Section(header: ColText("Definitions")) {
+            Section(header: SecTitle("Definitions")) {
                 ForEach($definitions, id: \.self) { $definition in
                     TextField(text: $definition) {
                         Text("Definition")
@@ -84,7 +84,7 @@ struct NewVocabView: View {
                 }
             }
 
-            Section(header: ColText("Examples")) {
+            Section(header: SecTitle("Examples")) {
                 ForEach($examples, id: \.self) { $example in
                     TextField(text: $example) { Text("Example Sentence") }
                 }
