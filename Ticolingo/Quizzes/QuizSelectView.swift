@@ -24,7 +24,7 @@ struct QuizSelectView: View {
     
     var content: some View {
         List {
-            Section {
+            Section("Select Quizzed Aspects") {
                 QuizSelectTypeView(vocab: set.terms,
                                    questions: $questions)
             }
@@ -65,7 +65,21 @@ struct QuizSelectView: View {
                 }
             }
         }
-        .navigationTitle("Select Quiz Type")
+        .navigationTitle(quizTypeName)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    var quizTypeName: String {
+        switch quizType {
+        case .dragAndMatch:
+            return "Drag And Match"
+        case .memoryCards:
+            return "Memory Cards"
+        case .questionAnswer:
+            return "Question and Answer"
+        case .flashCards:
+            return "Flash Cards"
+        }
     }
 }
 
