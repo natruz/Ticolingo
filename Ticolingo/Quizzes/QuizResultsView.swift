@@ -66,65 +66,10 @@ struct QuizResultsView: View {
                     Button("Exit") {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .onChange(of: geometry.frame(in: .global)) { newValue in
-                        print("Scrol pos: \(newValue)")
-                        scroll = newValue
-                    }
-                    .onAppear {
-                        scroll = geometry.frame(in: .global)
-                    }
-                    .opacity(floatingExit ? 0.001 : 1)
-                }
-                .listRowBackground(floatingExit ? Color.clear : tableColor)
-            }
-        }
-        .overlay {
-            GeometryReader { geometry in
-                VStack {
-                    Spacer()
-                    Button("Exit") {
-
-                    }
-                    .onChange(of: geometry.frame(in: .local)) { newValue in
-                        print("Exit pos: \(newValue)")
-                        exitPos = newValue
-                    }
-                    .onAppear {
-                        exitPos = geometry.frame(in: .local)
-                    }
-                    .frame(height: 45)
-                    .frame(maxWidth: .infinity)
-                    .background(tableColor)
-                    .cornerRadius(10)
-                    .padding(.horizontal, 20)
-                    .shadow(color: Color.gray, radius: exitShadow * 10)
-                    .opacity(floatingExit ? 1 : 0)
-                    Spacer().frame(height: 20)
                 }
             }
         }
         .navigationTitle("Results")
-    }
-
-    @Environment(\.colorScheme) var colorScheme
-    var tableColor: Color {
-        colorScheme == .light ? Color.white : Color(uiColor: UIColor.systemGray6)
-    }
-
-    var floatingExit: Bool {
-        scroll.minY-scroll.height > exitPos.height || scroll == .zero
-    }
-
-    var exitShadow: CGFloat {
-        if scroll.minY-scroll.height > exitPos.height ||
-            scroll == .zero {
-            guard scroll != .zero else { return 1 }
-            // calculate shadow amount
-            difference = (scroll.minY-scroll.height) - exitPos.height
-            return min(1, difference/70)
-        } else {
-            return 0
-        }
     }
 }
 
