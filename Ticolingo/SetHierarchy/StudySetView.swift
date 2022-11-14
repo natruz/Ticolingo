@@ -11,7 +11,7 @@ struct StudySetView: View {
     
     @State var set: StudySet
 
-    @State var editing: Bool = false
+    @State var adding: Bool = false
     
     var body: some View {
         List {
@@ -74,6 +74,18 @@ struct StudySetView: View {
             }
         }
         .navigationTitle(set.title)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    adding.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+        .sheet(isPresented: $adding) {
+            NewVocabView(terms: $set.terms)
+        }
     }
 }
 
