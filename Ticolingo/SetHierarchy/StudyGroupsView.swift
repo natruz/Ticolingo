@@ -36,8 +36,10 @@ struct StudyGroupsView: View {
                             .deleteDisabled(!studyGroup.editable)
                             .moveDisabled(!studyGroup.editable)
                             .contextMenu {
-                                Button("Delete", role: .destructive) {
-                                    studyGroups.studyGroups.removeAll(where: { $0.id == studyGroup.id })
+                                if studyGroup.editable {
+                                    Button("Delete", role: .destructive) {
+                                        studyGroups.studyGroups.removeAll(where: { $0.id == studyGroup.id })
+                                    }
                                 }
                             }
                         }

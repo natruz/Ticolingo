@@ -9,9 +9,9 @@ import SwiftUI
 
 struct StudySetView: View {
     
-    @State var set: StudySet
+    @ObservedObject var set: StudySet
 
-    @State var editing: Bool = false
+    @State var adding: Bool = false
     
     var body: some View {
         List {
@@ -65,15 +65,28 @@ struct StudySetView: View {
                     .moveDisabled(!set.editable)
                 }
                 .onMove(perform: { index, moveTo in
-                    print("Tried to move \(index) to \(moveTo)")
+                    set.terms.move(fromOffsets: index, toOffset: moveTo)
                 })
                 .onDelete(perform: { index in
-
-                    print("Tried to delete \(index)")
+                    set.terms.remove(atOffsets: index)
                 })
             }
         }
         .navigationTitle(set.title)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                if set.editable {
+                    Button {
+                        adding.toggle()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $adding) {
+            NewVocabView(terms: $set.terms)
+        }
     }
 }
 

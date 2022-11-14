@@ -32,6 +32,7 @@
 		93159F8628D5A9C000C55C5A /* OtherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8528D5A9C000C55C5A /* OtherData.swift */; };
 		93159F8928D5AAF600C55C5A /* StudyGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8828D5AAF600C55C5A /* StudyGroups.swift */; };
 		93159F8B28D5ADFE00C55C5A /* StudyGroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93159F8A28D5ADFE00C55C5A /* StudyGroupsView.swift */; };
+		931FF0722921E20900F1952E /* PublisherCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931FF0712921E20900F1952E /* PublisherCodable.swift */; };
 		933CC90E28D6E3B000EC98A0 /* Definition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933CC90D28D6E3B000EC98A0 /* Definition.swift */; };
 		934E94D4290D002F00FF272F /* EditStudySetGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934E94D3290D002F00FF272F /* EditStudySetGroup.swift */; };
 		935277092913F97600471421 /* ResizableTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935277082913F97600471421 /* ResizableTextView.swift */; };
@@ -76,6 +77,7 @@
 		93159F8528D5A9C000C55C5A /* OtherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherData.swift; sourceTree = "<group>"; };
 		93159F8828D5AAF600C55C5A /* StudyGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroups.swift; sourceTree = "<group>"; };
 		93159F8A28D5ADFE00C55C5A /* StudyGroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyGroupsView.swift; sourceTree = "<group>"; };
+		931FF0712921E20900F1952E /* PublisherCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherCodable.swift; sourceTree = "<group>"; };
 		933CC90D28D6E3B000EC98A0 /* Definition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Definition.swift; sourceTree = "<group>"; };
 		934E94D3290D002F00FF272F /* EditStudySetGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStudySetGroup.swift; sourceTree = "<group>"; };
 		935277082913F97600471421 /* ResizableTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResizableTextView.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				93BABE79290CD2850091B65A /* NewVocabView.swift */,
 				934E94D3290D002F00FF272F /* EditStudySetGroup.swift */,
 				9311F8AD290D4B8600C646C6 /* ImportStudySetGroupView.swift */,
+				931FF0712921E20900F1952E /* PublisherCodable.swift */,
 			);
 			path = Adding;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				93813D1E28D6F11200A492D4 /* PreferencesView.swift in Sources */,
 				937048852903930D0073ED7B /* MemoryCardsView.swift in Sources */,
 				93159F7B28D5A70E00C55C5A /* QuizResultsView.swift in Sources */,
+				931FF0722921E20900F1952E /* PublisherCodable.swift in Sources */,
 				93BABE7A290CD2860091B65A /* NewVocabView.swift in Sources */,
 				93159F8B28D5ADFE00C55C5A /* StudyGroupsView.swift in Sources */,
 				93159F6828D59A9000C55C5A /* PinyinFormatter.swift in Sources */,

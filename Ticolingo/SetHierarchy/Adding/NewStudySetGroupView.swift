@@ -37,8 +37,6 @@ struct NewStudySetGroupView: View {
                         Text(studySet.title)
                     }
                 }
-                .onDelete(perform: { _ in })
-                .onMove(perform: { _,_ in })
                 HStack {
                     Spacer()
                     Button {
