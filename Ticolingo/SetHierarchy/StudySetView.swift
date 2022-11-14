@@ -65,11 +65,10 @@ struct StudySetView: View {
                     .moveDisabled(!set.editable)
                 }
                 .onMove(perform: { index, moveTo in
-                    print("Tried to move \(index) to \(moveTo)")
+                    set.terms.move(fromOffsets: index, toOffset: moveTo)
                 })
                 .onDelete(perform: { index in
-
-                    print("Tried to delete \(index)")
+                    set.terms.remove(atOffsets: index)
                 })
             }
         }
