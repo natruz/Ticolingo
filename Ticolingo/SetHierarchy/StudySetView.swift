@@ -76,10 +76,12 @@ struct StudySetView: View {
         .navigationTitle(set.title)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    adding.toggle()
-                } label: {
-                    Image(systemName: "plus")
+                if set.editable {
+                    Button {
+                        adding.toggle()
+                    } label: {
+                        Image(systemName: "plus")
+                    }
                 }
             }
         }
