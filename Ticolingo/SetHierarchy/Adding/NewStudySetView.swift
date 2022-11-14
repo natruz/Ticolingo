@@ -26,7 +26,7 @@ struct NewStudySetView: View {
                 }
             }
 
-            Section("Vocabulary") {
+            Section(header: ColText("Vocabulary")) {
                 ForEach($terms) { $term in
                     VStack(alignment: .leading) {
                         Text(term.term)

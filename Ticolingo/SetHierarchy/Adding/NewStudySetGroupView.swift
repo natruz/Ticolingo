@@ -31,7 +31,7 @@ struct NewStudySetGroupView: View {
                 }
             }
 
-            Section("Study Sets") {
+            Section(header: ColText("Study Sets")) {
                 ForEach(studySets) { studySet in
                     VStack {
                         Text(studySet.title)

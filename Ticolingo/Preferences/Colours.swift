@@ -30,3 +30,17 @@ class ColorManager: ObservableObject {
     @Published var primaryFillerColour = Color(red: 170/255, green: 137/255, blue: 191/255)
     @Published var secondaryFillerColour = Color(red: 202/255, green: 183/255, blue: 206/255)
 }
+
+struct ColText: View {
+    @State var content: String
+    @ObservedObject var colors: ColorManager = .shared
+
+    init(_ content: String) {
+        self.content = content
+    }
+
+    var body: some View {
+        Text(content)
+            .foregroundColor(colors.secondaryTextColour)
+    }
+}

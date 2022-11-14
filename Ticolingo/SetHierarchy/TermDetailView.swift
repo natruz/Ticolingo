@@ -38,7 +38,7 @@ struct TermDetailView: View {
                 }
             }
 
-            Section("Definitions") {
+            Section(header: ColText("Definitions")) {
                 VStack(alignment: .leading) {
                     ForEach(term.definition.toDefinition(), id: \.self) { definition in
                         ZStack {
@@ -68,7 +68,7 @@ struct TermDetailView: View {
                 }
             }
 
-            Section("Examples") {
+            Section(header: ColText("Examples")) {
                 ForEach(Array(term.exampleSentences.enumerated()), id: \.offset.self) { index, exampleSentence in
                     HStack {
                         Image(systemName: "\(index + 1).circle")

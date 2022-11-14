@@ -87,8 +87,7 @@ struct SectionHeader: View {
 
     var body: some View {
         HStack {
-            Text(studyGroup.name)
-                .foregroundColor(colors.secondaryTextColour)
+            ColText(studyGroup.name)
             if !studyGroup.editable {
                 Image(systemName: "lock.fill")
             }

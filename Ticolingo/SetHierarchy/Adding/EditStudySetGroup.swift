@@ -106,14 +106,14 @@ struct EditStudySetGroup: View {
                                 }
                             }
 
-                            Section("Preview") {
+                            Section(header: ColText("Preview")) {
                                 ScrollView(.vertical, showsIndicators: true) {
                                     Text(export)
                                 }
                                 .frame(height: 160)
                             }
 
-                            Section("Export Options") {
+                            Section(header: ColText("Export Options")) {
                                 Button("Save to Clipboard") {
                                     UIPasteboard.general.string = export
                                 }

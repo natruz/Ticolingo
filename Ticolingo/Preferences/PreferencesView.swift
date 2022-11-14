@@ -32,7 +32,7 @@ struct PreferencesView: View {
                     }
                 }
             }
-            Section("Color Scheme Picker") {
+            Section(header: ColText("Color Scheme Picker")) {
                 ColorPicker("Main Header Color", selection: .init(get: {
                     colors.primaryTextColour
                 }, set: {
