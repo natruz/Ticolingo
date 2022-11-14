@@ -51,8 +51,11 @@ struct StudySetView: View {
             }
             Section {
                 ForEach(set.terms) { term in
-                    NavigationLink(destination: TermDetailView(term: term)) {
-                        Text(term.familiarity ? "😃" : "☹️")
+                    NavigationLink {
+                        TermDetailView(set: .constant(set), term: term)
+                    } label: {
+                        Image(systemName: term.familiarity ? "square.fill" : "square")
+                            .foregroundColor(term.familiarity ? .green : .primary)
                         Text(term.term)
                             .bold()
                             .foregroundColor(tertiaryTextColour)

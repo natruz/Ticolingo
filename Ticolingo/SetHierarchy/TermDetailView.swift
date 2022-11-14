@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct TermDetailView: View {
+
+    @Binding var set: StudySet
     
-    @State var term: Vocab
+    @ObservedObject var term: Vocab
 
     @State var editing: Bool = false
     
@@ -95,7 +97,7 @@ struct TermDetailView: View {
                 }
 
                 VStack(alignment: .leading) {
-                    Text("How familiar are you with this word?")
+                    Text("Are you familiar with this word?")
                         .foregroundColor(tertiaryTextColour)
                         .padding(.bottom, 1)
                 }
@@ -104,11 +106,12 @@ struct TermDetailView: View {
                     Button {
                         print("sad")
                         term.familiarity = false
+                        set.objectWillChange.send()
                     } label: {
                         Text("☹️")
                             .font(.title)
                             .padding()
-                            .background(.red)
+                            .background(.red.opacity(term.familiarity ? 0.5 : 1))
                             .cornerRadius(15)
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -116,11 +119,12 @@ struct TermDetailView: View {
                     Button {
                         print("happy")
                         term.familiarity = true
+                        set.objectWillChange.send()
                     } label: {
                         Text("😃")
                             .font(.title)
                             .padding()
-                            .background(.green)
+                            .background(.green.opacity(term.familiarity ? 1 : 0.5))
                             .cornerRadius(15)
                     }
                     .buttonStyle(PlainButtonStyle())
@@ -143,7 +147,8 @@ struct TermDetailView: View {
 struct TermDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TermDetailView(term: Vocab(term: "中文",
+            TermDetailView(set: .constant(StudySet(title: "hi", terms: [])),
+                           term: Vocab(term: "中文",
                                        definition: "\(noun) Chinese, \(adj) IDK man",
                                        exampleSentences: ["我的家人都讲中文", "中文是最难的课"],
                                        difficulty: 1))
