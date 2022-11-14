@@ -88,11 +88,13 @@ struct MemoryCardsView: QuizProtocolView {
             let id = currentQAs[lineNo * 3 + colNo].1.id
             if id == selectedQuestion.id {
                 // MATCH
-                withAnimation {
-                    pastQuestions.append(currentQAs[lineNo * 3 + colNo].1)
-                    currentQAs[lineNo * 3 + colNo] = (emptyIdentifier, .empty())
-                    if let otherIndex = currentQAs.firstIndex(where: { $0.1.id == id }) {
-                        currentQAs[otherIndex] = (emptyIdentifier, .empty())
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    withAnimation {
+                        pastQuestions.append(currentQAs[lineNo * 3 + colNo].1)
+                        currentQAs[lineNo * 3 + colNo] = (emptyIdentifier, .empty())
+                        if let otherIndex = currentQAs.firstIndex(where: { $0.1.id == id }) {
+                            currentQAs[otherIndex] = (emptyIdentifier, .empty())
+                        }
                     }
                 }
                 // update the attempts and total completed
