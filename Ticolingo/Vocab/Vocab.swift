@@ -11,7 +11,7 @@ class Vocab: ObservableObject, Codable, Identifiable {
 
     var id = UUID()
 
-    var term: String                { didSet {
+    @Published var term: String                { didSet {
         if term.hasChineseCharacter {
             pinyin = term.toPinyin(withFormat: pyOutputFormat).transformDiacritics()
         } else {
@@ -19,13 +19,13 @@ class Vocab: ObservableObject, Codable, Identifiable {
         }
         StudyGroups.shared.save()
     }}
-    var pinyin: String              { didSet { StudyGroups.shared.save() } }
-    var definition: String          { didSet { StudyGroups.shared.save() } }
-    var exampleSentences: [String]  { didSet { StudyGroups.shared.save() } }
-    var difficulty: Int             { didSet { StudyGroups.shared.save() } }
-    var familiarity = false         { didSet { StudyGroups.shared.save() } }
+    @Published var pinyin: String              { didSet { StudyGroups.shared.save() } }
+    @Published var definition: String          { didSet { StudyGroups.shared.save() } }
+    @Published var exampleSentences: [String]  { didSet { StudyGroups.shared.save() } }
+    @Published var difficulty: Int             { didSet { StudyGroups.shared.save() } }
+    @Published var familiarity = false         { didSet { StudyGroups.shared.save() } }
 
-    var editable: Bool = true
+    @Published var editable: Bool = true
 
     init(term: String,
          pinyin: String? = nil,

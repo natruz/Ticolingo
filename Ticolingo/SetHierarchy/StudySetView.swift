@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StudySetView: View {
     
-    @State var set: StudySet
+    @ObservedObject var set: StudySet
 
     @State var adding: Bool = false
     

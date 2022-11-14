@@ -8,10 +8,10 @@
 import Foundation
 
 class StudySetGroup: ObservableObject, Codable, Identifiable {
-    var name: String        { didSet { StudyGroups.shared.save() } }
-    var sets: [StudySet]    { didSet { StudyGroups.shared.save() } }
+    @Published var name: String        { didSet { StudyGroups.shared.save() } }
+    @Published var sets: [StudySet]    { didSet { StudyGroups.shared.save() } }
 
-    var editable: Bool = true {
+    @Published var editable: Bool = true {
         didSet {
             for set in sets {
                 set.editable = editable
