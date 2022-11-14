@@ -11,6 +11,8 @@ struct PreferencesView: View {
     @State var showAlert: Bool = false
     @State var confirmProcessType: ProcessType = .none
 
+    @ObservedObject var colors: ColorManager = .shared
+
     enum ProcessType {
         case none
         case resetVocab
@@ -31,35 +33,35 @@ struct PreferencesView: View {
                 }
             }
             Section("Color Scheme Picker") {
-                ColorPicker("Primary Text Colour \(primaryTextColour.description)", selection: .init(get: {
-                    primaryTextColour
+                ColorPicker("Primary Text Colour \n\(colors.primaryTextColour.description)", selection: .init(get: {
+                    colors.primaryTextColour
                 }, set: {
-                    primaryTextColour = $0
+                    colors.primaryTextColour = $0
                 }))
-                ColorPicker("Secondary Text Colour \(secondaryTextColour.description)", selection: .init(get: {
-                    secondaryTextColour
+                ColorPicker("Secondary Text Colour \n\(colors.secondaryTextColour.description)", selection: .init(get: {
+                    colors.secondaryTextColour
                 }, set: {
-                    secondaryTextColour = $0
+                    colors.secondaryTextColour = $0
                 }))
-                ColorPicker("Tertiary Text Colour \(tertiaryTextColour.description)", selection: .init(get: {
-                    tertiaryTextColour
+                ColorPicker("Tertiary Text Colour \n\(colors.tertiaryTextColour.description)", selection: .init(get: {
+                    colors.tertiaryTextColour
                 }, set: {
-                    tertiaryTextColour = $0
+                    colors.tertiaryTextColour = $0
                 }))
-                ColorPicker("Background Colour \(backgroundColour.description)", selection: .init(get: {
-                    backgroundColour
+                ColorPicker("Background Colour \n\(colors.backgroundColour.description)", selection: .init(get: {
+                    colors.backgroundColour
                 }, set: {
-                    backgroundColour = $0
+                    colors.backgroundColour = $0
                 }))
-                ColorPicker("Primary Filler Colour \(primaryFillerColour.description)", selection: .init(get: {
-                    primaryFillerColour
+                ColorPicker("Primary Filler Colour \n\(colors.primaryFillerColour.description)", selection: .init(get: {
+                    colors.primaryFillerColour
                 }, set: {
-                    primaryFillerColour = $0
+                    colors.primaryFillerColour = $0
                 }))
-                ColorPicker("Secondary Filler Colour \(secondaryFillerColour.description)", selection: .init(get: {
-                    secondaryFillerColour
+                ColorPicker("Secondary Filler Colour \n\(colors.secondaryFillerColour.description)", selection: .init(get: {
+                    colors.secondaryFillerColour
                 }, set: {
-                    secondaryFillerColour = $0
+                    colors.secondaryFillerColour = $0
                 }))
             }
         }

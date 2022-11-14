@@ -12,14 +12,11 @@ struct StudyGroupsView: View {
     @ObservedObject
     var studyGroups: StudyGroups = .shared
 
+    @ObservedObject
+    var colors: ColorManager = .shared
+
     @State
     var showEditGroups: Bool = false
-
-    init() {
-        UISearchBar.appearance().tintColor = UIColor.init(primaryTextColour)
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.init(primaryTextColour)]
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.init(primaryTextColour)
-    }
 
     var body: some View {
         VStack {
@@ -30,9 +27,9 @@ struct StudyGroupsView: View {
                             NavigationLink(destination: StudySetView(set: studyset)) {
                                 Text(studyset.title)
                                     .bold()
-                                    .foregroundColor(tertiaryTextColour)
+                                    .foregroundColor(colors.tertiaryTextColour)
                             }
-                            .listRowBackground(secondaryFillerColour)
+                            .listRowBackground(colors.secondaryFillerColour)
                             .deleteDisabled(!studyGroup.editable)
                             .moveDisabled(!studyGroup.editable)
                             .contextMenu {
@@ -85,10 +82,13 @@ struct StudyGroupsView_Previews: PreviewProvider {
 struct SectionHeader: View {
     @State var studyGroup: StudySetGroup
 
+    @ObservedObject
+    var colors: ColorManager = .shared
+
     var body: some View {
         HStack {
             Text(studyGroup.name)
-                .foregroundColor(secondaryTextColour)
+                .foregroundColor(colors.secondaryTextColour)
             if !studyGroup.editable {
                 Image(systemName: "lock.fill")
             }

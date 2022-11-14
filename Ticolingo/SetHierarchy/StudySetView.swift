@@ -11,6 +11,8 @@ struct StudySetView: View {
     
     @ObservedObject var set: StudySet
 
+    @ObservedObject var colors: ColorManager = .shared
+
     @State var adding: Bool = false
     
     var body: some View {
@@ -22,7 +24,7 @@ struct StudySetView: View {
                 } label: {
                     Text("Drag and Match Quiz")
                         .bold()
-                        .foregroundColor(secondaryTextColour)
+                        .foregroundColor(colors.secondaryTextColour)
                 }
                 NavigationLink {
                     QuizSelectView(quizType: .memoryCards,
@@ -30,7 +32,7 @@ struct StudySetView: View {
                 } label: {
                     Text("Memory Cards Quiz")
                         .bold()
-                    .foregroundColor(secondaryTextColour)
+                        .foregroundColor(colors.secondaryTextColour)
                 }
                 NavigationLink {
                     QuizSelectView(quizType: .questionAnswer,
@@ -38,7 +40,7 @@ struct StudySetView: View {
                 } label: {
                     Text("Question and Answer Quiz")
                         .bold()
-                    .foregroundColor(secondaryTextColour)
+                        .foregroundColor(colors.secondaryTextColour)
                 }
                 NavigationLink {
                     QuizSelectView(quizType: .flashCards,
@@ -46,7 +48,7 @@ struct StudySetView: View {
                 } label: {
                     Text("Flash Cards")
                         .bold()
-                    .foregroundColor(secondaryTextColour)
+                        .foregroundColor(colors.secondaryTextColour)
                 }
             }
             Section {
@@ -58,11 +60,11 @@ struct StudySetView: View {
                             .foregroundColor(term.familiarity ? .green : .primary)
                         Text(term.term)
                             .bold()
-                            .foregroundColor(tertiaryTextColour)
+                            .foregroundColor(colors.tertiaryTextColour)
                         Text(term.pinyin)
                             .bold()
                             .opacity(0.8)
-                            .foregroundColor(tertiaryTextColour)
+                            .foregroundColor(colors.tertiaryTextColour)
                     }
                     .deleteDisabled(!set.editable)
                     .moveDisabled(!set.editable)

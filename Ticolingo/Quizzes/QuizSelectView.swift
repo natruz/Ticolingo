@@ -12,7 +12,9 @@ struct QuizSelectView: View {
     @State var quizType: QuizType
     @State var set: StudySet
     @State var questions: [Question] = []
-    
+
+    @ObservedObject var colors: ColorManager = .shared
+
     var body: some View {
         if #available(iOS 16.0, *) {
             content
@@ -58,9 +60,9 @@ struct QuizSelectView: View {
                 ForEach(questions) { question in
                     VStack(alignment: .leading) {
                         Text(question.question)
-                            .foregroundColor(secondaryTextColour)
+                            .foregroundColor(colors.secondaryTextColour)
                         Text(question.answer)
-                            .foregroundColor(secondaryTextColour)
+                            .foregroundColor(colors.secondaryTextColour)
                     }
                 }
             }
