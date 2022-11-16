@@ -23,32 +23,28 @@ struct StudySetView: View {
                                    set: set)
                 } label: {
                     Text("Drag and Match Quiz")
-                        .bold()
-                        .foregroundColor(colors.secondaryTextColour)
+                        .foregroundColor(colors.tertiaryTextColour)
                 }
                 NavigationLink {
                     QuizSelectView(quizType: .memoryCards,
                                    set: set)
                 } label: {
                     Text("Memory Cards Quiz")
-                        .bold()
-                        .foregroundColor(colors.secondaryTextColour)
+                        .foregroundColor(colors.tertiaryTextColour)
                 }
                 NavigationLink {
                     QuizSelectView(quizType: .questionAnswer,
                                    set: set)
                 } label: {
                     Text("Question and Answer Quiz")
-                        .bold()
-                        .foregroundColor(colors.secondaryTextColour)
+                        .foregroundColor(colors.tertiaryTextColour)
                 }
                 NavigationLink {
                     QuizSelectView(quizType: .flashCards,
                                    set: set)
                 } label: {
                     Text("Flash Cards")
-                        .bold()
-                        .foregroundColor(colors.secondaryTextColour)
+                        .foregroundColor(colors.tertiaryTextColour)
                 }
             }
             Section {
@@ -61,10 +57,8 @@ struct StudySetView: View {
                                 .foregroundColor(term.familiarity ? .green : .primary)
                             VStack(alignment: .leading) {
                                 Text(term.term)
-                                    .bold()
                                     .foregroundColor(colors.tertiaryTextColour)
                                 Text(term.pinyin)
-                                    .bold()
                                     .opacity(0.8)
                                     .foregroundColor(colors.tertiaryTextColour)
                             }

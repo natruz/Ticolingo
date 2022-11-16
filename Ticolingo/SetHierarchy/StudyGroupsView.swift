@@ -26,7 +26,6 @@ struct StudyGroupsView: View {
                         ForEach(studyGroup.sets) { studyset in
                             NavigationLink(destination: StudySetView(set: studyset)) {
                                 Text(studyset.title)
-                                    .bold()
                                     .foregroundColor(colors.tertiaryTextColour)
                             }
                             .listRowBackground(colors.secondaryFillerColour)

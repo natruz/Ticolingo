@@ -46,53 +46,8 @@ struct PreferencesView: View {
 //                ColorPicker("List Background Color",
 //                            selection: $colors.secondaryFillerColour)
 //            }
-            Section(header: SecTitle("Theme")) {
-                ForEach(ColorTheme.themes, id: \.name) { theme in
-                    VStack(alignment: .center) {
-                        Text(theme.name)
-                            .font(.title2)
-                        HStack {
-                            Group {
-                                Spacer()
-                                Circle()
-                                    .foregroundColor(theme.primaryTextColor)
-                                    .frame(width: 30, height: 30)
-                                Spacer()
-                            }
-                            Group {
-                                Circle()
-                                    .foregroundColor(theme.secondaryTextColour)
-                                    .frame(width: 30, height: 30)
-                                Spacer()
-                            }
-                            Group {
-                                Circle()
-                                    .foregroundColor(theme.tertiaryTextColour)
-                                    .frame(width: 30, height: 30)
-                                Spacer()
-                            }
-                            Group {
-                                Circle()
-                                    .foregroundColor(theme.backgroundColour)
-                                    .frame(width: 30, height: 30)
-                                Spacer()
-                            }
-                            Group {
-                                Circle()
-                                    .foregroundColor(theme.primaryFillerColour)
-                                    .frame(width: 30, height: 30)
-                                Spacer()
-                            }
-                            Group {
-                                Circle()
-                                    .foregroundColor(theme.secondaryFillerColour)
-                                    .frame(width: 30, height: 30)
-                                Spacer()
-                            }
-                        }
-                    }
-                }
-            }
+
+            themeChooser
         }
         .navigationTitle("Preferences")
         .alert(isPresented: $showAlert) {
@@ -117,6 +72,55 @@ struct PreferencesView: View {
                 return Alert(title: Text("Reset Complete"))
             default:
                 return Alert(title: Text("Alert Error"))
+            }
+        }
+    }
+
+    @ViewBuilder
+    var themeChooser: some View {
+        Section(header: SecTitle("Theme")) {
+            Text("Current theme: \(colors.currentThemeName)")
+            ForEach(ColorTheme.themes, id: \.name) { theme in
+                VStack(alignment: .center) {
+                    Text(theme.name)
+                        .font(.title2)
+                    HStack {
+                        Group {
+                            Spacer()
+                            Circle()
+                                .foregroundColor(theme.primaryTextColor)
+                                .frame(width: 30, height: 30)
+                            Spacer()
+                        }
+                        Group {
+                            Circle()
+                                .foregroundColor(theme.secondaryTextColour)
+                                .frame(width: 30, height: 30)
+                            Spacer()
+                        }
+                        Group {
+                            Circle()
+                                .foregroundColor(theme.tertiaryTextColour)
+                                .frame(width: 30, height: 30)
+                            Spacer()
+                        }
+                        Group {
+                            Circle()
+                                .foregroundColor(theme.primaryFillerColour)
+                                .frame(width: 30, height: 30)
+                            Spacer()
+                        }
+                        Group {
+                            Circle()
+                                .foregroundColor(theme.secondaryFillerColour)
+                                .frame(width: 30, height: 30)
+                            Spacer()
+                        }
+                    }
+                }
+                .onTapGesture {
+                    colors.switchToTheme(colorTheme: theme)
+                }
             }
         }
     }

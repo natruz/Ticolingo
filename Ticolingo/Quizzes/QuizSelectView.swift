@@ -60,9 +60,9 @@ struct QuizSelectView: View {
                 ForEach(questions) { question in
                     VStack(alignment: .leading) {
                         Text(question.question)
-                            .foregroundColor(colors.secondaryTextColour)
+                            .foregroundColor(colors.tertiaryTextColour)
                         Text(question.answer)
-                            .foregroundColor(colors.secondaryTextColour)
+                            .foregroundColor(colors.tertiaryTextColour)
                     }
                 }
             }

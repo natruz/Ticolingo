@@ -33,7 +33,8 @@ class ColorTheme {
 
 extension ColorTheme {
     static let themes: [ColorTheme] = [
-        .defaultPurple
+        .defaultPurple,
+        .defaultiOS
     ]
 
     static let defaultPurple: ColorTheme = .init("Default Purple",
@@ -42,4 +43,11 @@ extension ColorTheme {
                                                  tertiaryTextColour: Color(red: 194/255, green: 70/255, blue: 123/255),
                                                  primaryFillerColour: Color(red: 170/255, green: 137/255, blue: 191/255),
                                                  secondaryFillerColour: Color(red: 202/255, green: 183/255, blue: 206/255))
+
+    static let defaultiOS: ColorTheme = .init("Default iOS",
+                                              primaryTextColor: .black,
+                                              secondaryTextColour: .gray,
+                                              tertiaryTextColour: .black,
+                                              primaryFillerColour: .yellow,
+                                              secondaryFillerColour: .white)
 }
