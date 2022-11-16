@@ -79,47 +79,49 @@ struct PreferencesView: View {
     @ViewBuilder
     var themeChooser: some View {
         Section(header: SecTitle("Theme")) {
-            Text("Current theme: \(colors.currentThemeName)")
             ForEach(ColorTheme.themes, id: \.name) { theme in
-                VStack(alignment: .center) {
-                    Text(theme.name)
-                        .font(.title2)
+                Button {
+                    colors.currentTheme = theme
+                } label: {
                     HStack {
-                        Group {
-                            Spacer()
-                            Circle()
-                                .foregroundColor(theme.primaryTextColor)
-                                .frame(width: 30, height: 30)
-                            Spacer()
-                        }
-                        Group {
-                            Circle()
-                                .foregroundColor(theme.secondaryTextColour)
-                                .frame(width: 30, height: 30)
-                            Spacer()
-                        }
-                        Group {
-                            Circle()
-                                .foregroundColor(theme.tertiaryTextColour)
-                                .frame(width: 30, height: 30)
-                            Spacer()
-                        }
-                        Group {
-                            Circle()
-                                .foregroundColor(theme.primaryFillerColour)
-                                .frame(width: 30, height: 30)
-                            Spacer()
-                        }
-                        Group {
-                            Circle()
-                                .foregroundColor(theme.secondaryFillerColour)
-                                .frame(width: 30, height: 30)
-                            Spacer()
+                        Image(systemName: theme.name == colors.currentTheme?.name ? "circle.fill" : "circle")
+                        VStack(alignment: .center) {
+                            Text(theme.name)
+                            HStack {
+                                Group {
+                                    Spacer()
+                                    Circle()
+                                        .foregroundColor(theme.primaryTextColor)
+                                        .frame(width: 30, height: 30)
+                                    Spacer()
+                                }
+                                Group {
+                                    Circle()
+                                        .foregroundColor(theme.secondaryTextColour)
+                                        .frame(width: 30, height: 30)
+                                    Spacer()
+                                }
+                                Group {
+                                    Circle()
+                                        .foregroundColor(theme.tertiaryTextColour)
+                                        .frame(width: 30, height: 30)
+                                    Spacer()
+                                }
+                                Group {
+                                    Circle()
+                                        .foregroundColor(theme.primaryFillerColour)
+                                        .frame(width: 30, height: 30)
+                                    Spacer()
+                                }
+                                Group {
+                                    Circle()
+                                        .foregroundColor(theme.secondaryFillerColour)
+                                        .frame(width: 30, height: 30)
+                                    Spacer()
+                                }
+                            }
                         }
                     }
-                }
-                .onTapGesture {
-                    colors.switchToTheme(colorTheme: theme)
                 }
             }
         }
