@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+private var defaults = UserDefaults.standard
+
 class ColorManager: ObservableObject {
     static let shared: ColorManager = .init()
 
@@ -15,18 +17,25 @@ class ColorManager: ObservableObject {
         UISearchBar.appearance().tintColor = UIColor.init(primaryTextColour)
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.init(primaryTextColour)]
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.init(primaryTextColour)
-        currentTheme = ColorTheme.themes.first!
+        if let savedTheme = defaults.string(forKey: "currentTheme"),
+           let theme = ColorTheme.themes.first(where: { $0.name == savedTheme }) {
+            print("Saved theme loaded: \(savedTheme)")
+            currentTheme = theme
+        } else {
+            currentTheme = ColorTheme.themes.first!
+        }
     }
 
-    @Published var currentTheme: ColorTheme? {
+    @Published var currentTheme: ColorTheme = ColorTheme.themes.first! {
         didSet {
-            if let colorTheme = currentTheme {
-                self.primaryTextColour = colorTheme.primaryTextColor
-                self.secondaryTextColour = colorTheme.secondaryTextColour
-                self.tertiaryTextColour = colorTheme.tertiaryTextColour
-                self.primaryFillerColour = colorTheme.primaryFillerColour
-                self.secondaryFillerColour = colorTheme.secondaryFillerColour
-            }
+            defaults.set(currentTheme.name, forKey: "currentTheme")
+            print("Set current theme to \(currentTheme.name)")
+            print("Current theme: \(defaults.string(forKey: "currentTheme") ?? "none")")
+            self.primaryTextColour = currentTheme.primaryTextColor
+            self.secondaryTextColour = currentTheme.secondaryTextColour
+            self.tertiaryTextColour = currentTheme.tertiaryTextColour
+            self.primaryFillerColour = currentTheme.primaryFillerColour
+            self.secondaryFillerColour = currentTheme.secondaryFillerColour
         }
     }
     @Published private(set) var primaryTextColour: Color = .clear {

@@ -84,7 +84,7 @@ struct PreferencesView: View {
                     colors.currentTheme = theme
                 } label: {
                     HStack {
-                        Image(systemName: theme.name == colors.currentTheme?.name ? "circle.fill" : "circle")
+                        Image(systemName: theme.name == colors.currentTheme.name ? "circle.fill" : "circle")
                         VStack(alignment: .center) {
                             Text(theme.name)
                             HStack {
