@@ -24,7 +24,6 @@ class ColorManager: ObservableObject {
         self.primaryTextColour = colorTheme.primaryTextColor
         self.secondaryTextColour = colorTheme.secondaryTextColour
         self.tertiaryTextColour = colorTheme.tertiaryTextColour
-        self.backgroundColour = colorTheme.backgroundColour
         self.primaryFillerColour = colorTheme.primaryFillerColour
         self.secondaryFillerColour = colorTheme.secondaryFillerColour
     }
@@ -39,7 +38,6 @@ class ColorManager: ObservableObject {
     }
     @Published var secondaryTextColour: Color = .clear
     @Published var tertiaryTextColour: Color = .clear
-    @Published var backgroundColour: Color = .clear
     @Published var primaryFillerColour: Color = .clear
     @Published var secondaryFillerColour: Color = .clear
 }
