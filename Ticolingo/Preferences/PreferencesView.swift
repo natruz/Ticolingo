@@ -76,6 +76,9 @@ struct PreferencesView: View {
         }
     }
 
+    @State var showDetail: Bool = false
+    @State var detailTheme: ColorTheme = .themes.first! // NOTE: UNRELIABLE
+
     @ViewBuilder
     var themeChooser: some View {
         Section(header: SecTitle("Theme")) {
@@ -84,46 +87,87 @@ struct PreferencesView: View {
                     colors.currentTheme = theme
                 } label: {
                     HStack {
-                        Image(systemName: theme.name == colors.currentTheme.name ? "circle.fill" : "circle")
-                        VStack(alignment: .center) {
+                        VStack(alignment: .leading) {
                             Text(theme.name)
                             HStack {
-                                Group {
-                                    Spacer()
-                                    Circle()
-                                        .foregroundColor(theme.primaryTextColor)
-                                        .frame(width: 30, height: 30)
-                                    Spacer()
-                                }
-                                Group {
-                                    Circle()
-                                        .foregroundColor(theme.secondaryTextColour)
-                                        .frame(width: 30, height: 30)
-                                    Spacer()
-                                }
-                                Group {
-                                    Circle()
-                                        .foregroundColor(theme.tertiaryTextColour)
-                                        .frame(width: 30, height: 30)
-                                    Spacer()
-                                }
-                                Group {
-                                    Circle()
-                                        .foregroundColor(theme.primaryFillerColour)
-                                        .frame(width: 30, height: 30)
-                                    Spacer()
-                                }
-                                Group {
-                                    Circle()
-                                        .foregroundColor(theme.secondaryFillerColour)
-                                        .frame(width: 30, height: 30)
-                                    Spacer()
-                                }
+                                Circle()
+                                    .foregroundColor(theme.primaryTextColor)
+                                    .overlay { Circle().stroke(lineWidth: 1) }
+                                    .frame(width: 15, height: 15)
+                                Circle()
+                                    .foregroundColor(theme.secondaryTextColour)
+                                    .overlay { Circle().stroke(lineWidth: 1) }
+                                    .frame(width: 15, height: 15)
+                                Circle()
+                                    .foregroundColor(theme.tertiaryTextColour)
+                                    .overlay { Circle().stroke(lineWidth: 1) }
+                                    .frame(width: 15, height: 15)
+                                Circle()
+                                    .foregroundColor(theme.primaryFillerColour)
+                                    .overlay { Circle().stroke(lineWidth: 1) }
+                                    .frame(width: 15, height: 15)
+                                Circle()
+                                    .foregroundColor(theme.secondaryFillerColour)
+                                    .overlay { Circle().stroke(lineWidth: 1) }
+                                    .frame(width: 15, height: 15)
                             }
+                        }
+                        .foregroundColor(Color.primary)
+                        Spacer()
+                        if theme.name == colors.currentTheme.name {
+                            Image(systemName: "checkmark")
+                        }
+                    }
+                    .contextMenu {
+                        Button("Show Color Details") {
+                            detailTheme = theme
+                            showDetail = true
                         }
                     }
                 }
             }
+        }
+        .sheet(isPresented: $showDetail) {
+            if #available(iOS 16.0, *) {
+                List {
+                    ColorText("Main Header Color", color: detailTheme.primaryTextColor)
+                    ColorText("Section Header Color", color: detailTheme.secondaryTextColour)
+                    ColorText("Body Text Colour", color: detailTheme.tertiaryTextColour)
+                    ColorText("Primary Filler Colour (UNUSED)", color: detailTheme.primaryFillerColour)
+                    ColorText("List Background Color", color: detailTheme.secondaryFillerColour)
+                }
+                .presentationDetents([.medium])
+            } else {
+                // Fallback on earlier versions
+                List {
+                    ColorText("Main Header Color", color: detailTheme.primaryTextColor)
+                    ColorText("Section Header Color", color: detailTheme.secondaryTextColour)
+                    ColorText("Body Text Colour", color: detailTheme.tertiaryTextColour)
+                    ColorText("Primary Filler Colour (UNUSED)", color: detailTheme.primaryFillerColour)
+                    ColorText("List Background Color", color: detailTheme.secondaryFillerColour)
+                }
+            }
+        }
+    }
+}
+
+private struct ColorText: View {
+    var text: String
+    var color: Color
+
+    init(_ text: String, color: Color) {
+        self.text = text
+        self.color = color
+    }
+
+    var body: some View {
+        HStack {
+            Text(text)
+            Spacer()
+            Circle()
+                .foregroundColor(color)
+                .overlay { Circle().stroke(lineWidth: 1) }
+                .frame(width: 15, height: 15)
         }
     }
 }
