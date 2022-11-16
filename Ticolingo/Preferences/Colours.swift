@@ -31,16 +31,23 @@ class ColorManager: ObservableObject {
     @Published var secondaryFillerColour = Color(red: 202/255, green: 183/255, blue: 206/255)
 }
 
-struct SecTitle: View {
+struct SecTitle<Content: View>: View {
     @State var content: String
+    @State var trailing: () -> Content
     @ObservedObject var colors: ColorManager = .shared
 
-    init(_ content: String) {
+    init(_ content: String,
+         @ViewBuilder _ trailing: @escaping () -> Content = { EmptyView() }) {
         self.content = content
+        self.trailing = trailing
     }
 
     var body: some View {
-        Text(content)
-            .foregroundColor(colors.secondaryTextColour)
+        HStack {
+            Text(content)
+                .foregroundColor(colors.secondaryTextColour)
+            Spacer()
+            trailing()
+        }
     }
 }
