@@ -33,36 +33,18 @@ struct PreferencesView: View {
                 }
             }
             Section(header: SecTitle("Color Scheme Picker")) {
-                ColorPicker("Main Header Color", selection: .init(get: {
-                    colors.primaryTextColour
-                }, set: {
-                    colors.primaryTextColour = $0
-                }))
-                ColorPicker("Section Header Color", selection: .init(get: {
-                    colors.secondaryTextColour
-                }, set: {
-                    colors.secondaryTextColour = $0
-                }))
-                ColorPicker("Body Text Colour", selection: .init(get: {
-                    colors.tertiaryTextColour
-                }, set: {
-                    colors.tertiaryTextColour = $0
-                }))
-                ColorPicker("Background Colour (UNUSED)", selection: .init(get: {
-                    colors.backgroundColour
-                }, set: {
-                    colors.backgroundColour = $0
-                }))
-                ColorPicker("Primary Filler Colour (UNUSED)", selection: .init(get: {
-                    colors.primaryFillerColour
-                }, set: {
-                    colors.primaryFillerColour = $0
-                }))
-                ColorPicker("List Background Color", selection: .init(get: {
-                    colors.secondaryFillerColour
-                }, set: {
-                    colors.secondaryFillerColour = $0
-                }))
+                ColorPicker("Main Header Color",
+                            selection: $colors.primaryTextColour)
+                ColorPicker("Section Header Color",
+                            selection: $colors.secondaryTextColour)
+                ColorPicker("Body Text Colour",
+                            selection: $colors.tertiaryTextColour)
+                ColorPicker("Background Colour (UNUSED)",
+                            selection: $colors.backgroundColour)
+                ColorPicker("Primary Filler Colour (UNUSED)",
+                            selection: $colors.primaryFillerColour)
+                ColorPicker("List Background Color",
+                            selection: $colors.secondaryFillerColour)
             }
         }
         .navigationTitle("Preferences")
