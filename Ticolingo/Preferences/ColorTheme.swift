@@ -34,7 +34,9 @@ class ColorTheme {
 extension ColorTheme {
     static let themes: [ColorTheme] = [
         .defaultPurple,
-        .defaultiOS
+        .defaultiOS,
+        .defaultBeach,
+        .defaultForest
     ]
 
     static let defaultPurple: ColorTheme = .init("Default Purple",
@@ -50,4 +52,18 @@ extension ColorTheme {
                                               tertiaryTextColour: .black,
                                               primaryFillerColour: .yellow,
                                               secondaryFillerColour: .white)
+    
+    static let defaultBeach: ColorTheme = .init("Default Beach",
+                                                primaryTextColor: Color(red: 85/255, green: 155/225, blue: 163/255),
+                                                secondaryTextColour: Color(red: 79/255, green: 110/255, blue: 123/255),
+                                                tertiaryTextColour: Color(red: 8/255, green: 65/255, blue: 139/255),
+                                                primaryFillerColour: Color(red: 170/255, green: 137/255, blue: 191/255),
+                                                secondaryFillerColour: Color(red: 238/255, green: 204/255, blue: 154/255))
+     
+    static let defaultForest: ColorTheme = .init("Default Forest",
+                                                primaryTextColor: Color(red: 76/255, green: 142/225, blue: 23/255),
+                                                secondaryTextColour: Color(red: 79/255, green: 110/255, blue: 123/255),
+                                                tertiaryTextColour: Color(red: 32/255, green: 61/255, blue: 20/255),
+                                                primaryFillerColour: Color(red: 170/255, green: 137/255, blue: 191/255),
+                                                secondaryFillerColour: Color(red: 145/255, green: 191/255, blue: 109/255))
 }
