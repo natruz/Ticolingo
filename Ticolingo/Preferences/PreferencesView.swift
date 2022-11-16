@@ -32,19 +32,66 @@ struct PreferencesView: View {
                     }
                 }
             }
-            Section(header: SecTitle("Color Scheme Picker")) {
-                ColorPicker("Main Header Color",
-                            selection: $colors.primaryTextColour)
-                ColorPicker("Section Header Color",
-                            selection: $colors.secondaryTextColour)
-                ColorPicker("Body Text Colour",
-                            selection: $colors.tertiaryTextColour)
-                ColorPicker("Background Colour (UNUSED)",
-                            selection: $colors.backgroundColour)
-                ColorPicker("Primary Filler Colour (UNUSED)",
-                            selection: $colors.primaryFillerColour)
-                ColorPicker("List Background Color",
-                            selection: $colors.secondaryFillerColour)
+//            Section(header: SecTitle("Color Scheme Picker")) {
+//                ColorPicker("Main Header Color",
+//                            selection: $colors.primaryTextColour)
+//                ColorPicker("Section Header Color",
+//                            selection: $colors.secondaryTextColour)
+//                ColorPicker("Body Text Colour",
+//                            selection: $colors.tertiaryTextColour)
+//                ColorPicker("Background Colour (UNUSED)",
+//                            selection: $colors.backgroundColour)
+//                ColorPicker("Primary Filler Colour (UNUSED)",
+//                            selection: $colors.primaryFillerColour)
+//                ColorPicker("List Background Color",
+//                            selection: $colors.secondaryFillerColour)
+//            }
+            Section(header: SecTitle("Theme")) {
+                ForEach(ColorTheme.themes, id: \.name) { theme in
+                    VStack(alignment: .center) {
+                        Text(theme.name)
+                            .font(.title2)
+                        HStack {
+                            Group {
+                                Spacer()
+                                Circle()
+                                    .foregroundColor(theme.primaryTextColor)
+                                    .frame(width: 30, height: 30)
+                                Spacer()
+                            }
+                            Group {
+                                Circle()
+                                    .foregroundColor(theme.secondaryTextColour)
+                                    .frame(width: 30, height: 30)
+                                Spacer()
+                            }
+                            Group {
+                                Circle()
+                                    .foregroundColor(theme.tertiaryTextColour)
+                                    .frame(width: 30, height: 30)
+                                Spacer()
+                            }
+                            Group {
+                                Circle()
+                                    .foregroundColor(theme.backgroundColour)
+                                    .frame(width: 30, height: 30)
+                                Spacer()
+                            }
+                            Group {
+                                Circle()
+                                    .foregroundColor(theme.primaryFillerColour)
+                                    .frame(width: 30, height: 30)
+                                Spacer()
+                            }
+                            Group {
+                                Circle()
+                                    .foregroundColor(theme.secondaryFillerColour)
+                                    .frame(width: 30, height: 30)
+                                Spacer()
+                            }
+                        }
+                    }
+                }
             }
         }
         .navigationTitle("Preferences")

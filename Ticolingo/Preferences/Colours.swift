@@ -15,20 +15,33 @@ class ColorManager: ObservableObject {
         UISearchBar.appearance().tintColor = UIColor.init(primaryTextColour)
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.init(primaryTextColour)]
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.init(primaryTextColour)
+
+        switchToTheme(colorTheme: ColorTheme.themes.first!)
     }
 
-    @Published var primaryTextColour = Color(red: 246/255, green: 198/255, blue: 106/255) {
+    func switchToTheme(colorTheme: ColorTheme) {
+        self.currentThemeName = colorTheme.name
+        self.primaryTextColour = colorTheme.primaryTextColor
+        self.secondaryTextColour = colorTheme.secondaryTextColour
+        self.tertiaryTextColour = colorTheme.tertiaryTextColour
+        self.backgroundColour = colorTheme.backgroundColour
+        self.primaryFillerColour = colorTheme.primaryFillerColour
+        self.secondaryFillerColour = colorTheme.secondaryFillerColour
+    }
+
+    @Published var currentThemeName: String = ""
+    @Published var primaryTextColour: Color = .clear {
         didSet {
             UISearchBar.appearance().tintColor = UIColor.init(primaryTextColour)
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.init(primaryTextColour)]
             UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.init(primaryTextColour)
         }
     }
-    @Published var secondaryTextColour = Color(red: 120/255, green: 120/255, blue: 216/255)
-    @Published var tertiaryTextColour = Color(red: 194/255, green: 70/255, blue: 123/255)
-    @Published var backgroundColour = Color(red: 249/255, green: 241/255, blue: 251/255)
-    @Published var primaryFillerColour = Color(red: 170/255, green: 137/255, blue: 191/255)
-    @Published var secondaryFillerColour = Color(red: 202/255, green: 183/255, blue: 206/255)
+    @Published var secondaryTextColour: Color = .clear
+    @Published var tertiaryTextColour: Color = .clear
+    @Published var backgroundColour: Color = .clear
+    @Published var primaryFillerColour: Color = .clear
+    @Published var secondaryFillerColour: Color = .clear
 }
 
 struct SecTitle<Content: View>: View {

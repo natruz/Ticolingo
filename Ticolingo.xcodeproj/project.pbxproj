@@ -46,6 +46,7 @@
 		93BABE75290CC1310091B65A /* NewStudySetGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE74290CC1310091B65A /* NewStudySetGroupView.swift */; };
 		93BABE77290CC13C0091B65A /* NewStudySetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE76290CC13C0091B65A /* NewStudySetView.swift */; };
 		93BABE7A290CD2860091B65A /* NewVocabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BABE79290CD2850091B65A /* NewVocabView.swift */; };
+		93EB216F292487B70037EE22 /* ColorTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EB216E292487B70037EE22 /* ColorTheme.swift */; };
 		D98550F1290EB2E70013614B /* FlashcardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98550F0290EB2E70013614B /* FlashcardsView.swift */; };
 		D98550F3291236760013614B /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98550F2291236760013614B /* QuizView.swift */; };
 /* End PBXBuildFile section */
@@ -91,6 +92,7 @@
 		93BABE74290CC1310091B65A /* NewStudySetGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStudySetGroupView.swift; sourceTree = "<group>"; };
 		93BABE76290CC13C0091B65A /* NewStudySetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStudySetView.swift; sourceTree = "<group>"; };
 		93BABE79290CD2850091B65A /* NewVocabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewVocabView.swift; sourceTree = "<group>"; };
+		93EB216E292487B70037EE22 /* ColorTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTheme.swift; sourceTree = "<group>"; };
 		D98550F0290EB2E70013614B /* FlashcardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsView.swift; sourceTree = "<group>"; };
 		D98550F2291236760013614B /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -248,6 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				2E3DDF3128D0A3E100D3EC00 /* Colours.swift */,
+				93EB216E292487B70037EE22 /* ColorTheme.swift */,
 				93813D1D28D6F11200A492D4 /* PreferencesView.swift */,
 			);
 			path = Preferences;
@@ -355,6 +358,7 @@
 				2E3DDF3228D0A3E100D3EC00 /* Colours.swift in Sources */,
 				93159F6728D59A9000C55C5A /* HanziPinyinResource.swift in Sources */,
 				D98550F3291236760013614B /* QuizView.swift in Sources */,
+				93EB216F292487B70037EE22 /* ColorTheme.swift in Sources */,
 				933CC90E28D6E3B000EC98A0 /* Definition.swift in Sources */,
 				93B71B0828D6AADA00817750 /* StudyGroupsManager.swift in Sources */,
 				93813D1E28D6F11200A492D4 /* PreferencesView.swift in Sources */,
