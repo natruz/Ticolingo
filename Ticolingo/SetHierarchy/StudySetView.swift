@@ -56,15 +56,19 @@ struct StudySetView: View {
                     NavigationLink {
                         TermDetailView(set: .constant(set), term: term)
                     } label: {
-                        Image(systemName: term.familiarity ? "square.fill" : "square")
-                            .foregroundColor(term.familiarity ? .green : .primary)
-                        Text(term.term)
-                            .bold()
-                            .foregroundColor(colors.tertiaryTextColour)
-                        Text(term.pinyin)
-                            .bold()
-                            .opacity(0.8)
-                            .foregroundColor(colors.tertiaryTextColour)
+                        HStack {
+                            Image(systemName: term.familiarity ? "square.fill" : "square")
+                                .foregroundColor(term.familiarity ? .green : .primary)
+                            VStack(alignment: .leading) {
+                                Text(term.term)
+                                    .bold()
+                                    .foregroundColor(colors.tertiaryTextColour)
+                                Text(term.pinyin)
+                                    .bold()
+                                    .opacity(0.8)
+                                    .foregroundColor(colors.tertiaryTextColour)
+                            }
+                        }
                     }
                     .deleteDisabled(!set.editable)
                     .moveDisabled(!set.editable)
