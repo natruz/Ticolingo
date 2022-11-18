@@ -130,23 +130,31 @@ struct PreferencesView: View {
         .sheet(isPresented: $showDetail) {
             if #available(iOS 16.0, *) {
                 List {
-                    ColorText("Main Header Color", color: detailTheme.primaryTextColor)
-                    ColorText("Section Header Color", color: detailTheme.secondaryTextColour)
-                    ColorText("Body Text Colour", color: detailTheme.tertiaryTextColour)
-                    ColorText("Primary Filler Colour (UNUSED)", color: detailTheme.primaryFillerColour)
-                    ColorText("List Background Color", color: detailTheme.secondaryFillerColour)
+                    colorDetails
                 }
                 .presentationDetents([.medium])
             } else {
                 // Fallback on earlier versions
                 List {
-                    ColorText("Main Header Color", color: detailTheme.primaryTextColor)
-                    ColorText("Section Header Color", color: detailTheme.secondaryTextColour)
-                    ColorText("Body Text Colour", color: detailTheme.tertiaryTextColour)
-                    ColorText("Primary Filler Colour (UNUSED)", color: detailTheme.primaryFillerColour)
-                    ColorText("List Background Color", color: detailTheme.secondaryFillerColour)
+                    colorDetails
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    var colorDetails: some View {
+        Section(detailTheme.name) {
+            ColorText("Main Header Color",
+                      color: detailTheme.primaryTextColor)
+            ColorText("Section Header Color",
+                      color: detailTheme.secondaryTextColour)
+            ColorText("Body Text Colour",
+                      color: detailTheme.tertiaryTextColour)
+            ColorText("Primary Filler Colour (UNUSED)",
+                      color: detailTheme.primaryFillerColour)
+            ColorText("List Background Color",
+                      color: detailTheme.secondaryFillerColour)
         }
     }
 }
