@@ -30,6 +30,7 @@ struct QuizSelectTypeView: View {
                     }
                 }
             })
+            .foregroundColor(ColorManager.shared.tertiaryTextColour)
             .pickerStyle(.menu)
         }
         .onChange(of: questionFormat) { _ in
@@ -55,6 +56,7 @@ struct QuizSelectTypeView: View {
                     }
                 }
             })
+            .foregroundColor(ColorManager.shared.tertiaryTextColour)
             .pickerStyle(.menu)
         }
         .onChange(of: answerFormat) { _ in
