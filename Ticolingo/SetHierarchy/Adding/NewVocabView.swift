@@ -73,7 +73,9 @@ struct NewVocabView: View {
                     showDefinitionEdit = true
                 } label: {
                     HStack {
-                        Text("\(definition.defName):\n\(definition.wrappedString)")
+                        Text("\(definition.wrappedString)")
+                        Spacer()
+                        Text("\(definition.defName)")
                     }
                     .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
@@ -86,30 +88,12 @@ struct NewVocabView: View {
             })
         }
         .sheet(isPresented: $showDefinitionEdit) {
-            List {
-                Picker("Definition Type", selection: .init(get: { () -> Definition in
-                    definitions[definitionToEdit]
-                }, set: { newValue in
-                    definitions[definitionToEdit] = definitions[definitionToEdit]
-                        .changingDefinitionType(to: newValue)
-                })) {
-                    ForEach(Definition.allCases, id: \.self) { defType in
-                        Text(defType.defName)
-                    }
-                }
-
-                TextField("Definition", text: .init(get: {
-                    print("Read value: \(definitions[definitionToEdit].wrappedString) for \(definitionToEdit)")
-                    return definitions[definitionToEdit].wrappedString
-                }, set: { newValue in
-                    print("New value: \(newValue)")
-                    definitions[definitionToEdit] = definitions[definitionToEdit]
-                        .replacingWrappedString(with: newValue)
-                    print("Value afterward: \(definitions[definitionToEdit].wrappedString)")
-                }))
-                .onSubmit {
-                    showDefinitionEdit = false
-                }
+            if #available(iOS 16.0, *) {
+                definitionEditView
+                    .presentationDetents([.fraction(0.3), .medium])
+            } else {
+                // Fallback on earlier versions
+                definitionEditView
             }
         }
 
@@ -128,6 +112,7 @@ struct NewVocabView: View {
                     showExamplesEdit = true
                 } label: {
                     Text(example)
+                        .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
             }
             .onMove(perform: { index, moveTo in
@@ -138,16 +123,56 @@ struct NewVocabView: View {
             })
         }
         .sheet(isPresented: $showExamplesEdit) {
-            List {
-                Section {
-                    TextField("Example", text: .init(get: {
-                        examples[exampleToEdit]
-                    }, set: { newValue in
-                        examples[exampleToEdit] = newValue
-                    }))
-                    .onSubmit {
-                        showExamplesEdit = false
-                    }
+            if #available(iOS 16.0, *) {
+                exampleEditView
+                    .presentationDetents([.fraction(0.3), .medium])
+            } else {
+                // Fallback on earlier versions
+                exampleEditView
+            }
+        }
+    }
+
+    @ViewBuilder
+    var definitionEditView: some View {
+        List {
+            Picker("Definition Type", selection: .init(get: { () -> Definition in
+                definitions[definitionToEdit]
+            }, set: { newValue in
+                definitions[definitionToEdit] = definitions[definitionToEdit]
+                    .changingDefinitionType(to: newValue)
+            })) {
+                ForEach(Definition.allCases, id: \.self) { defType in
+                    Text(defType.defName)
+                }
+            }
+
+            TextField("Definition", text: .init(get: {
+                print("Read value: \(definitions[definitionToEdit].wrappedString) for \(definitionToEdit)")
+                return definitions[definitionToEdit].wrappedString
+            }, set: { newValue in
+                print("New value: \(newValue)")
+                definitions[definitionToEdit] = definitions[definitionToEdit]
+                    .replacingWrappedString(with: newValue)
+                print("Value afterward: \(definitions[definitionToEdit].wrappedString)")
+            }))
+            .onSubmit {
+                showDefinitionEdit = false
+            }
+        }
+    }
+
+    @ViewBuilder
+    var exampleEditView: some View {
+        List {
+            Section {
+                TextField("Example", text: .init(get: {
+                    examples[exampleToEdit]
+                }, set: { newValue in
+                    examples[exampleToEdit] = newValue
+                }))
+                .onSubmit {
+                    showExamplesEdit = false
                 }
             }
         }
