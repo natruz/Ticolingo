@@ -44,7 +44,9 @@ class StudyGroups: ObservableObject {
         } else {
             // If no study groups were specified, try to load from memory.
             // In this case, includeDefaults is ignored.
-            load()
+            DispatchQueue.main.async {
+                self.load()
+            }
             self.saveToMemory = true
         }
     }
