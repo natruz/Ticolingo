@@ -7,16 +7,31 @@
 
 import SwiftUI
 
+private let vocabTypes = [
+    "Verb",
+    "Noun",
+    "Adjective",
+    "Adverb",
+    "Idiom",
+    "Onomatopoea"
+]
+
 struct NewVocabView: View {
 
     @Binding var terms: [Vocab]
 
     @State var term: String = ""
-    @State var definitions: [String] = []
+    @State var definitions: [(String, String)] = []
     @State var difficulty: Int = 0
     @State var examples: [String] = []
 
     @State var newDefinitionPrefix: String = "Verb"
+
+    @State var showDefinitionEdit: Bool = false
+    @State var showExamplesEdit: Bool = false
+
+    @State var definitionToEdit: Int = 0
+    @State var exampleToEdit: Int = 0
 
     @Environment(\.presentationMode) var presentationMode
 
@@ -27,7 +42,8 @@ struct NewVocabView: View {
 
         Button("Create Vocabulary") {
             terms.append(Vocab(term: term,
-                               definition: definitions.joined(separator: ", "),
+                               definition: definitions.map({ "\($0)\($1)" })
+                                    .joined(separator: ", "),
                                exampleSentences: examples,
                                difficulty: difficulty))
             presentationMode.wrappedValue.dismiss()
@@ -50,14 +66,7 @@ struct NewVocabView: View {
 
         Section(header: SecTitle("Definitions") {
             Menu {
-                ForEach([
-                    "Verb",
-                    "Noun",
-                    "Adjective",
-                    "Adverb",
-                    "Idiom",
-                    "Onomatopoea"
-                ], id: \.self) { type in
+                ForEach(vocabTypes, id: \.self) { type in
                     Button("\(type) Definition") {
                         var newPrefix = verb
                         switch type {
@@ -69,16 +78,23 @@ struct NewVocabView: View {
                         case "Onomatopoea": newPrefix = sound
                         default: return
                         }
-                        definitions.append(newPrefix)
+                        definitions.append((newPrefix, ""))
                     }
                 }
             } label: {
                 Image(systemName: "plus")
             }
         }) {
-            ForEach($definitions, id: \.self) { $definition in
-                TextField(text: $definition) {
-                    Text("Definition")
+            ForEach(Array(definitions.enumerated()), id: \.0) { (index, definition) in
+                Button {
+                    definitionToEdit = index
+                    showDefinitionEdit = true
+                } label: {
+                    HStack {
+                        Text("\(definition.1)")
+                        Spacer()
+                        Text("\(definition.0)")
+                    }
                 }
             }
             .onMove(perform: { index, moveTo in
@@ -87,6 +103,44 @@ struct NewVocabView: View {
             .onDelete(perform: { index in
                 definitions.remove(atOffsets: index)
             })
+        }
+        .sheet(isPresented: $showDefinitionEdit) {
+            List {
+                Picker("Definition Type", selection: .init(get: { () -> String in
+                    let type = definitions[definitionToEdit].0
+                    switch type {
+                    case verb: return "Verb"
+                    case noun: return "Noun"
+                    case adj: return "Adjective"
+                    case advb: return "Adverb"
+                    case idiom: return "Idiom"
+                    case sound: return "Onomatopoea"
+                    default: return "ERROR"
+                    }
+                }, set: { newValue in
+                    var actualValue = "ERROR"
+                    switch newValue {
+                    case "Verb": actualValue = verb
+                    case "Noun": actualValue = noun
+                    case "Adjective": actualValue = adj
+                    case "Adverb": actualValue = advb
+                    case "Idiom": actualValue = idiom
+                    case "Onomatopoea": actualValue = sound
+                    default: actualValue = "ERROR"
+                    }
+                    definitions[definitionToEdit].0 = actualValue
+                })) {
+                    ForEach(vocabTypes, id: \.self) { defType in
+                        Text(defType)
+                    }
+                }
+
+                TextField("Definition", text: .init(get: {
+                    definitions[definitionToEdit].1
+                }, set: { newValue in
+                    definitions[definitionToEdit].1 = newValue
+                }))
+            }
         }
 
         Section(header: SecTitle("Examples") {
