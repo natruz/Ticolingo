@@ -96,12 +96,21 @@ struct MemoryCardsView: QuizProtocolView {
                             currentQAs[otherIndex] = (emptyIdentifier, .empty())
                         }
                     }
+
+                    // detect if currentQAs is empty
+                    if currentQAs.filter({ $0.0 != emptyIdentifier }).isEmpty {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                            newGridElements()
+                        }
+                    }
                 }
+
                 // update the attempts and total completed
                 let existingScore = attempts[selectedQuestion] ?? (0, 0)
                 attempts[selectedQuestion] = (existingScore.0, existingScore.1 + 1)
                 self.selectedQuestion = nil
                 completed += 1
+
                 return .none
             } else {
                 // NO MATCH
@@ -168,17 +177,18 @@ struct MemoryCardsView_Previews: PreviewProvider {
         NavigationView {
             MemoryCardsView(options: [
                 Question(question: "a", answer: "1"),
-                Question(question: "b", answer: "2")
-                //            Question(question: "c", answer: "3"),
-                //            Question(question: "d", answer: "4"),
-                //            Question(question: "e", answer: "5"),
-                //            Question(question: "f", answer: "6"),
-                //            Question(question: "g", answer: "7"),
-                //            Question(question: "h", answer: "8"),
-                //            Question(question: "i", answer: "9"),
-                //            Question(question: "j", answer: "10"),
-                //            Question(question: "k", answer: "11"),
-                //            Question(question: "l", answer: "12"),
+                Question(question: "b", answer: "2"),
+                Question(question: "c", answer: "3"),
+                Question(question: "d", answer: "4"),
+                Question(question: "e", answer: "5"),
+                Question(question: "f", answer: "6"),
+                Question(question: "g", answer: "7"),
+                Question(question: "h", answer: "8"),
+                Question(question: "i", answer: "9"),
+                Question(question: "j", answer: "10"),
+                Question(question: "k", answer: "11"),
+                Question(question: "l", answer: "12"),
+                Question(question: "m", answer: "13")
             ])
         }
     }
