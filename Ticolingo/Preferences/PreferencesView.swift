@@ -81,7 +81,7 @@ struct PreferencesView: View {
 
     @ViewBuilder
     var themeChooser: some View {
-        Section(header: SecTitle("Theme")) {
+        Section(header: SecTitle("Themes")) {
             ForEach(ColorTheme.themes, id: \.name) { theme in
                 Button {
                     colors.currentTheme = theme
