@@ -40,7 +40,7 @@ struct TermDetailView: View {
 
             Section(header: SecTitle("Definitions")) {
                 VStack(alignment: .leading) {
-                    ForEach(term.definition.toDefinition(), id: \.self) { definition in
+                    ForEach(term.definition, id: \.hashValue) { definition in
                         ZStack {
                             switch definition {
                             case .verb:

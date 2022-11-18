@@ -7,7 +7,8 @@
 
 import Foundation
 
-enum Definition: Hashable {
+enum Definition: Hashable, Codable {
+
     case verb(String)
     case noun(String)
     case adj(String)

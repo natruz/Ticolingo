@@ -20,7 +20,7 @@ class Vocab: ObservableObject, Codable, Identifiable {
         StudyGroups.shared.save()
     }}
     @Published var pinyin: String              { didSet { StudyGroups.shared.save() } }
-    @Published var definition: String          { didSet { StudyGroups.shared.save() } }
+    @Published var definition: [Definition]    { didSet { StudyGroups.shared.save() } }
     @Published var exampleSentences: [String]  { didSet { StudyGroups.shared.save() } }
     @Published var difficulty: Int             { didSet { StudyGroups.shared.save() } }
     @Published var familiarity = false         { didSet { StudyGroups.shared.save() } }
@@ -29,7 +29,7 @@ class Vocab: ObservableObject, Codable, Identifiable {
 
     init(term: String,
          pinyin: String? = nil,
-         definition: String,
+         definition: [Definition],
          exampleSentences: [String],
          difficulty: Int,
          editable: Bool = true
@@ -48,6 +48,22 @@ class Vocab: ObservableObject, Codable, Identifiable {
         self.exampleSentences = exampleSentences
         self.difficulty = difficulty
         self.editable = editable
+    }
+
+    convenience init(term: String,
+                     pinyin: String? = nil,
+                     definition: String,
+                     exampleSentences: [String],
+                     difficulty: Int,
+                     editable: Bool = true
+    ) {
+        let definition = definition.toDefinition()
+        self.init(term: term,
+                  pinyin: pinyin,
+                  definition: definition,
+                  exampleSentences: exampleSentences,
+                  difficulty: difficulty,
+                  editable: editable)
     }
 
     convenience init(term: String,

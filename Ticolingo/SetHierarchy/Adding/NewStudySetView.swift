@@ -32,8 +32,10 @@ struct NewStudySetView: View {
                     VStack(alignment: .leading) {
                         Text(term.term)
                             .foregroundColor(ColorManager.shared.tertiaryTextColour)
-                        Text(term.definition)
-                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
+                        ForEach(term.definition, id: \.hashValue) { definition in
+                            Text(definition.asString())
+                                .foregroundColor(ColorManager.shared.tertiaryTextColour)
+                        }
                         Text("\(term.exampleSentences.count) Examples")
                             .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Picker(selection: $term.difficulty) {
