@@ -69,13 +69,9 @@ struct TermDetailView: View {
                         .foregroundColor(colors.tertiaryTextColour)
                         .padding(.bottom, 1)
                     HStack {
-                        ForEach(0..<term.difficulty, id: \.self ) { _ in
+                        ForEach(0..<7) { index in
                             Image(systemName: "star.fill")
-                                .foregroundColor(.yellow)
-                        }
-                        ForEach(term.difficulty..<7, id: \.self) { _ in
-                            Image(systemName: "star.fill")
-                                .foregroundColor(.gray)
+                                .foregroundColor(term.difficulty <= index ? .gray : .yellow)
                         }
                     }
                 }

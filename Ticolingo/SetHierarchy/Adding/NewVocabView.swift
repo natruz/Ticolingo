@@ -27,7 +27,7 @@ struct NewVocabView: View {
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        Form {
+        List {
             content
         }
 
@@ -45,14 +45,36 @@ struct NewVocabView: View {
     var content: some View {
         Section {
             TextField(text: $term) { Text("Term") }
-            Picker(selection: $difficulty) {
-                ForEach(0..<7) { index in
-                    Text("\(index+1)")
-                        .foregroundColor(ColorManager.shared.tertiaryTextColour)
-                }
-            } label: {
-                Text("Difficulty")
+            VStack(alignment: .leading) {
+                Text("Difficulty: \(difficulty)/7")
                     .foregroundColor(ColorManager.shared.tertiaryTextColour)
+                    .padding(.bottom, 1)
+                HStack {
+                    ForEach(0..<7) { index in
+                        Image(systemName: "star.fill")
+                            .foregroundColor(difficulty <= index ? .gray : .yellow)
+                    }
+                }
+                .overlay {
+                    GeometryReader { geometry in
+                        Color.white.opacity(0.001)
+                            .gesture(DragGesture(minimumDistance: 0)
+                                .onChanged{ gesture in
+                                    let segmentWidth = geometry.size.width/7
+                                    let location = Int(gesture.location.x/segmentWidth)
+                                    withAnimation(.linear(duration: 0.1)) {
+                                        difficulty = max(0, min(location+1, 7))
+                                    }
+                                }
+                                .onEnded { gesture in
+                                    let segmentWidth = geometry.size.width/7
+                                    let location = Int(gesture.location.x/segmentWidth)
+                                    withAnimation(.linear(duration: 0.1)) {
+                                        difficulty = max(0, min(location+1, 7))
+                                    }
+                                })
+                    }
+                }
             }
         }
 
