@@ -7,21 +7,12 @@
 
 import SwiftUI
 
-private let vocabTypes = [
-    "Verb",
-    "Noun",
-    "Adjective",
-    "Adverb",
-    "Idiom",
-    "Onomatopoea"
-]
-
 struct NewVocabView: View {
 
     @Binding var terms: [Vocab]
 
     @State var term: String = ""
-    @State var definitions: [(String, String)] = []
+    @State var definitions: [Definition] = []
     @State var difficulty: Int = 0
     @State var examples: [String] = []
 
@@ -42,8 +33,7 @@ struct NewVocabView: View {
 
         Button("Create Vocabulary") {
             terms.append(Vocab(term: term,
-                               definition: definitions.map({ "\($0)\($1)" })
-                                    .joined(separator: ", "),
+                               definition: definitions,
                                exampleSentences: examples,
                                difficulty: difficulty))
             presentationMode.wrappedValue.dismiss()
@@ -68,19 +58,9 @@ struct NewVocabView: View {
 
         Section(header: SecTitle("Definitions") {
             Menu {
-                ForEach(vocabTypes, id: \.self) { type in
-                    Button("\(type) Definition") {
-                        var newPrefix = verb
-                        switch type {
-                        case "Verb": newPrefix = verb
-                        case "Noun": newPrefix = noun
-                        case "Adjective": newPrefix = adj
-                        case "Adverb": newPrefix = advb
-                        case "Idiom": newPrefix = idiom
-                        case "Onomatopoea": newPrefix = sound
-                        default: return
-                        }
-                        definitions.append((newPrefix, ""))
+                ForEach(Definition.allCases, id: \.self) { type in
+                    Button("\(type.defName) Definition") {
+                        definitions.append(type.replacingWrappedString(with: ""))
                     }
                 }
             } label: {
@@ -93,9 +73,7 @@ struct NewVocabView: View {
                     showDefinitionEdit = true
                 } label: {
                     HStack {
-                        Text("\(definition.1)")
-                        Spacer()
-                        Text("\(definition.0)")
+                        Text("\(definition.defName):\n\(definition.wrappedString)")
                     }
                     .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
@@ -109,39 +87,25 @@ struct NewVocabView: View {
         }
         .sheet(isPresented: $showDefinitionEdit) {
             List {
-                Picker("Definition Type", selection: .init(get: { () -> String in
-                    let type = definitions[definitionToEdit].0
-                    switch type {
-                    case verb: return "Verb"
-                    case noun: return "Noun"
-                    case adj: return "Adjective"
-                    case advb: return "Adverb"
-                    case idiom: return "Idiom"
-                    case sound: return "Onomatopoea"
-                    default: return "ERROR"
-                    }
+                Picker("Definition Type", selection: .init(get: { () -> Definition in
+                    definitions[definitionToEdit]
                 }, set: { newValue in
-                    var actualValue = "ERROR"
-                    switch newValue {
-                    case "Verb": actualValue = verb
-                    case "Noun": actualValue = noun
-                    case "Adjective": actualValue = adj
-                    case "Adverb": actualValue = advb
-                    case "Idiom": actualValue = idiom
-                    case "Onomatopoea": actualValue = sound
-                    default: actualValue = "ERROR"
-                    }
-                    definitions[definitionToEdit].0 = actualValue
+                    definitions[definitionToEdit] = definitions[definitionToEdit]
+                        .changingDefinitionType(to: newValue)
                 })) {
-                    ForEach(vocabTypes, id: \.self) { defType in
-                        Text(defType)
+                    ForEach(Definition.allCases, id: \.self) { defType in
+                        Text(defType.defName)
                     }
                 }
 
                 TextField("Definition", text: .init(get: {
-                    definitions[definitionToEdit].1
+                    print("Read value: \(definitions[definitionToEdit].wrappedString) for \(definitionToEdit)")
+                    return definitions[definitionToEdit].wrappedString
                 }, set: { newValue in
-                    definitions[definitionToEdit].1 = newValue
+                    print("New value: \(newValue)")
+                    definitions[definitionToEdit] = definitions[definitionToEdit]
+                        .replacingWrappedString(with: newValue)
+                    print("Value afterward: \(definitions[definitionToEdit].wrappedString)")
                 }))
                 .onSubmit {
                     showDefinitionEdit = false

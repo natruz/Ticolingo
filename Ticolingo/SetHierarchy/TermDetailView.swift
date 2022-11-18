@@ -41,27 +41,9 @@ struct TermDetailView: View {
             Section(header: SecTitle("Definitions")) {
                 VStack(alignment: .leading) {
                     ForEach(term.definition, id: \.hashValue) { definition in
-                        ZStack {
-                            switch definition {
-                            case .verb:
-                                Text("Verb: ")
-                            case .noun:
-                                Text("Noun: ")
-                            case .adj:
-                                Text("Adjective: ")
-                            case .advb:
-                                Text("Adverb: ")
-                            case .idiom:
-                                Text("Idiom: ")
-                            case .sound:
-                                Text("Onomatopoea: ")
-                            case .unknown:
-                                // just don't show anything
-                                EmptyView()
-                            }
-                        }
+                        Text(definition.defName)
                         .foregroundColor(colors.tertiaryTextColour)
-                        Text(definition.asString())
+                        Text(definition.wrappedString)
                             .foregroundColor(colors.tertiaryTextColour)
                             .padding(.bottom, 5)
                     }

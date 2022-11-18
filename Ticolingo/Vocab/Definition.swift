@@ -9,6 +9,15 @@ import Foundation
 
 enum Definition: Hashable, Codable {
 
+    static let allCases: [Definition] = [
+        .verb(""),
+        .noun(""),
+        .adj(""),
+        .advb(""),
+        .idiom(""),
+        .sound(""),
+    ]
+
     case verb(String)
     case noun(String)
     case adj(String)
@@ -18,7 +27,26 @@ enum Definition: Hashable, Codable {
 
     case unknown(String)
 
-    func asString() -> String {
+    var defName: String {
+        switch self {
+        case .verb(_):
+            return "Verb"
+        case .noun(_):
+            return "Noun"
+        case .adj(_):
+            return "Adjective"
+        case .advb(_):
+            return "Adverb"
+        case .idiom(_):
+            return "Idiom"
+        case .sound(_):
+            return "Onomatopoea"
+        case .unknown(_):
+            return ""
+        }
+    }
+
+    var wrappedString: String {
         var asString = ""
         switch self {
         case .verb(let string):
@@ -37,6 +65,29 @@ enum Definition: Hashable, Codable {
             asString = string
         }
         return asString.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    func replacingWrappedString(with newValue: String) -> Definition {
+        switch self {
+        case .verb(_):
+            return .verb(newValue)
+        case .noun(_):
+            return .noun(newValue)
+        case .adj(_):
+            return .adj(newValue)
+        case .advb(_):
+            return .advb(newValue)
+        case .idiom(_):
+            return .idiom(newValue)
+        case .sound(_):
+            return .sound(newValue)
+        case .unknown(_):
+            return .unknown(newValue)
+        }
+    }
+
+    func changingDefinitionType(to newType: Definition) -> Definition {
+        return newType.replacingWrappedString(with: self.wrappedString)
     }
 }
 

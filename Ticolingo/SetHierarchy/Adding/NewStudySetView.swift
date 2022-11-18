@@ -33,7 +33,7 @@ struct NewStudySetView: View {
                         Text(term.term)
                             .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         ForEach(term.definition, id: \.hashValue) { definition in
-                            Text(definition.asString())
+                            Text(definition.wrappedString)
                                 .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         }
                         Text("\(term.exampleSentences.count) Examples")

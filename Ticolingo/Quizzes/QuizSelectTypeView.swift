@@ -84,7 +84,7 @@ struct QuizSelectTypeView: View {
             case .pinYin:
                 question = vocab.pinyin
             case .definition:
-                question = vocab.definition.randomElement()?.asString() ?? "No Definition"
+                question = vocab.definition.randomElement()?.wrappedString ?? "No Definition"
             default: break
             }
 
@@ -94,7 +94,7 @@ struct QuizSelectTypeView: View {
             case .pinYin:
                 answer = vocab.pinyin
             case .definition:
-                answer = vocab.definition.randomElement()?.asString() ?? "No Definition"
+                answer = vocab.definition.randomElement()?.wrappedString ?? "No Definition"
             default: break
             }
 
