@@ -42,9 +42,11 @@ struct NewVocabView: View {
             Picker(selection: $difficulty) {
                 ForEach(0..<7) { index in
                     Text("\(index+1)")
+                        .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
             } label: {
                 Text("Difficulty")
+                    .foregroundColor(ColorManager.shared.tertiaryTextColour)
             }
         }
 
@@ -79,6 +81,7 @@ struct NewVocabView: View {
             ForEach($definitions, id: \.self) { $definition in
                 TextField(text: $definition) {
                     Text("Definition")
+                        .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
             }
             .onMove(perform: { index, moveTo in

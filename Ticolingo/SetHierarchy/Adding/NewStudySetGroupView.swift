@@ -25,9 +25,11 @@ struct NewStudySetGroupView: View {
             Section {
                 TextField(text: $studyGroupName) {
                     Text("Name of Study Group")
+                        .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
                 Toggle(isOn: $isEditable) {
                     Text("Is Editable")
+                        .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
             }
 

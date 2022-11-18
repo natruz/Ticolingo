@@ -24,9 +24,11 @@ struct QuizResultsView: View {
                         VStack(alignment: .leading) {
                             Spacer()
                             Text(question.question)
+                                .foregroundColor(ColorManager.shared.tertiaryTextColour)
                                 .font(.system(size: 20))
                             Spacer()
                             Text(question.answer)
+                                .foregroundColor(ColorManager.shared.tertiaryTextColour)
                                 .font(.system(size: 15))
                                 .opacity(0.8)
                             Spacer()
@@ -41,6 +43,7 @@ struct QuizResultsView: View {
                             // turns the Double score into an integer percentage
                             if let score = score {
                                 Text("\(Int((score*Double(100)).rounded()))%")
+                                    .foregroundColor(ColorManager.shared.tertiaryTextColour)
                                 Circle()
                                     .trim(from: 0, to: score)
                                     .stroke(
@@ -54,6 +57,7 @@ struct QuizResultsView: View {
                                     .animation(.easeOut, value: score)
                             } else {
                                 Text("?")
+                                    .foregroundColor(ColorManager.shared.tertiaryTextColour)
                             }
                         }
                         .frame(width: 60, height: 60)

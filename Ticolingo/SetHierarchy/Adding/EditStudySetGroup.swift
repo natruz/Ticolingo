@@ -29,10 +29,12 @@ struct EditStudySetGroup: View {
                 ForEach($studyGroups.studyGroups) { $studyGroup in
                     HStack {
                         Text(studyGroup.name)
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Image(systemName: "lock.fill")
                             .opacity(studyGroup.editable ? 0.01 : 1)
                         Spacer()
                         Text("\(studyGroup.sets.count) Sets")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     }
                     .contextMenu {
                         if studyGroup.editable {
@@ -121,9 +123,11 @@ struct EditStudySetGroup: View {
                         }
                     } else {
                         Text("Failed to export")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     }
                 } else {
                     Text("No selected study group")
+                        .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
             }
 
