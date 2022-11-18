@@ -37,6 +37,9 @@ struct FlashcardsView: QuizProtocolView {
     @State var cardOffset: CGSize = .zero
     @State var cardScale: CGSize = .one
     
+    @ObservedObject
+    var colors: ColorManager = .shared
+    
     var body: some View {
         VStack {
             if completed < total {
@@ -69,6 +72,7 @@ struct FlashcardsView: QuizProtocolView {
                             return .reject
                         }).frame(width: 50, height: 80)
                         Text("Familiar")
+                            .foregroundColor(colors.tertiaryTextColour)
                             .offset(x: -65)
                     }
                     Spacer()
@@ -80,6 +84,7 @@ struct FlashcardsView: QuizProtocolView {
                             return .reject
                         }).frame(width: 50, height: 80)
                         Text("Unfamiliar")
+                            .foregroundColor(colors.tertiaryTextColour)
                             .offset(x: 75)
                     }
                     Spacer()

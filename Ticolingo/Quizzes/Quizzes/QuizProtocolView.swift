@@ -64,6 +64,7 @@ enum Stat: CaseIterable {
 }
 
 extension QuizProtocolView {
+
     @ViewBuilder
     /// A stat view, which provides statistics according to the ``statsToShow`` variable.
     /// Does not wrap the stats in a `HStack`, `VStack`, etc. so it is up to the developer
@@ -80,28 +81,38 @@ extension QuizProtocolView {
                     case .total:
                         Text("Total")
                             .padding(.bottom, 0)
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Text("\(total)")
                             .font(.system(size: 30))
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     case .completed:
                         Text("Done")
                             .padding(.bottom, 0)
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Text("\(completed)")
                             .font(.system(size: 30))
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     case .remaining:
                         Text("Left")
                             .padding(.bottom, 0)
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Text("\(total-completed)")
                             .font(.system(size: 30))
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     case .wrong:
                         Text("Wrong")
                             .padding(.bottom, 0)
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Text("\(wrong ?? 0)")
                             .font(.system(size: 30))
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     case .correct:
                         Text("Right")
                             .padding(.bottom, 0)
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Text("\(correct ?? 0)")
                             .font(.system(size: 30))
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     }
                 }
             }
@@ -124,6 +135,7 @@ extension QuizProtocolView {
                         Image(systemName: "arrow.clockwise")
                             .frame(width: 25)
                         Text("Restart")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     }
                 }
                 Button {
@@ -133,6 +145,7 @@ extension QuizProtocolView {
                         Image(systemName: "chevron.backward.square")
                             .frame(width: 25)
                         Text("Exit")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     }
                 }
                 NavigationLink {
@@ -142,6 +155,7 @@ extension QuizProtocolView {
                         Image(systemName: "list.star")
                             .frame(width: 25)
                         Text("Results")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     }
                     .foregroundColor(.accentColor)
                 }

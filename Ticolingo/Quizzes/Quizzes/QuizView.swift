@@ -23,6 +23,9 @@ struct QuizView: QuizProtocolView {
     @State var wrongQuestions: [Question]
 
     @State var isCorrect: Bool?
+    
+    @ObservedObject
+    var colors: ColorManager = .shared
 
     init(options: [Question], randomised: Bool = false) {
         self._total = State(initialValue: options.count)
@@ -98,7 +101,9 @@ struct QuizView: QuizProtocolView {
                 VStack {
                     Text(isCorrect ? "Correct!" : "Incorrect")
                         .font(.largeTitle)
+                        .foregroundColor(colors.primaryTextColour)
                     Text("Correct option:")
+                        .foregroundColor(colors.secondaryTextColour)
                         .font(.title2)
                         .padding(20)
                     ResizableTextView(.constant(options[completed].0.answer))

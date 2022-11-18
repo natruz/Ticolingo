@@ -23,6 +23,7 @@ struct NewStudySetView: View {
             Section {
                 TextField(text: $studySetTitle) {
                     Text("Name of Set")
+                        .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
             }
 
@@ -30,14 +31,19 @@ struct NewStudySetView: View {
                 ForEach($terms) { $term in
                     VStack(alignment: .leading) {
                         Text(term.term)
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Text(term.definition)
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Text("\(term.exampleSentences.count) Examples")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         Picker(selection: $term.difficulty) {
                             ForEach(0..<7) { index in
                                 Text("\(index+1)")
+                                    .foregroundColor(ColorManager.shared.tertiaryTextColour)
                             }
                         } label: {
                             Text("Difficulty")
+                                .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         }
                     }
                 }

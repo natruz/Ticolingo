@@ -21,8 +21,11 @@ struct QuizSelectTypeView: View {
                 ForEach(QAType.allRealCases, id: \.self) { format in
                     switch format {
                     case .character: Text("Character")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     case .pinYin: Text("PinYin")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     case .definition: Text("Definition")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     default: EmptyView()
                     }
                 }
@@ -43,8 +46,11 @@ struct QuizSelectTypeView: View {
                 ForEach(QAType.allRealCases, id: \.self) { format in
                     switch format {
                     case .character: Text("Character")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     case .pinYin: Text("PinYin")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     case .definition: Text("Definition")
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     default: EmptyView()
                     }
                 }
