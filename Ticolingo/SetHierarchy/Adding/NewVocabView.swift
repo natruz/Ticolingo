@@ -140,6 +140,9 @@ struct NewVocabView: View {
                 }, set: { newValue in
                     definitions[definitionToEdit].1 = newValue
                 }))
+                .onSubmit {
+                    showDefinitionEdit = false
+                }
             }
         }
 
@@ -152,8 +155,13 @@ struct NewVocabView: View {
                 Image(systemName: "plus")
             }
         }) {
-            ForEach($examples, id: \.self) { $example in
-                TextField(text: $example) { Text("Example Sentence") }
+            ForEach(Array(examples.enumerated()), id: \.0) { (index, example) in
+                Button {
+                    exampleToEdit = index
+                    showExamplesEdit = true
+                } label: {
+                    Text(example)
+                }
             }
             .onMove(perform: { index, moveTo in
                 examples.move(fromOffsets: index, toOffset: moveTo)
@@ -161,6 +169,20 @@ struct NewVocabView: View {
             .onDelete(perform: { index in
                 examples.remove(atOffsets: index)
             })
+        }
+        .sheet(isPresented: $showExamplesEdit) {
+            List {
+                Section {
+                    TextField("Example", text: .init(get: {
+                        examples[exampleToEdit]
+                    }, set: { newValue in
+                        examples[exampleToEdit] = newValue
+                    }))
+                    .onSubmit {
+                        showExamplesEdit = false
+                    }
+                }
+            }
         }
     }
 }
