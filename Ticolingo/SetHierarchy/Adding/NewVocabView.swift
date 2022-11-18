@@ -33,8 +33,8 @@ struct NewVocabView: View {
 
         Button("Create Vocabulary") {
             terms.append(Vocab(term: term,
-                               definition: definitions,
-                               exampleSentences: examples,
+                               definition: definitions.filter({ !$0.wrappedString.isEmpty }),
+                               exampleSentences: examples.filter({ !$0.isEmpty }),
                                difficulty: difficulty))
             presentationMode.wrappedValue.dismiss()
         }
@@ -95,7 +95,12 @@ struct NewVocabView: View {
                     showDefinitionEdit = true
                 } label: {
                     HStack {
-                        Text("\(definition.wrappedString)")
+                        if definition.wrappedString.isEmpty {
+                            Text("Definition")
+                                .foregroundColor(Color(UIColor.tertiaryLabel))
+                        } else {
+                            Text("\(definition.wrappedString)")
+                        }
                         Spacer()
                         Text("\(definition.defName)")
                     }
@@ -133,8 +138,13 @@ struct NewVocabView: View {
                     exampleToEdit = index
                     showExamplesEdit = true
                 } label: {
-                    Text(example)
-                        .foregroundColor(ColorManager.shared.tertiaryTextColour)
+                    if example.isEmpty {
+                        Text("Example")
+                        .foregroundColor(Color(UIColor.tertiaryLabel))
+                    } else {
+                        Text(example)
+                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
+                    }
                 }
             }
             .onMove(perform: { index, moveTo in
