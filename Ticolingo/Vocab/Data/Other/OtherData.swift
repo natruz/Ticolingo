@@ -54,7 +54,11 @@ extension StudyGroups {
         ]),
         StudySetGroup(name: "Weather", sets: [
             StudySet(title: "Sunny", terms: [
-                Vocab(term: "", definition: "", exampleSentence: "", difficulty: 0)
+                Vocab(term: "炎热", definition: "scorching hot", exampleSentence: "新加坡的天气非常炎热。", difficulty: 0),
+                Vocab(term: "晴朗",definition: "sunny; cloudless", exampleSentence: "今天天气晴朗，非常适合去野餐。", difficulty: 0),
+                Vocab(term: "万里无云", definition: "clear, sunny skies", exampleSentence: "今天天气很好，万里无云啊！", difficulty: 0),
+                Vocab(term: "阳光普照", definition: "sunny clear skies", exampleSentence: "今天阳光普照，很适合出游", difficulty: 0),
+                Vocab(term: "烈日当空", definition: "literally: scorching sun hanging in the sky", exampleSentence: "现在烈日当空，我们应该避免出门。", difficulty: 0)
             ]),
         ]),
         // Other sections: Speaking(how to say "shuo")
