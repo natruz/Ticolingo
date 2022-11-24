@@ -60,6 +60,13 @@ extension StudyGroups {
                 Vocab(term: "阳光普照", definition: "sunny clear skies", exampleSentence: "今天阳光普照，很适合出游", difficulty: 0),
                 Vocab(term: "烈日当空", definition: "literally: scorching sun hanging in the sky", exampleSentence: "现在烈日当空，我们应该避免出门。", difficulty: 0)
             ]),
+            StudySet(title: "Rainy", terms: [
+                Vocab(term: "狂风暴雨", definition: "howling winds and torrential rain", exampleSentence: "", difficulty: 0),
+                Vocab(term: "寒风刺骨", definition: "very cold weather", exampleSentence: "狂风暴雨造成很多地方停水停电，给居民带来不便。", difficulty: 0),
+                Vocab(term: "阴雨绵绵", definition: "gloomy, long-term rainfall", exampleSentence: "现在是梅雨季节，这个星期一直阴雨绵绵，家里许多东西都开始发霉了。", difficulty: 0),
+                Vocab(term: "淅淅沥沥", definition: "continuous pattern of rainfall", exampleSentence: "外面下着小雨，雨打在绿叶上，淅淅沥沥的。", difficulty: 0),
+                Vocab(term: "倾盆大雨", definition: "used to describe a heavy rainfall", exampleSentence: "这场倾盆大雨下得太突然，我没准备雨伞，全身都湿透了", difficulty: 0),
+            ]),
         ]),
         // Other sections: Speaking(how to say "shuo")
     ]
