@@ -64,14 +64,6 @@ struct QuizResultsView: View {
                     }
                 }
             }
-
-            Section {
-                GeometryReader { geometry in
-                    Button("Exit") {
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
-            }
         }
         .navigationTitle("Results")
     }
