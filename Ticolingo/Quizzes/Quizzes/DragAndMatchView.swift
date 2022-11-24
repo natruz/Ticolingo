@@ -124,11 +124,12 @@ struct DragAndMatchView: QuizProtocolView {
                 self.draggedCard = currentOptions[selectedIndex]
             }
             .onEnded { gesture in
+                let selectedIndex = Int(gesture.location.y / (size.height/5))
 
-                // only if the x coordinate is on the right 1/3 of the screen, calculate overlap
-                if gesture.location.x > size.width/3*2 {
+                // only if the x coordinate is on the right 1/3 of the screen,
+                // and the selected index is 0 <= x < max, calculate overlap
+                if gesture.location.x > size.width/3*2 && selectedIndex >= 0 && selectedIndex < rightArrangement.count {
                     // figure out which card it was dragged over
-                    let selectedIndex = Int(gesture.location.y / (size.height/5))
                     let overlapCard = currentOptions[rightArrangement[selectedIndex]]
                     if overlapCard == draggedCard {
                         // They answered correctly
