@@ -20,7 +20,7 @@ struct MemoryCardsView: QuizProtocolView {
     @State var randomised: Bool
     @State var attempts: [Question : (Int, Int)]
 
-    @State var statsToShow: [Stat] = [ .total, .completed, .wrong ]
+    @State var statsToShow: [Stat] = [ .total, .completed]
 
     @State var currentQAs: [(String, Question)] // 12 elements ONLY
     @State var selectedQuestion: Question?
