@@ -23,7 +23,7 @@ struct ResizableTextView: View {
     var body: some View {
         Text(text)
             .multilineTextAlignment(.center)
-            .foregroundColor(Color.white)
+            .foregroundColor(Color("quizTextColour"))
             .font(largestFont)
             .fixedSize(horizontal: false, vertical: false)
             .minimumScaleFactor(minimumScaleFactor)
