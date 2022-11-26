@@ -69,10 +69,8 @@ struct StudyGroupsView: View {
         .navigationTitle("Study Sets")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
+                Button("Edit") {
                     showEditGroups.toggle()
-                } label: {
-                    Image(systemName: "pencil.circle")
                 }
             }
         }

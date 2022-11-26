@@ -38,6 +38,7 @@ struct EditStudySetGroup: View {
                                 .foregroundColor(ColorManager.shared.tertiaryTextColour)
                         }
                     }
+                    .disabled(!studyGroup.editable)
                     .contextMenu {
                         Button("Export") {
                             exportedStudyGroup = studyGroup

@@ -78,13 +78,10 @@ struct StudySetView: View {
         .navigationTitle(set.title)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if set.editable {
-                    Button {
-                        editing.toggle()
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+                Button("Edit") {
+                    editing.toggle()
                 }
+                .disabled(!set.editable)
             }
         }
         .sheet(isPresented: $editing) {

@@ -111,8 +111,8 @@ struct TermDetailView: View {
         }
         .navigationTitle(term.term)
         .toolbar {
-            ToolbarItem(id: "edit", placement: .navigationBarTrailing) {
-                Button(editing ? "Finish" : "Edit") {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Edit") {
                     editing.toggle()
                 }
                 .disabled(!term.editable)
