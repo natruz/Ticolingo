@@ -12,7 +12,6 @@ struct ImportStudySetGroupView: View {
     @ObservedObject var studyGroups: StudyGroups = .shared
 
     @Environment(\.presentationMode) var presentationMode
-    @Environment(\.dismiss) var dismiss
 
     @State var jsonString: String = ""
 
@@ -32,7 +31,7 @@ struct ImportStudySetGroupView: View {
                     Spacer()
                     Button {
                         _ = studyGroups.importStudyGroup(string: jsonString)
-                        dismiss()
+                        presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "plus")
                     }
