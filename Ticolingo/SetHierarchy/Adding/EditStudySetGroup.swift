@@ -25,14 +25,18 @@ struct EditStudySetGroup: View {
         List {
             Section {
                 ForEach($studyGroups.studyGroups) { $studyGroup in
-                    HStack {
-                        Text(studyGroup.name)
-                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
-                        Image(systemName: "lock.fill")
-                            .opacity(studyGroup.editable ? 0.01 : 1)
-                        Spacer()
-                        Text("\(studyGroup.sets.count) Sets")
-                            .foregroundColor(ColorManager.shared.tertiaryTextColour)
+                    NavigationLink {
+                        NewStudySetGroupView(studyGroup: studyGroup)
+                    } label: {
+                        HStack {
+                            Text(studyGroup.name)
+                                .foregroundColor(ColorManager.shared.tertiaryTextColour)
+                            Image(systemName: "lock.fill")
+                                .opacity(studyGroup.editable ? 0.01 : 1)
+                            Spacer()
+                            Text("\(studyGroup.sets.count) Sets")
+                                .foregroundColor(ColorManager.shared.tertiaryTextColour)
+                        }
                     }
                     .contextMenu {
                         Button("Export") {

@@ -77,7 +77,9 @@ struct StudyGroupsView: View {
             }
         }
         .sheet(isPresented: $showEditGroups) {
-            EditStudySetGroup()
+            NavigationView {
+                EditStudySetGroup()
+            }
         }
     }
 }

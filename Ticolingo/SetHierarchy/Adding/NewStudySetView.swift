@@ -89,6 +89,7 @@ struct NewStudySetView: View {
                 }
             }
         }
+        .navigationTitle(studySet.title)
         .onDisappear {
             StudyGroups.shared.objectWillChange.send()
             studyGroup.objectWillChange.send()

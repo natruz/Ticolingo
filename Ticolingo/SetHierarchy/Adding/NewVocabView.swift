@@ -32,6 +32,7 @@ struct NewVocabView: View {
         List {
             content
         }
+        .navigationTitle(vocab.term)
         .onDisappear {
             studySet.objectWillChange.send()
             studyGroup.objectWillChange.send()

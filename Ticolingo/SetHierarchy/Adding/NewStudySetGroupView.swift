@@ -51,6 +51,7 @@ struct NewStudySetGroupView: View {
                 }
             }
         }
+        .navigationTitle(studyGroup.name)
         .sheet(isPresented: $showAddStudySet) {
             NewStudySetView(studyGroup: studyGroup,
                             studySet: newSet)
