@@ -108,6 +108,7 @@ struct EditStudySetGroup: View {
                             Section(header: SecTitle("Export Options")) {
                                 Button("Save to Clipboard") {
                                     UIPasteboard.general.string = export
+                                    showExport = false
                                 }
                             }
                         }

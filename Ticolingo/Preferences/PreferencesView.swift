@@ -53,6 +53,11 @@ struct PreferencesView: View {
         .alert(isPresented: $showAlert) {
             switch confirmProcessType {
             case .resetVocab:
+              //  Attempt to solve secondary filler colour not resetting
+//                print(colors.secondaryFillerColour)
+//                DispatchQueue.main.async {
+//                    colors.objectWillChange.send()
+//                }
                 return Alert(title: Text("Are you sure you want to reset your Vocabulary? This cannot be undone."),
                       primaryButton: .cancel(),
                       secondaryButton: .destructive(Text("Proceed"), action: {
