@@ -21,17 +21,9 @@ struct TermDetailView: View {
         List {
             Section {
                 VStack(alignment: .leading) {
-                    if editing {
-                        TextField("Enter Term", text: $term.term)
-                            .autocorrectionDisabled()
-                            .textInputAutocapitalization(.never)
-                            .foregroundColor(colors.secondaryTextColour)
-                            .font(.system(size: 30))
-                    } else {
-                        Text(term.term)
-                            .font(.system(size: 30))
-                            .foregroundColor(colors.tertiaryTextColour)
-                    }
+                    Text(term.term)
+                        .font(.system(size: 30))
+                        .foregroundColor(colors.tertiaryTextColour)
                     Text(term.pinyin)
                         .foregroundColor(colors.tertiaryTextColour)
                         .padding(.top, 3)
@@ -111,6 +103,11 @@ struct TermDetailView: View {
                     Spacer()
                 }
             }
+        }
+        .sheet(isPresented: $editing) {
+            NewVocabView(studyGroup: StudySetGroup(name: "", sets: []),
+                         studySet: StudySet(title: "", terms: []),
+                         vocab: term)
         }
         .navigationTitle(term.term)
         .toolbar {

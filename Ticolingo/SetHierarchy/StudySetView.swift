@@ -13,11 +13,7 @@ struct StudySetView: View {
 
     @ObservedObject var colors: ColorManager = .shared
 
-    @State var adding: Bool = false
-    @State var newVocab: Vocab = Vocab(term: "Unnamed Term",
-                                       definition: "",
-                                       exampleSentences: [],
-                                       difficulty: 0)
+    @State var editing: Bool = false
     
     var body: some View {
         List {
@@ -84,22 +80,16 @@ struct StudySetView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if set.editable {
                     Button {
-                        newVocab = Vocab(term: "Unnamed Term",
-                                         definition: "",
-                                         exampleSentences: [],
-                                         difficulty: 0)
-                        set.terms.append(newVocab)
-                        adding.toggle()
+                        editing.toggle()
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
         }
-        .sheet(isPresented: $adding) {
-            NewVocabView(studyGroup: StudySetGroup(name: "", sets: []),
-                         studySet: set,
-                         vocab: newVocab)
+        .sheet(isPresented: $editing) {
+            NewStudySetView(studyGroup: StudySetGroup(name: "", sets: []),
+                            studySet: set)
         }
     }
 }
