@@ -12,6 +12,9 @@ struct NewStudySetGroupView: View {
     @ObservedObject
     var studyGroup: StudySetGroup
 
+    @State
+    var newSet: StudySet = StudySet(title: "Untitled Study Set", terms: [])
+
     @Environment(\.presentationMode) var presentationMode
 
     @State private var showAddStudySet: Bool = false
@@ -38,6 +41,8 @@ struct NewStudySetGroupView: View {
                 HStack {
                     Spacer()
                     Button {
+                        newSet = StudySet(title: "Untitled Study Set", terms: [])
+                        studyGroup.sets.append(newSet)
                         showAddStudySet.toggle()
                     } label: {
                         Image(systemName: "plus")
@@ -47,14 +52,14 @@ struct NewStudySetGroupView: View {
             }
         }
         .sheet(isPresented: $showAddStudySet) {
-            NewStudySetView(studySets: $studyGroup.sets)
+            NewStudySetView(studyGroup: studyGroup,
+                            studySet: newSet)
         }
         .onDisappear {
             StudyGroups.shared.objectWillChange.send()
         }
 
         Button("Finish") {
-            print("\(studyGroup.name) + \(studyGroup.sets) + \(studyGroup.editable)")
             presentationMode.wrappedValue.dismiss()
         }
     }

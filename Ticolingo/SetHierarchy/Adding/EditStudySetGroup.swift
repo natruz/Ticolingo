@@ -12,9 +12,6 @@ struct EditStudySetGroup: View {
     @ObservedObject
     var studyGroups: StudyGroups = .shared
 
-    @State var showNewSet: Bool = false
-    @State var setAddsToGroup: StudySetGroup? = StudyGroups.shared.studyGroups.first
-
     @State var showNewGroups: Bool = false
     @State var newGroup: StudySetGroup = StudySetGroup(name: "", sets: [])
 
@@ -38,12 +35,6 @@ struct EditStudySetGroup: View {
                             .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     }
                     .contextMenu {
-                        if studyGroup.editable {
-                            Button("Add Study Set") {
-                                setAddsToGroup = studyGroup
-                                showNewSet = true
-                            }
-                        }
                         Button("Export") {
                             exportedStudyGroup = studyGroup
                             showExport = true
@@ -90,13 +81,6 @@ struct EditStudySetGroup: View {
                     studyGroups.studyGroups.move(fromOffsets: index, toOffset: moveTo)
                 }
             }
-            .sheet(isPresented: $showNewSet, content: {
-                NewStudySetView(studySets: .init(get: {
-                    setAddsToGroup?.sets ?? []
-                }, set: { newSets in
-                    setAddsToGroup?.sets = newSets
-                }))
-            })
             .sheet(isPresented: $showExport) {
                 if let exportedStudyGroup {
                     if let export = exportedStudyGroup.export(pretty: prettyExport) {
