@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @State
+    var showTutorial: Bool = false
     
     var body: some View {
         TabView {
             NavigationView {
                 StudyGroupsView()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button("Tutorial") {
+                                showTutorial.toggle()
+                            }
+                        }
+                    }
             }
             .tabItem {
                 Label("Words", systemImage: "character.book.closed.zh")
@@ -24,6 +34,9 @@ struct ContentView: View {
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
+        }
+        .sheet(isPresented: $showTutorial) {
+            TutorialView(showThisView: $showTutorial)
         }
     }
 }
