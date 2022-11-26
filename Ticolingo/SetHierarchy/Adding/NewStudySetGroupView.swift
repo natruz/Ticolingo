@@ -9,11 +9,9 @@ import SwiftUI
 
 struct NewStudySetGroupView: View {
 
-    @ObservedObject
-    var studyGroup: StudySetGroup
+    @ObservedObject var studyGroup: StudySetGroup
 
-    @State
-    var newSet: StudySet = StudySet(title: "Untitled Study Set", terms: [])
+    @State var newSet: StudySet = StudySet(title: "Untitled Study Set", terms: [])
 
     @Environment(\.presentationMode) var presentationMode
 

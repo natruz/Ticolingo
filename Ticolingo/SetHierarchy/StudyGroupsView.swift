@@ -9,17 +9,11 @@ import SwiftUI
 
 struct StudyGroupsView: View {
 
-    @ObservedObject
-    var studyGroups: StudyGroups = .shared
+    @ObservedObject var studyGroups: StudyGroups = .shared
+    @ObservedObject var colors: ColorManager = .shared
 
-    @ObservedObject
-    var colors: ColorManager = .shared
-
-    @State
-    var showEditGroups: Bool = false
-
-    @State
-    var showDefault: Bool = UIDevice.current.userInterfaceIdiom == .pad
+    @State var showEditGroups: Bool = false
+    @State var showDefault: Bool = UIDevice.current.userInterfaceIdiom == .pad
 
     var body: some View {
         VStack {
