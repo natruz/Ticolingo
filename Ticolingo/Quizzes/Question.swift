@@ -51,16 +51,40 @@ enum QAType: CaseIterable {
     case pinYin
     case definition
     case unspecified
-
+//    case characterAndPinYin
+//    case characterAndDefinition
+//    case pinYinAndCharacter
+//    case pinYinAndDefinition
+//    case definitionAndCharacter
+//    case definitionAndPinYin
+    
     static var allRealCases: [QAType] {
         allCases.filter({ $0 != .unspecified })
     }
 
     public func questionUsingFormatFor(text: String) -> String {
         switch self {
-        case .character:    return "What is the character for \"\(text)\"?"
-        case .pinYin:       return "What is the pinyin for \"\(text)\"?"
-        case .definition:   return "What is the definition of \"\(text)\"?"
+//        case .character:
+//            return ""
+//        case .pinYin:
+//            return ""
+//        case .definition:
+//            return ""
+//        case .characterAndPinYin:
+//            return "What is the pinyin for \"\(text)\"?"
+//        case .characterAndDefinition:
+//            return "What is the definition for \"\(text)\"?"
+//        case .pinYinAndCharacter:
+//            return "What is the character for \"\(text)\"?"
+//        case .pinYinAndDefinition:
+//            return "What is the definition for \"\(text)\"?"
+//        case .definitionAndCharacter:
+//            return "What is the character for \"\(text)\"?"
+//        case .definitionAndPinYin:
+//            return "What is the pinyin for \"\(text)\"?"
+        case .character:    return "What is the pinyin for \"\(text)\"?"
+        case .pinYin:       return "What is the definition for \"\(text)\"?"
+        case .definition:   return "What is the character of \"\(text)\"?"
         case .unspecified:  return text
         }
     }
