@@ -18,8 +18,20 @@ struct StudyGroupsView: View {
     @State
     var showEditGroups: Bool = false
 
+    @State
+    var showDefault: Bool = UIDevice.current.userInterfaceIdiom == .pad
+
     var body: some View {
         VStack {
+            NavigationLink(destination: {
+                VStack {
+                    Text("No Study Group Selected")
+                        .font(Font.system(Font.TextStyle.largeTitle))
+                    Spacer()
+                        .frame(height: 20)
+                    Text("Choose one from the sidebar")
+                }
+            }(), isActive: $showDefault, label: {})
             List {
                 ForEach(studyGroups.studyGroups) { studyGroup in
                     Section(header: SectionHeader(studyGroup: studyGroup)) {

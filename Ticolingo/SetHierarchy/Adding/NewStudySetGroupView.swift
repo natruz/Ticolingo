@@ -10,31 +10,30 @@ import SwiftUI
 struct NewStudySetGroupView: View {
 
     @ObservedObject
-    var studyGroups: StudyGroups = .shared
+    var studyGroup: StudySetGroup
+
+    @State
+    var newSet: StudySet = StudySet(title: "Untitled Study Set", terms: [])
 
     @Environment(\.presentationMode) var presentationMode
-
-    @State var studyGroupName: String = ""
-    @State var studySets: [StudySet] = []
-    @State var isEditable: Bool = true
 
     @State private var showAddStudySet: Bool = false
 
     var body: some View {
         List {
             Section {
-                TextField(text: $studyGroupName) {
+                TextField(text: $studyGroup.name) {
                     Text("Name of Study Group")
                         .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
-                Toggle(isOn: $isEditable) {
+                Toggle(isOn: $studyGroup.editable) {
                     Text("Is Editable")
                         .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
             }
 
             Section(header: SecTitle("Study Sets")) {
-                ForEach(studySets) { studySet in
+                ForEach(studyGroup.sets) { studySet in
                     VStack {
                         Text(studySet.title)
                     }
@@ -42,6 +41,8 @@ struct NewStudySetGroupView: View {
                 HStack {
                     Spacer()
                     Button {
+                        newSet = StudySet(title: "Untitled Study Set", terms: [])
+                        studyGroup.sets.append(newSet)
                         showAddStudySet.toggle()
                     } label: {
                         Image(systemName: "plus")
@@ -51,16 +52,16 @@ struct NewStudySetGroupView: View {
             }
         }
         .sheet(isPresented: $showAddStudySet) {
-            NewStudySetView(studySets: $studySets)
+            NewStudySetView(studyGroup: studyGroup,
+                            studySet: newSet)
+        }
+        .onDisappear {
+            StudyGroups.shared.objectWillChange.send()
         }
 
-        Button("Create Study Group") {
-            studyGroups.studyGroups.append(StudySetGroup(name: studyGroupName,
-                                                         sets: studySets,
-                                                         editable: isEditable))
+        Button("Finish") {
             presentationMode.wrappedValue.dismiss()
         }
-        .disabled(studyGroupName.isEmpty)
     }
 }
 
@@ -70,7 +71,7 @@ struct NewStudySetGroupView_Previews: PreviewProvider {
             Text("HI")
         }
         .sheet(isPresented: .constant(true)) {
-            NewStudySetGroupView()
+            NewStudySetGroupView(studyGroup: StudySetGroup(name: "test", sets: []))
         }
     }
 }

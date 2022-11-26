@@ -9,26 +9,27 @@ import SwiftUI
 
 struct NewStudySetView: View {
 
-    @Binding var studySets: [StudySet]
+    @ObservedObject
+    var studyGroup: StudySetGroup
+
+    @ObservedObject
+    var studySet: StudySet
 
     @Environment(\.presentationMode) var presentationMode
-
-    @State var studySetTitle: String = ""
-    @State var terms: [Vocab] = []
 
     @State var showDefinitions: Bool = false
 
     var body: some View {
         List {
             Section {
-                TextField(text: $studySetTitle) {
+                TextField(text: $studySet.title) {
                     Text("Name of Set")
                         .foregroundColor(ColorManager.shared.tertiaryTextColour)
                 }
             }
 
             Section(header: SecTitle("Vocabulary")) {
-                ForEach($terms) { $term in
+                ForEach($studySet.terms) { $term in
                     VStack(alignment: .leading) {
                         Text(term.term)
                             .foregroundColor(ColorManager.shared.tertiaryTextColour)
@@ -50,16 +51,16 @@ struct NewStudySetView: View {
                     }
                 }
                 .onMove(perform: { index, moveTo in
-                    terms.move(fromOffsets: index, toOffset: moveTo)
+                    studySet.terms.move(fromOffsets: index, toOffset: moveTo)
                 })
                 .onDelete(perform: { index in
-                    terms.remove(atOffsets: index)
+                    studySet.terms.remove(atOffsets: index)
                 })
 
                 HStack {
                     Spacer()
                     Button {
-                        if  let last = terms.last,
+                        if  let last = studySet.terms.last,
                             last.term.isEmpty &&
                             last.definition.isEmpty &&
                             last.exampleSentences.isEmpty {
@@ -72,17 +73,18 @@ struct NewStudySetView: View {
                     Spacer()
                 }
                 .sheet(isPresented: $showDefinitions) {
-                    NewVocabView(terms: $terms)
+                    NewVocabView(terms: $studySet.terms)
                 }
             }
         }
+        .onDisappear {
+            StudyGroups.shared.objectWillChange.send()
+            studyGroup.objectWillChange.send()
+        }
 
-        Button("Create Study Set") {
-            studySets.append(StudySet(title: studySetTitle,
-                                      terms: terms.filter({ !$0.term.isEmpty })))
+        Button("Finish") {
             presentationMode.wrappedValue.dismiss()
         }
-        .disabled(studySetTitle.isEmpty)
     }
 }
 
@@ -92,7 +94,8 @@ struct NewStudySetView_Previews: PreviewProvider {
 
         }
         .sheet(isPresented: .constant(true)) {
-            NewStudySetView(studySets: .constant([]))
+            NewStudySetView(studyGroup: StudySetGroup(name: "hi", sets: []),
+                            studySet: StudySet(title: "Untitled Study Set", terms: []))
         }
     }
 }
