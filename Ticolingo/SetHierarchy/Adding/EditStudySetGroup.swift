@@ -16,6 +16,7 @@ struct EditStudySetGroup: View {
     @State var setAddsToGroup: StudySetGroup? = StudyGroups.shared.studyGroups.first
 
     @State var showNewGroups: Bool = false
+    @State var newGroup: StudySetGroup = StudySetGroup(name: "", sets: [])
 
     @State var showImport: Bool = false
 
@@ -133,6 +134,8 @@ struct EditStudySetGroup: View {
 
             Section {
                 Button("Create New Study Group") {
+                    newGroup = StudySetGroup(name: "Untitled Study Set", sets: [])
+                    studyGroups.studyGroups.append(newGroup)
                     showNewGroups.toggle()
                 }
                 Button("Import Study Group") {
@@ -140,7 +143,7 @@ struct EditStudySetGroup: View {
                 }
             }
             .sheet(isPresented: $showNewGroups) {
-                NewStudySetGroupView()
+                NewStudySetGroupView(studyGroup: newGroup)
             }
             .sheet(isPresented: $showImport) {
                 ImportStudySetGroupView()
