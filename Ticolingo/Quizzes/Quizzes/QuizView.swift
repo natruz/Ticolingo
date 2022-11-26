@@ -71,7 +71,7 @@ struct QuizView: QuizProtocolView {
                     // question
                     // this view reuses the single flip card view for its auto
                     // resizing text. It does not flip.
-                    ResizableTextView(.constant(options[completed].0.questionType
+                    ResizableTextView(.constant(options[completed].0.answerType
                         .questionUsingFormatFor(text: options[completed].0.question)))
                         .frame(height: geometry.size.height/2)
 

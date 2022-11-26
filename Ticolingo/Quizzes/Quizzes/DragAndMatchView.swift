@@ -73,7 +73,7 @@ struct DragAndMatchView: QuizProtocolView {
                             if currentOptions.count == rightArrangement.count {
                                 SingleFlipCardView(front: .constant(currentOptions[optionIndex].answer),
                                                    back: .constant(""),
-                                                   frontColor: .pink,
+                                                   frontColor: .orange,
                                                    onFlip: { _ in .reject })
                                 .opacity(currentOptions[optionIndex].isEmpty ? 0 : (
                                     pairedQuestions.contains(currentOptions[optionIndex]) ? 0 : 1
@@ -92,7 +92,7 @@ struct DragAndMatchView: QuizProtocolView {
                             if currentOptions.count == leftArrangement.count {
                                 SingleFlipCardView(front: .constant(currentOptions[optionIndex].question),
                                                    back: .constant(""),
-                                                   frontColor: .pink,
+                                                   frontColor: .orange,
                                                    onFlip: { _ in .reject })
                                 .opacity(currentOptions[optionIndex].isEmpty ? 0 : (
                                     pairedQuestions.contains(currentOptions[optionIndex]) ? 0 : 1
