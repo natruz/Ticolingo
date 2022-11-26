@@ -22,6 +22,8 @@ struct EditStudySetGroup: View {
     @State var showExport: Bool = false
     @State var exportedStudyGroup: StudySetGroup? = StudyGroups.shared.studyGroups.first
     @State var prettyExport: Bool = false
+    
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         List {
@@ -118,6 +120,7 @@ struct EditStudySetGroup: View {
                             Section(header: SecTitle("Export Options")) {
                                 Button("Save to Clipboard") {
                                     UIPasteboard.general.string = export
+                                    dismiss()
                                 }
                             }
                         }
