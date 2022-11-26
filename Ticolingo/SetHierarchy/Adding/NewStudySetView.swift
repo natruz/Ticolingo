@@ -17,6 +17,11 @@ struct NewStudySetView: View {
 
     @Environment(\.presentationMode) var presentationMode
 
+    @State var newTerm: Vocab = Vocab(term: "Unnamed Term",
+                                      definition: "",
+                                      exampleSentences: [],
+                                      difficulty: 0)
+
     @State var showDefinitions: Bool = false
 
     var body: some View {
@@ -66,6 +71,11 @@ struct NewStudySetView: View {
                             last.exampleSentences.isEmpty {
                             return
                         }
+                        newTerm = Vocab(term: "Unnamed Term",
+                                        definition: "",
+                                        exampleSentences: [],
+                                        difficulty: 0)
+                        studySet.terms.append(newTerm)
                         showDefinitions.toggle()
                     } label: {
                         Image(systemName: "plus")
@@ -73,7 +83,9 @@ struct NewStudySetView: View {
                     Spacer()
                 }
                 .sheet(isPresented: $showDefinitions) {
-                    NewVocabView(terms: $studySet.terms)
+                    NewVocabView(studyGroup: studyGroup,
+                                 studySet: studySet,
+                                 vocab: newTerm)
                 }
             }
         }

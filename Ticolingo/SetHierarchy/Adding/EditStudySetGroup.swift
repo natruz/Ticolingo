@@ -133,6 +133,9 @@ struct EditStudySetGroup: View {
                 ImportStudySetGroupView()
             }
         }
+        .onDisappear {
+            studyGroups.objectWillChange.send()
+        }
     }
 }
 

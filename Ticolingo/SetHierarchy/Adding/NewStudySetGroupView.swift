@@ -56,6 +56,7 @@ struct NewStudySetGroupView: View {
                             studySet: newSet)
         }
         .onDisappear {
+            studyGroup.objectWillChange.send()
             StudyGroups.shared.objectWillChange.send()
         }
 

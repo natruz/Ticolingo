@@ -9,12 +9,14 @@ import SwiftUI
 
 struct NewVocabView: View {
 
-    @Binding var terms: [Vocab]
+    @ObservedObject
+    var studyGroup: StudySetGroup
 
-    @State var term: String = ""
-    @State var definitions: [Definition] = []
-    @State var difficulty: Int = 0
-    @State var examples: [String] = []
+    @ObservedObject
+    var studySet: StudySet
+
+    @ObservedObject
+    var vocab: Vocab
 
     @State var newDefinitionPrefix: String = "Verb"
 
@@ -30,29 +32,29 @@ struct NewVocabView: View {
         List {
             content
         }
+        .onDisappear {
+            studySet.objectWillChange.send()
+            studyGroup.objectWillChange.send()
+            StudyGroups.shared.objectWillChange.send()
+        }
 
-        Button("Create Vocabulary") {
-            terms.append(Vocab(term: term,
-                               definition: definitions.filter({ !$0.wrappedString.isEmpty }),
-                               exampleSentences: examples.filter({ !$0.isEmpty }),
-                               difficulty: difficulty))
+        Button("Finish") {
             presentationMode.wrappedValue.dismiss()
         }
-        .disabled(term.isEmpty)
     }
 
     @ViewBuilder
     var content: some View {
         Section {
-            TextField(text: $term) { Text("Term") }
+            TextField(text: $vocab.term) { Text("Term") }
             VStack(alignment: .leading) {
-                Text("Difficulty: \(difficulty)/7")
+                Text("Difficulty: \(vocab.difficulty)/7")
                     .foregroundColor(ColorManager.shared.tertiaryTextColour)
                     .padding(.bottom, 1)
                 HStack {
                     ForEach(0..<7) { index in
                         Image(systemName: "star.fill")
-                            .foregroundColor(difficulty <= index ? .gray : .yellow)
+                            .foregroundColor(vocab.difficulty <= index ? .gray : .yellow)
                     }
                 }
                 .overlay {
@@ -63,14 +65,14 @@ struct NewVocabView: View {
                                     let segmentWidth = geometry.size.width/7
                                     let location = Int(gesture.location.x/segmentWidth)
                                     withAnimation(.linear(duration: 0.1)) {
-                                        difficulty = max(0, min(location+1, 7))
+                                        vocab.difficulty = max(0, min(location+1, 7))
                                     }
                                 }
                                 .onEnded { gesture in
                                     let segmentWidth = geometry.size.width/7
                                     let location = Int(gesture.location.x/segmentWidth)
                                     withAnimation(.linear(duration: 0.1)) {
-                                        difficulty = max(0, min(location+1, 7))
+                                        vocab.difficulty = max(0, min(location+1, 7))
                                     }
                                 })
                     }
@@ -82,14 +84,14 @@ struct NewVocabView: View {
             Menu {
                 ForEach(Definition.allCases, id: \.self) { type in
                     Button("\(type.defName) Definition") {
-                        definitions.append(type.replacingWrappedString(with: ""))
+                        vocab.definition.append(type.replacingWrappedString(with: ""))
                     }
                 }
             } label: {
                 Image(systemName: "plus")
             }
         }) {
-            ForEach(Array(definitions.enumerated()), id: \.0) { (index, definition) in
+            ForEach(Array(vocab.definition.enumerated()), id: \.0) { (index, definition) in
                 Button {
                     definitionToEdit = index
                     showDefinitionEdit = true
@@ -108,10 +110,10 @@ struct NewVocabView: View {
                 }
             }
             .onMove(perform: { index, moveTo in
-                definitions.move(fromOffsets: index, toOffset: moveTo)
+                vocab.definition.move(fromOffsets: index, toOffset: moveTo)
             })
             .onDelete(perform: { index in
-                definitions.remove(atOffsets: index)
+                vocab.definition.remove(atOffsets: index)
             })
         }
         .sheet(isPresented: $showDefinitionEdit) {
@@ -126,14 +128,14 @@ struct NewVocabView: View {
 
         Section(header: SecTitle("Examples") {
             Button {
-                if !examples.contains(where: { $0.isEmpty }) {
-                    examples.append("")
+                if !vocab.exampleSentences.contains(where: { $0.isEmpty }) {
+                    vocab.exampleSentences.append("")
                 }
             } label: {
                 Image(systemName: "plus")
             }
         }) {
-            ForEach(Array(examples.enumerated()), id: \.0) { (index, example) in
+            ForEach(Array(vocab.exampleSentences.enumerated()), id: \.0) { (index, example) in
                 Button {
                     exampleToEdit = index
                     showExamplesEdit = true
@@ -148,10 +150,10 @@ struct NewVocabView: View {
                 }
             }
             .onMove(perform: { index, moveTo in
-                examples.move(fromOffsets: index, toOffset: moveTo)
+                vocab.exampleSentences.move(fromOffsets: index, toOffset: moveTo)
             })
             .onDelete(perform: { index in
-                examples.remove(atOffsets: index)
+                vocab.exampleSentences.remove(atOffsets: index)
             })
         }
         .sheet(isPresented: $showExamplesEdit) {
@@ -169,9 +171,9 @@ struct NewVocabView: View {
     var definitionEditView: some View {
         List {
             Picker("Definition Type", selection: .init(get: { () -> Definition in
-                definitions[definitionToEdit]
+                vocab.definition[definitionToEdit]
             }, set: { newValue in
-                definitions[definitionToEdit] = definitions[definitionToEdit]
+                vocab.definition[definitionToEdit] = vocab.definition[definitionToEdit]
                     .changingDefinitionType(to: newValue)
             })) {
                 ForEach(Definition.allCases, id: \.self) { defType in
@@ -180,13 +182,13 @@ struct NewVocabView: View {
             }
 
             TextField("Definition", text: .init(get: {
-                print("Read value: \(definitions[definitionToEdit].wrappedString) for \(definitionToEdit)")
-                return definitions[definitionToEdit].wrappedString
+                print("Read value: \(vocab.definition[definitionToEdit].wrappedString) for \(definitionToEdit)")
+                return vocab.definition[definitionToEdit].wrappedString
             }, set: { newValue in
                 print("New value: \(newValue)")
-                definitions[definitionToEdit] = definitions[definitionToEdit]
+                vocab.definition[definitionToEdit] = vocab.definition[definitionToEdit]
                     .replacingWrappedString(with: newValue)
-                print("Value afterward: \(definitions[definitionToEdit].wrappedString)")
+                print("Value afterward: \(vocab.definition[definitionToEdit].wrappedString)")
             }))
             .onSubmit {
                 showDefinitionEdit = false
@@ -199,25 +201,14 @@ struct NewVocabView: View {
         List {
             Section {
                 TextField("Example", text: .init(get: {
-                    examples[exampleToEdit]
+                    vocab.exampleSentences[exampleToEdit]
                 }, set: { newValue in
-                    examples[exampleToEdit] = newValue
+                    vocab.exampleSentences[exampleToEdit] = newValue
                 }))
                 .onSubmit {
                     showExamplesEdit = false
                 }
             }
-        }
-    }
-}
-
-struct NewVocabView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-
-        }
-        .sheet(isPresented: .constant(true)) {
-            NewVocabView(terms: .constant([]))
         }
     }
 }
